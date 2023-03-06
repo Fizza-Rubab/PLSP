@@ -4,7 +4,7 @@ import 'package:google_maps/post_arrival.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/gestures.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'login.dart';
+import 'old_login.dart';
 import 'profile.dart';
 import 'register.dart';
 import 'towards_emergency.dart';
@@ -15,7 +15,6 @@ import 'coming.dart';
 import 'arrived.dart';
 import 'homepage.dart';
 import 'display.dart';
-
 
 // const Profile_Name = TextStyle(
 //   fontWeight: FontWeight.bold,
@@ -73,15 +72,13 @@ import 'display.dart';
 //   height: 0,
 // );
 
-void main() {
-  runApp(
-    MaterialApp(
-      home:
-          DisplayPage()
-      // Searching(), //Searching(),  //Coming(), //AlertDetails(), //Profile(), //Register(), // LogIn()
-    ),
-  );
-}
+// void main() {
+//   runApp(
+//     MaterialApp(home: DisplayPage()
+//         // Searching(), //Searching(),  //Coming(), //AlertDetails(), //Profile(), //Register(), // LogIn()
+//         ),
+//   );
+// }
 
 //-----------------------------------------------
 //-----------------------------------------------
@@ -127,3 +124,44 @@ void main() {
 //     controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
 //   }
 // }
+
+import 'Welcome/Welcome.dart';
+import './texttheme.dart';
+
+void main() => runApp(const MyApp());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'PLSP',
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+        scaffoldBackgroundColor: Colors.white,
+        textTheme: customTextTheme,
+
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            elevation: 0,
+            shape: const StadiumBorder(),
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            shape: const StadiumBorder(),
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            // foregroundColor: PrimaryColor,
+            shape: const StadiumBorder(),
+          ),
+        ),
+      ),
+      home: const Welcome(),
+    );
+  }
+}

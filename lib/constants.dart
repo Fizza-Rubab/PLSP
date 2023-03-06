@@ -1,3 +1,10 @@
+import 'package:flutter/material.dart';
+
+const PrimaryColor = Colors.redAccent;
+
+const double defaultPadding = 16.0;
+
+
 class ApiConstants {
   // static String baseUrl = 'http://kaavish2023.pythonanywhere.com';
   // http://10.0.2.2:8000
