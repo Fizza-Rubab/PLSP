@@ -16,61 +16,6 @@ import 'arrived.dart';
 import 'homepage.dart';
 import 'display.dart';
 
-// const Profile_Name = TextStyle(
-//   fontWeight: FontWeight.bold,
-//   color: Colors.black45,
-//   fontFamily: 'Poppins',
-//   fontSize: 20,
-//   letterSpacing: 0,
-// );
-//
-// const role_style = TextStyle(
-//   fontStyle: FontStyle.italic,
-//   color: Colors.black45,
-//   fontFamily: 'Poppins',
-//   fontSize: 15,
-//   letterSpacing: 0,
-// );
-//
-// const text_field = TextStyle(
-//   fontStyle: FontStyle.italic,
-//   color: Colors.black45,
-//   fontFamily: 'Poppins',
-//   fontSize: 18,
-//   letterSpacing: 0,
-//   fontWeight: FontWeight.normal,
-// );
-//
-// const not_pressed = TextStyle(
-//   color: Colors.black45,
-//   fontFamily: 'Poppins',
-//   fontSize: 18,
-//   letterSpacing: 0,
-//   fontWeight: FontWeight.normal,
-// );
-// const radio_buttons = TextStyle(
-//   color: Colors.black45,
-//   fontFamily: 'Poppins',
-//   fontSize: 15,
-//   letterSpacing: 0,
-//   fontWeight: FontWeight.normal,
-// );
-// var linkText = TextStyle(
-//   color: Color.fromRGBO(255, 0, 95, 1),
-//   fontFamily: 'Poppins',
-//   fontSize: 10,
-//   letterSpacing: 0,
-//   fontWeight: FontWeight.normal,
-//   height: 0,
-// );
-// var disclaimerText = TextStyle(
-//   color: Colors.black45,
-//   fontFamily: 'Poppins',
-//   fontSize: 10,
-//   letterSpacing: 0,
-//   fontWeight: FontWeight.normal,
-//   height: 0,
-// );
 
 // void main() {
 //   runApp(
