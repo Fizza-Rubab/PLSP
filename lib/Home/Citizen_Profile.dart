@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../constants.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class CitizenProfile extends StatelessWidget {
   CitizenProfile({super.key});
@@ -18,7 +19,7 @@ class CitizenProfile extends StatelessWidget {
           child: AppBar(
             elevation: 0.0,
             centerTitle: true,
-            title: Text("Profile",
+            title: Text(AppLocalizations.of(context)!.profile,
                 style: GoogleFonts.poppins(
                   fontSize: 24,
                   fontWeight: FontWeight.w600,
@@ -29,8 +30,14 @@ class CitizenProfile extends StatelessWidget {
             backgroundColor: Colors.transparent,
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.pin,
-              background: Stack(
-                alignment: Alignment.bottomCenter,
+              title: Text(AppLocalizations.of(context)!.profile,
+                  style: GoogleFonts.poppins(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0,
+                    color: Colors.black45,
+                  )),
+              background: Stack(alignment: Alignment.bottomCenter,
                 children: [
                   Container(
                     color: Colors.transparent,

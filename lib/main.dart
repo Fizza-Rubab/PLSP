@@ -57,12 +57,17 @@ import 'shared.dart';
 // }
 
 import 'Welcome/Welcome.dart';
-
 void main(){
   sharedPrefInit();
   runApp(Welcome());
-  }
+}
 
+// void main(){
+//   sharedPrefInit();
+//   runApp(MaterialApp(
+//       home:LogIn()))
+//       ;
+//   }
 // class MyApp extends StatelessWidget {
 //   const MyApp({super.key});
 

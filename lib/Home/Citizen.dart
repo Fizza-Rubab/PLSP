@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps/Home/Citizen_History.dart';
 import 'package:google_maps/Home/Citizen_Home.dart';
 import 'package:google_maps/Home/Citizen_Profile.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class Citizen extends StatefulWidget {
   const Citizen({super.key});
@@ -47,7 +48,7 @@ class _CitizenState extends State<Citizen> {
                 color: Colors.red.shade900,
               ),
               icon: const Icon(Icons.home_outlined),
-              label: "Home"),
+              label: AppLocalizations.of(context)!.home_icon),
           NavigationDestination(
               selectedIcon: Icon(
                 Icons.history_rounded,
@@ -55,7 +56,7 @@ class _CitizenState extends State<Citizen> {
                 color: Colors.red.shade900,
               ),
               icon: const Icon(Icons.history_rounded),
-              label: "History"),
+              label: AppLocalizations.of(context)!.history),
           NavigationDestination(
               selectedIcon: Icon(
                 Icons.person_outline_rounded,
@@ -63,7 +64,7 @@ class _CitizenState extends State<Citizen> {
                 color: Colors.red.shade900,
               ),
               icon: const Icon(Icons.person_outline_rounded),
-              label: "Profile"),
+              label: AppLocalizations.of(context)!.profile),
         ],
       ),
     );
