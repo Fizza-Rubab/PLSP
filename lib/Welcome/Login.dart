@@ -196,7 +196,7 @@ class _LoginState extends State<Login> {
                                   letterSpacing: 1.0,
                                   color: PrimaryColor),
                             ),
-                            const Icon(Icons.chevron_right_rounded)
+                            const Icon(Icons.chevron_right_rounded, color: PrimaryColor,)
                           ])),
                     ],
                   )
