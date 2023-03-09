@@ -101,7 +101,6 @@ class MyApp extends StatelessWidget {
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            // foregroundColor: PrimaryColor,
             shape: const StadiumBorder(),
           ),
         ),

@@ -10,13 +10,18 @@ class Welcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
+        body: Directionality (
+          textDirection: TextDirection.ltr,
+          child: Column(
       children: [
         Container(
             height: MediaQuery.of(context).size.height * 5 / 8,
             padding: const EdgeInsets.fromLTRB(14, 86, 14, 28),
             decoration: const BoxDecoration(
-                image: DecorationImage(image: AssetImage("assets/images/welcome-bg.png"), fit: BoxFit.cover),
+                image: DecorationImage(
+                  image: AssetImage("assets/images/welcome-bg.png"), fit: BoxFit.cover,
+                  // colorFilter: ColorFilter.mode(Colors.white12, BlendMode.overlay)
+                  ),
                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20))),
             child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
@@ -30,13 +35,13 @@ class Welcome extends StatelessWidget {
                   const Spacer(),
                   SizedBox(
                       height: 48,
-                      child: OutlinedButton(
+                      child: TextButton(
                           onPressed: () {},
-                          style: OutlinedButton.styleFrom(
-                            side: const BorderSide(width: 1.0, color: Colors.white),
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.white24
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 8, right: 8),
+                            padding: const EdgeInsets.only(left: 14, right: 8),
                             child: Text(
                               "Register",
                               style: Theme.of(context).textTheme.bodyText2,
@@ -82,27 +87,27 @@ class Welcome extends StatelessWidget {
                     const Spacer(),
                     Padding(
                       padding: const EdgeInsets.only(top: 8, bottom: 8),
-                      child: Text("Do you want to help save lives?", textAlign: TextAlign.center, style: GoogleFonts.poppins(fontSize: 19, fontWeight: FontWeight.w400, letterSpacing: 0.15, color: Colors.black45))
+                      child: Text("Do you want to help\nsave lives?", textAlign: TextAlign.center, style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w600, letterSpacing: 1.0, color: Colors.black38),)
                     ),
                     SizedBox(
                       height: 48,
                       width: double.infinity,
-                      child: OutlinedButton(
+                      child: TextButton(
                           onPressed: () {},
-                          style: OutlinedButton.styleFrom(
-                            side: const BorderSide(width: 1.0, color: PrimaryColor),
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.red.withOpacity(0.15),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.only(left: 12, right: 12),
                             child: Text(
                               "Become a Lifesaver",
-                              style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: 0.25, color: PrimaryColor),
+                              style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: 0.25, color: Colors.red.shade800),
                             ),
                           )),
                     ),
                   ],
                 )))
       ],
-    ));
+    )),);
   }
 }

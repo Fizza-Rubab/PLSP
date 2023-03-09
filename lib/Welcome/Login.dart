@@ -41,7 +41,7 @@ class _LoginState extends State<Login> {
                   ),
                   Text(
                     "Please enter your credentials to login",
-                    style: GoogleFonts.lato(fontSize: 15, fontWeight: FontWeight.w400, letterSpacing: 0.4, color: Colors.black45),
+                    style: GoogleFonts.lato(fontSize: 15, fontWeight: FontWeight.w400, letterSpacing: 0.2, color: Colors.black45),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.125),
                   Padding(
@@ -87,7 +87,9 @@ class _LoginState extends State<Login> {
                     activeColor: PrimaryColor,
                     value: rememberFlag,
                     onChanged: ((value) {
-                      setState(() {});
+                      setState(() {
+                        rememberFlag = value!;
+                      });
                     }),
                   ),
                   const Spacer(),
@@ -97,7 +99,7 @@ class _LoginState extends State<Login> {
                       TextButton(
                           // icon: Icon(Icons.chevron_right),
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Citizen_Home()));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CitizenHome()));
                           },
                           child: Row(children: [
                             Text(

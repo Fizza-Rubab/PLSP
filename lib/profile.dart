@@ -80,10 +80,7 @@ class _ProfileState extends State<Profile> {
               Icons.arrow_back,
               color: Colors.red,
             ),
-            onPressed: () => {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => LogIn()))
-            },
+            onPressed: () => {Navigator.of(context).push(MaterialPageRoute(builder: (context) => LogIn()))},
           ),
           elevation: 0,
           flexibleSpace: Padding(
