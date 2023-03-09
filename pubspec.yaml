@@ -48,6 +48,7 @@ dependencies:
   multi_language_json: ^1.2.0
   shared_preferences: ^2.0.18
   intl: ^0.17.0
+  flutter_rating_bar: ^4.0.0
 
 dev_dependencies:
   flutter_test:

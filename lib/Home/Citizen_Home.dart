@@ -39,7 +39,6 @@ class _CitizenHomeState extends State<CitizenHome> {
       });
     });
     
-    print("initState() called");
   }
   @override
   Widget build(BuildContext context) {
