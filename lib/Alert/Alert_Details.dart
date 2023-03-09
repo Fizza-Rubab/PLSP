@@ -16,14 +16,14 @@ class _Alert_DetailsState extends State<Alert_Details> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
+          backgroundColor: Colors.redAccent,
+          shadowColor: Colors.red,
           title: Text("Emergency Details",
               style: GoogleFonts.poppins(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 0,
-                color: Colors.black45,
+                color: Colors.white,
               )),
         ),
         body: Container(
