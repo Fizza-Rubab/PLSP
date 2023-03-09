@@ -3,7 +3,8 @@ import './constants.dart';
 
 InputDecoration buildInputDecoration(IconData icons, String hinttext) {
   return InputDecoration(
-    hintText: hinttext,
+    labelText: hinttext,
+    // hintText: hinttext,
     prefixIcon: Icon(icons),
     filled: true,
     fillColor: Colors.grey.shade200,
