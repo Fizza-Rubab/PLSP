@@ -31,13 +31,13 @@ class CitizenProfile extends StatelessWidget {
             backgroundColor: Colors.transparent,
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.pin,
-              title: Text("Profile",
-                  style: GoogleFonts.poppins(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 0,
-                    color: Colors.black45,
-                  )),
+              // title: Text("Profile",
+              //     style: GoogleFonts.poppins(
+              //       fontSize: 24,
+              //       fontWeight: FontWeight.w600,
+              //       letterSpacing: 0,
+              //       color: Colors.black45,
+              //     )),
               background: Stack(alignment: Alignment.bottomCenter,
                 children: [
                   Container(
@@ -74,13 +74,13 @@ class CitizenProfile extends StatelessWidget {
               ),
             ),
           ),
-          for (int i = 0; i < 10; i++)
-            SliverToBoxAdapter(
-              child: Container(
-                height: 200,
-                color: i % 2 == 0 ? Colors.grey : Colors.grey.shade300,
-              ),
-            ),
+          // for (int i = 0; i < 10; i++)
+          //   SliverToBoxAdapter(
+          //     child: Container(
+          //       height: 200,
+          //       color: i % 2 == 0 ? Colors.grey : Colors.grey.shade300,
+          //     ),
+          //   ),
         ],
       ),
     );

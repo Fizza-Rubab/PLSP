@@ -60,7 +60,7 @@ class CitizenHome extends StatelessWidget {
           children: [
             const Spacer(),
             Padding(
-              padding: const EdgeInsets.only(bottom: 14),
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * (1/32)),
               child: Text(
                 "Do you need help?",
                 textAlign: TextAlign.center,
@@ -72,10 +72,10 @@ class CitizenHome extends StatelessWidget {
                 child: Text(
                   "Press the button below to\ncontact a lifesaver",
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w700, letterSpacing: 0.2, color: Colors.black45),
+                  style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w700, letterSpacing: 0.4, color: Colors.black45, height: MediaQuery.of(context).size.height * (1/512)),
                 )),
             Padding(
-              padding: const EdgeInsets.only(top: 42, bottom: 36),
+              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * (1/10), bottom: MediaQuery.of(context).size.height * (1/10)),
               child: Container(
                 height: MediaQuery.of(context).size.width / 2 + 14,
                 width: MediaQuery.of(context).size.width / 2 + 14,
