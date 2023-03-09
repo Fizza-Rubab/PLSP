@@ -14,6 +14,7 @@ class CitizenProfile extends StatelessWidget {
         slivers: [
           SliverAppBar(
             elevation: 0.0,
+            centerTitle: true,
             title: Text("Profile",
                 style: GoogleFonts.poppins(
                   fontSize: 24,
@@ -30,13 +31,13 @@ class CitizenProfile extends StatelessWidget {
             backgroundColor: Colors.transparent,
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.pin,
-              // title: Text("Profile",
-              //     style: GoogleFonts.poppins(
-              //       fontSize: 24,
-              //       fontWeight: FontWeight.w600,
-              //       letterSpacing: 0,
-              //       color: Colors.black45,
-              //     )),
+              title: Text("Profile",
+                  style: GoogleFonts.poppins(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0,
+                    color: Colors.black45,
+                  )),
               background: Stack(alignment: Alignment.bottomCenter,
                 children: [
                   Container(

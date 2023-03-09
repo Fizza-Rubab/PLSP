@@ -78,46 +78,46 @@ import './texttheme.dart';
 
 void main(){
   sharedPrefInit();
-  runApp(const MyApp());
+  runApp(Welcome());
   }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'PLSP',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        scaffoldBackgroundColor: Colors.white,
-        textTheme: customTextTheme,
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       title: 'PLSP',
+//       theme: ThemeData(
+//         primarySwatch: Colors.red,
+//         scaffoldBackgroundColor: Colors.white,
+//         textTheme: customTextTheme,
 
-        navigationBarTheme: NavigationBarThemeData(
-          backgroundColor: Colors.red.shade50,
-          height: 64,
-          labelTextStyle: MaterialStateProperty.all(GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.red.shade900),)
-        ),
+//         navigationBarTheme: NavigationBarThemeData(
+//           backgroundColor: Colors.red.shade50,
+//           height: 64,
+//           labelTextStyle: MaterialStateProperty.all(GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.red.shade900),)
+//         ),
 
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            elevation: 0,
-            shape: const StadiumBorder(),
-          ),
-        ),
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(
-            shape: const StadiumBorder(),
-          ),
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            shape: const StadiumBorder(),
-          ),
-        ),
-      ),
-      home: const Welcome(),
-    );
-  }
-}
+//         elevatedButtonTheme: ElevatedButtonThemeData(
+//           style: ElevatedButton.styleFrom(
+//             elevation: 0,
+//             shape: const StadiumBorder(),
+//           ),
+//         ),
+//         outlinedButtonTheme: OutlinedButtonThemeData(
+//           style: OutlinedButton.styleFrom(
+//             shape: const StadiumBorder(),
+//           ),
+//         ),
+//         textButtonTheme: TextButtonThemeData(
+//           style: TextButton.styleFrom(
+//             shape: const StadiumBorder(),
+//           ),
+//         ),
+//       ),
+//       home: Welcome(),
+//     );
+//   }
+// }
