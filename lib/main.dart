@@ -16,6 +16,8 @@ import 'coming.dart';
 import 'arrived.dart';
 import 'homepage.dart';
 import 'display.dart';
+import 'shared.dart';
+
 
 
 // void main() {
@@ -74,7 +76,10 @@ import 'display.dart';
 import 'Welcome/Welcome.dart';
 import './texttheme.dart';
 
-void main() => runApp(const MyApp());
+void main(){
+  sharedPrefInit();
+  runApp(const MyApp());
+  }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
