@@ -107,7 +107,7 @@ class _LoginState extends State<Login> {
             // child: SingleChildScrollView(
             child: Form(
               key: _formkey,
-              // child: Expanded(
+              // child: Expanded(l
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -133,7 +133,6 @@ class _LoginState extends State<Login> {
                     child: TextFormField(
                       controller: email,
                       autofocus: true,
-                      style: Theme.of(context).textTheme.caption,
                       keyboardType: TextInputType.text,
                       decoration: buildInputDecoration(Icons.email_rounded,
                           AppLocalizations.of(context)!.email),

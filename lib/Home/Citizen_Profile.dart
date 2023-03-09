@@ -15,7 +15,7 @@ class CitizenProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(240),
+          preferredSize: Size.fromHeight(expandedHeight),
           child: AppBar(
             elevation: 0.0,
             centerTitle: true,
@@ -30,14 +30,15 @@ class CitizenProfile extends StatelessWidget {
             backgroundColor: Colors.transparent,
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.pin,
-              title: Text(AppLocalizations.of(context)!.profile,
-                  style: GoogleFonts.poppins(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 0,
-                    color: Colors.black45,
-                  )),
-              background: Stack(alignment: Alignment.bottomCenter,
+              // title: Text(AppLocalizations.of(context)!.profile,
+              //     style: GoogleFonts.poppins(
+              //       fontSize: 24,
+              //       fontWeight: FontWeight.w600,
+              //       letterSpacing: 0,
+              //       color: Colors.black45,
+              //     )),
+              background: Stack(
+                alignment: Alignment.bottomCenter,
                 children: [
                   Container(
                     color: Colors.transparent,
@@ -97,27 +98,43 @@ class CitizenProfile extends StatelessWidget {
                             )
                           ],
                         ))),
-                Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 6), child: infoCard(double.infinity, "Location", "53B/1, Khayaban-e-Bahria, Phase 5, DHA")),
-                Padding(padding: const EdgeInsets.symmetric(vertical: 6), child: infoCard(double.infinity, "Date of Birth", DateFormat.yMMMMd().format(DOB))),
-                Padding(padding: const EdgeInsets.symmetric(vertical: 6), child: infoCard(double.infinity, "Contact", "03222336019")),
-                const SizedBox(height: 8,),
-                Row(
-                  children: [
-                    const Spacer(),
-                    TextButton(
-                        // icon: Icon(Icons.chevron_right),
-                        onPressed: () {
-                          // Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Citizen()));
-                        },
-                        child: Row(children: [
-                          const Padding(padding: EdgeInsets.all(2), child: Icon(Icons.edit_outlined, color: PrimaryColor,),),
-                          Text(
-                            'Edit Profile',
-                            style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: 1.0, color: PrimaryColor),
-                          ),
-                        ])),
-                  ],
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                  Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: infoCard(double.infinity, "Location", "53B/1, Khayaban-e-Bahria, Phase 5, DHA")),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6), child: infoCard(double.infinity, "Date of Birth", DateFormat.yMMMMd().format(DOB))),
+                  Padding(padding: const EdgeInsets.symmetric(vertical: 6), child: infoCard(double.infinity, "Contact", "03222336019")),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    children: [
+                      const Spacer(),
+                      TextButton(
+                          // icon: Icon(Icons.chevron_right),
+                          onPressed: () {
+                            // Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Citizen()));
+                          },
+                          child: Row(children: [
+                            const Padding(
+                              padding: EdgeInsets.all(2),
+                              child: Icon(
+                                Icons.edit_outlined,
+                                color: PrimaryColor,
+                              ),
+                            ),
+                            Text(
+                              'Edit Profile',
+                              style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: 1.0, color: PrimaryColor),
+                            ),
+                          ])),
+                    ],
+                  )
+                    ],
+                  ),
                 )
               ],
             )));
