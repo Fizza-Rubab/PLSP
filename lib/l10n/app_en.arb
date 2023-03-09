@@ -1,4 +1,9 @@
 {
+    "plsp": "Pakistan Lifesavers \nProgramme",
     "language": "English",
-    "btn": "Change Language"
+    "btn": "Change Language",
+    "register":"Register",
+    "login" : "Login",
+    "welcome_caption": "Do you want to help save lives?",
+    "become_lifesaver": "Become a Lifesaver"
 }

@@ -9,7 +9,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_localizations/flutter_localizations.dart";
 
-enum LocaleMenu { itemOne, itemTwo, itemThree, itemFour }
+enum LocaleMenu { en, ur, pa, ps }
+TextDirection td = TextDirection.ltr;
+
 
 class Welcome extends StatefulWidget {
   @override
@@ -79,7 +81,7 @@ class _WelcomeContentState extends State<WelcomeContent> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Directionality(
-          textDirection: TextDirection.ltr,
+          textDirection: td,
           child: Column(
             children: [
               Container(
@@ -99,7 +101,7 @@ class _WelcomeContentState extends State<WelcomeContent> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Pakistan Lifesavers\nProgramme",
+                          AppLocalizations.of(context)!.plsp,
                           style: GoogleFonts.poppins(
                               fontSize: 36,
                               fontWeight: FontWeight.w700,
@@ -118,27 +120,32 @@ class _WelcomeContentState extends State<WelcomeContent> {
                               onSelected: (LocaleMenu item) {
                                 setState(() {
                                   selected_lang = item.name;
+                                  if (selected_lang=='ur')
+                                    td = TextDirection.rtl;
+                                  else
+                                    td = TextDirection.ltr;
                                 });
-                                // widget.setLocale(Locale.fromSubtags(languageCode: selected_lang.split(' - ')[1]));
+                                print(selected_lang);
+                                widget.setLocale(Locale.fromSubtags(languageCode: selected_lang));
                               },
                               itemBuilder: (BuildContext context) =>
                                   <PopupMenuEntry<LocaleMenu>>[
                                 const PopupMenuItem<LocaleMenu>(
-                                  value: LocaleMenu.itemOne,
+                                  value: LocaleMenu.en,
                                   child: Text('English - en'),
                                 ),
                                 const PopupMenuItem<LocaleMenu>(
-                                  value: LocaleMenu.itemTwo,
+                                  value: LocaleMenu.ur,
                                   child: Text('Urdu - ur'),
                                 ),
-                                const PopupMenuItem<LocaleMenu>(
-                                  value: LocaleMenu.itemThree,
-                                  child: Text('Pashto - ps'),
-                                ),
-                                const PopupMenuItem<LocaleMenu>(
-                                  value: LocaleMenu.itemFour,
-                                  child: Text('Panjabi - pa'),
-                                ),
+                                // const PopupMenuItem<LocaleMenu>(
+                                //   value: LocaleMenu.ps,
+                                //   child: Text('Pashto - ps'),
+                                // ),
+                                // const PopupMenuItem<LocaleMenu>(
+                                //   value: LocaleMenu.pa,
+                                //   child: Text('Panjabi - pa'),
+                                // ),
                               ],
                             ),
 
@@ -159,7 +166,7 @@ class _WelcomeContentState extends State<WelcomeContent> {
                                       padding: const EdgeInsets.only(
                                           left: 14, right: 8),
                                       child: Text(
-                                        "Register",
+                                        AppLocalizations.of(context)!.register,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyText2,
@@ -184,7 +191,7 @@ class _WelcomeContentState extends State<WelcomeContent> {
                                     padding: const EdgeInsets.only(
                                         left: 8, right: 8),
                                     child: Text(
-                                      "Login",
+                                      AppLocalizations.of(context)!.login,
                                       style:
                                           Theme.of(context).textTheme.bodyText2,
                                     ),
@@ -208,7 +215,7 @@ class _WelcomeContentState extends State<WelcomeContent> {
                           Padding(
                               padding: const EdgeInsets.only(top: 8, bottom: 8),
                               child: Text(
-                                "Do you want to help\nsave lives?",
+                                AppLocalizations.of(context)!.welcome_caption,
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.lato(
                                     fontSize: 14,
@@ -228,7 +235,7 @@ class _WelcomeContentState extends State<WelcomeContent> {
                                   padding: const EdgeInsets.only(
                                       left: 12, right: 12),
                                   child: Text(
-                                    "Become a Lifesaver",
+                                    AppLocalizations.of(context)!.become_lifesaver,
                                     style: GoogleFonts.poppins(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w600,
