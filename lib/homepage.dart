@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:google_maps/alert_details.dart';
+import 'package:google_maps/Alert/Alert_Details.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
 import "searching.dart";
@@ -192,8 +192,8 @@ class _HomePageState extends State<HomePage> {
                   Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
                   Map<String, dynamic> alert_args = new Map<String,dynamic>.from(widget.args);
                   alert_args.addAll({'latitude':position.latitude, 'longitude':position.longitude, 'timestamp':position.timestamp});
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => AlertDetails(args:alert_args)));
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //     builder: (context) => AlertDetails(args:alert_args)));
                 },
                 child: Image.asset('assets/images/call_for_help.png', height:90,),
               ),

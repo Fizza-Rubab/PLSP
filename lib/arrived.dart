@@ -45,7 +45,7 @@ class _ArrivedState extends State<Arrived> {
       child: Scaffold(
         backgroundColor: Color.fromRGBO(255, 241, 236, 1),
         appBar: AppBar(
-          iconTheme: IconThemeData(color: appbar_icon_color),
+          // iconTheme: IconThemeData(color: appbar_icon_color),
           elevation: 0,
           backgroundColor: Colors.red,
           title: const Center(

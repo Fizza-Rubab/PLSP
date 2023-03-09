@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'myheaderdrawer.dart';
 import 'towards_emergency.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps/alert_details.dart';
+import 'package:google_maps/Alert/Alert_Details.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:flutter/gestures.dart';
 
@@ -30,7 +30,7 @@ class _PostArrivalState extends State<PostArrival> {
       child: Scaffold(
         backgroundColor: Color.fromRGBO(255, 241, 236, 1),
         appBar: AppBar(
-          iconTheme: IconThemeData(color: appbar_icon_color),
+          // iconTheme: IconThemeData(color: appbar_icon_color),
           elevation: 0,
           backgroundColor: Colors.red,
           title: Center(
@@ -214,9 +214,9 @@ class _PostArrivalState extends State<PostArrival> {
       padding: EdgeInsets.fromLTRB(10, 0, 10, 20),
       child: ElevatedButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => TowardsEmergency(args:this.widget.args),
-          ));
+          // Navigator.of(context).push(MaterialPageRoute(
+            // builder: (context) => TowardsEmergency(args:this.widget.args),
+          // ));
         },
         child: Icon(icon, color: Colors.redAccent),
         style: ElevatedButton.styleFrom(
