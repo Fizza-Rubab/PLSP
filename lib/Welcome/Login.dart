@@ -107,7 +107,7 @@ class _LoginState extends State<Login> {
                               'Login',
                               style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: 1.0, color: PrimaryColor),
                             ),
-                            const Icon(Icons.chevron_right_rounded)
+                            const Icon(Icons.chevron_right_rounded, color: PrimaryColor,)
                           ])),
                     ],
                   )

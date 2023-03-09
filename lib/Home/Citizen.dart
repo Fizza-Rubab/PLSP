@@ -11,7 +11,7 @@ class Citizen extends StatefulWidget {
 }
 
 class _CitizenState extends State<Citizen> {
-  List<Widget> bodyList = const [
+  List<Widget> bodyList =  [
     CitizenHome(),
     CitizenHistory(),
     CitizenProfile(),

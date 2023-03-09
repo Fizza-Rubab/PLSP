@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:plsp/RegisterLogin/Login.dart';
@@ -8,6 +10,7 @@ import '../texttheme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import "package:flutter_localizations/flutter_localizations.dart";
+import 'package:flutter/services.dart';
 
 enum LocaleMenu { en, ur, pa, ps }
 TextDirection td = TextDirection.ltr;
@@ -26,18 +29,19 @@ class _Welcome extends State<Welcome> {
     });
   }
 
-  @override
+  
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'PLSP',
         theme: ThemeData(
+          iconTheme: const IconThemeData(color: Colors.redAccent),
           primarySwatch: Colors.red,
           scaffoldBackgroundColor: Colors.white,
           textTheme: customTextTheme,
           navigationBarTheme: NavigationBarThemeData(
               backgroundColor: Colors.red.shade50,
-              height: 64,
+              height: 72,
               labelTextStyle: MaterialStateProperty.all(
                 GoogleFonts.lato(
                     fontSize: 14,
@@ -77,6 +81,16 @@ class WelcomeContent extends StatefulWidget {
 
 class _WelcomeContentState extends State<WelcomeContent> {
   String selected_lang = 'English - en';
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   if (Platform.isAndroid) {
+  //     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+  //         systemNavigationBarColor: Colors.deepOrange,
+  //         systemNavigationBarIconBrightness: Brightness.light));
+  //   }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
