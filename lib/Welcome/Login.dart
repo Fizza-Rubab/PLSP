@@ -1,6 +1,7 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps/Home/Citizen_Home.dart';
+import '../Home/Citizen.dart';
 import '../input_design.dart';
 import '../constants.dart';
 
@@ -99,7 +100,7 @@ class _LoginState extends State<Login> {
                       TextButton(
                           // icon: Icon(Icons.chevron_right),
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CitizenHome()));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Citizen()));
                           },
                           child: Row(children: [
                             Text(

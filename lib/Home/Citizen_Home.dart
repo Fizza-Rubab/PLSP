@@ -51,22 +51,7 @@ class CitizenHome extends StatelessWidget {
             )
           ],
           ),
-      body: CitizenHomeBody(),
-    );
-  }
-}
-
-class CitizenHomeBody extends StatefulWidget {
-  const CitizenHomeBody({super.key});
-
-  @override
-  State<CitizenHomeBody> createState() => _CitizenHomeBodyState();
-}
-
-class _CitizenHomeBodyState extends State<CitizenHomeBody> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
+      body: Container(
         height: double.infinity,
         width: double.infinity,
         padding: const EdgeInsets.fromLTRB(14, 48, 14, 14),
@@ -90,7 +75,7 @@ class _CitizenHomeBodyState extends State<CitizenHomeBody> {
                   style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w700, letterSpacing: 0.2, color: Colors.black45),
                 )),
             Padding(
-              padding: const EdgeInsets.only(top: 14, bottom: 96),
+              padding: const EdgeInsets.only(top: 42, bottom: 36),
               child: Container(
                 height: MediaQuery.of(context).size.width / 2 + 14,
                 width: MediaQuery.of(context).size.width / 2 + 14,
@@ -124,8 +109,8 @@ class _CitizenHomeBodyState extends State<CitizenHomeBody> {
                 ),
               ),
             ),
-            AnimatedContainer(duration: Duration.zero)
           ],
-        ));
+        ))
+    );
   }
 }

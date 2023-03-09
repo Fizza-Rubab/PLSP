@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps/homepage.dart';
 import 'package:google_maps/post_arrival.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -87,6 +88,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
         scaffoldBackgroundColor: Colors.white,
         textTheme: customTextTheme,
+
+        navigationBarTheme: NavigationBarThemeData(
+          backgroundColor: Colors.red.shade50,
+          height: 64,
+          labelTextStyle: MaterialStateProperty.all(GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.red.shade900),)
+        ),
 
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
