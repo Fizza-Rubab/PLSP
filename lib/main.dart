@@ -18,14 +18,7 @@ import 'display.dart';
 import 'shared.dart';
 
 
-
 void main() {
   sharedPrefInit();
-  runApp(
-    MaterialApp(
-      home:
-          DisplayPage()
-      // Searching(), //Searching(),  //Coming(), //AlertDetails(), //Profile(), //Register(), // LogIn()
-    ),
-  );
+  runApp(DisplayPage());
 }
