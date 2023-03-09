@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:flutter/gestures.dart';
-import 'login.dart';
+import 'old_login.dart';
 
 const Profile_Name = TextStyle(
   fontWeight: FontWeight.bold,
@@ -80,10 +80,7 @@ class _ProfileState extends State<Profile> {
               Icons.arrow_back,
               color: Colors.red,
             ),
-            onPressed: () => {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => LogIn()))
-            },
+            onPressed: () => {Navigator.of(context).push(MaterialPageRoute(builder: (context) => LogIn()))},
           ),
           elevation: 0,
           flexibleSpace: Padding(
