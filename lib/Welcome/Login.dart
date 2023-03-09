@@ -120,7 +120,7 @@ class _LoginState extends State<Login> {
                         color: Colors.black54),
                   ),
                   Text(
-                    AppLocalizations.of(context)!.instruct,
+                    AppLocalizations.of(context)!.login_desc,
                     style: GoogleFonts.lato(
                         fontSize: 15,
                         fontWeight: FontWeight.w400,
