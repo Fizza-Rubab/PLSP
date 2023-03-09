@@ -1,9 +1,20 @@
 {
     "plsp": "Pakistan Lifesavers \nProgramme",
+    "hello": "Hello,\n",
     "language": "English",
     "btn": "Change Language",
     "register":"Register",
     "login" : "Login",
     "welcome_caption": "Do you want to help save lives?",
-    "become_lifesaver": "Become a Lifesaver"
+    "become_lifesaver": "Become a Lifesaver",
+    "welcome_back": "Welcome\nBack",
+    "login_desc": "Please enter your credentials to login",
+    "email": "Email",
+    "password": "Password",
+    "rememberme" : "Remember me?",
+    "help": "Do you need help?",
+    "instruct": "Press the button below to contact a lifesaver",
+    "home_icon": "Home",
+    "history": "History",
+    "profile": "Profile"
 }

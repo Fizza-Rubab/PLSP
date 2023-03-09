@@ -1,9 +1,15 @@
+// ignore_for_file: avoid_print
+
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:google_maps/Home/Citizen_Home.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import '../Home/Citizen.dart';
 import '../input_design.dart';
 import '../constants.dart';
+import '../shared.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -13,12 +19,81 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  late String name, email, phone;
   bool rememberFlag = false;
+  bool is_lifesaver = false;
   //TextController to read text entered in text field
+  TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController confirmpassword = TextEditingController();
   final _formkey = GlobalKey<FormState>();
+
+  Future userLogin() async {
+    final http.Response result = await http.post(
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.loginEndpoint),
+        body: {'email': email.text, 'password': password.text});
+    Map<String, dynamic> body = json.decode(result.body);
+    print(body);
+    if (body.containsKey('access')) {
+      putString('token', body['access']);
+      if (body['is_lifesaver']) {
+        putBool('is_lifesaver', body['is_lifesaver']);
+        setState(() {
+          is_lifesaver = true;
+        });
+        final http.Response ls_result = await http.get(Uri.parse(
+            ApiConstants.baseUrl +
+                ApiConstants.lifesaverEndpoint +
+                '/' +
+                body['id'].toString()));
+        Map<String, dynamic> ls_body = json.decode(ls_result.body);
+        putString('id', ls_body['id'].toString());
+        putString('first_name', ls_body['first_name']);
+        putString('last_name', ls_body['last_name']);
+        putString('date_of_birth', ls_body['date_of_birth']);
+        putString('address', ls_body['address']);
+        putString('contact_no', ls_body['contact_no']);
+        putString('cnic', ls_body['cnic']);
+        Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Citizen()));
+      } else {
+        putBool('is_lifesaver', body['is_lifesaver']);
+        setState(() {
+          is_lifesaver = false;
+        });
+        final http.Response ct_result = await http.get(Uri.parse(
+            ApiConstants.baseUrl +
+                ApiConstants.citizenEndpoint +
+                '/' +
+                body['id'].toString()));
+        Map<String, dynamic> ct_body = json.decode(ct_result.body);
+        putString('id', ct_body['id'].toString());
+        putString('first_name', ct_body['first_name']);
+        putString('last_name', ct_body['last_name']);
+        putString('date_of_birth', ct_body['date_of_birth']);
+        putString('address', ct_body['address']);
+        putString('contact_no', ct_body['contact_no']);
+        Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Citizen()));
+      }
+      // ignore: use_build_context_synchronously
+
+    }
+    else{
+      print("i m here");
+    email.clear();
+    password.clear();
+    }
+
+    // else if (body.containsKey('detail')) {
+    //   setState(() {
+    //     valid = false;
+    //   });
+    // } else {
+    //   setState(() {
+    //     valid = false;
+    //   });
+    // }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,32 +112,40 @@ class _LoginState extends State<Login> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Welcome\nBack",
-                    style: GoogleFonts.poppins(fontSize: 36, fontWeight: FontWeight.w700, letterSpacing: -0.5, color: Colors.black54),
+                    AppLocalizations.of(context)!.welcome_back,
+                    style: GoogleFonts.poppins(
+                        fontSize: 36,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: -0.5,
+                        color: Colors.black54),
                   ),
                   Text(
-                    "Please enter your credentials to login",
-                    style: GoogleFonts.lato(fontSize: 15, fontWeight: FontWeight.w400, letterSpacing: 0.2, color: Colors.black45),
+                    AppLocalizations.of(context)!.instruct,
+                    style: GoogleFonts.lato(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
+                        letterSpacing: 0.2,
+                        color: Colors.black45),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.125),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 14),
                     child: TextFormField(
+                      controller: email,
                       autofocus: true,
                       style: Theme.of(context).textTheme.caption,
                       keyboardType: TextInputType.text,
-                      decoration: buildInputDecoration(Icons.email_rounded, "Email"),
+                      decoration: buildInputDecoration(Icons.email_rounded,
+                          AppLocalizations.of(context)!.email),
                       validator: (String? value) {
                         if (value!.isEmpty) {
                           return 'Please a Enter';
                         }
-                        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
+                        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                            .hasMatch(value)) {
                           return 'Please a valid Email';
                         }
                         return null;
-                      },
-                      onSaved: (String? value) {
-                        email = value!;
                       },
                     ),
                   ),
@@ -73,7 +156,8 @@ class _LoginState extends State<Login> {
                       obscureText: true,
                       controller: password,
                       keyboardType: TextInputType.text,
-                      decoration: buildInputDecoration(Icons.key_rounded, "Password"),
+                      decoration: buildInputDecoration(Icons.key_rounded,
+                          AppLocalizations.of(context)!.password),
                       validator: (String? value) {
                         if (value!.isEmpty) {
                           return 'Please a Enter Password';
@@ -84,7 +168,8 @@ class _LoginState extends State<Login> {
                   ),
                   CheckboxListTile(
                     controlAffinity: ListTileControlAffinity.trailing,
-                    title: Text("Remember Me?", style: Theme.of(context).textTheme.caption),
+                    title: Text(AppLocalizations.of(context)!.rememberme,
+                        style: Theme.of(context).textTheme.caption),
                     activeColor: PrimaryColor,
                     value: rememberFlag,
                     onChanged: ((value) {
@@ -100,12 +185,16 @@ class _LoginState extends State<Login> {
                       TextButton(
                           // icon: Icon(Icons.chevron_right),
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Citizen()));
+                            userLogin();
                           },
                           child: Row(children: [
                             Text(
-                              'Login',
-                              style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: 1.0, color: PrimaryColor),
+                              AppLocalizations.of(context)!.login,
+                              style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 1.0,
+                                  color: PrimaryColor),
                             ),
                             const Icon(Icons.chevron_right_rounded)
                           ])),

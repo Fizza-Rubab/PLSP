@@ -74,13 +74,17 @@ import 'shared.dart';
 // }
 
 import 'Welcome/Welcome.dart';
-import './texttheme.dart';
-
 void main(){
   sharedPrefInit();
   runApp(Welcome());
-  }
+}
 
+// void main(){
+//   sharedPrefInit();
+//   runApp(MaterialApp(
+//       home:LogIn()))
+//       ;
+//   }
 // class MyApp extends StatelessWidget {
 //   const MyApp({super.key});
 

@@ -1,15 +1,45 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps/towards_emergency.dart';
+import 'package:http/http.dart';
 import '../input_design.dart';
 import '../constants.dart';
 import 'package:flutter/material.dart';
 import '../profile.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import '../shared.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class CitizenHome extends StatelessWidget {
+
+
+class CitizenHome extends StatefulWidget {
   const CitizenHome({super.key});
 
+  @override
+  State<CitizenHome> createState() => _CitizenHomeState();
+}
+
+class _CitizenHomeState extends State<CitizenHome> {
+  late SharedPreferences _prefs;
+  String first_name = '';
+  String last_name = '';
+
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferences.getInstance().then((prefs) {
+      setState(() {
+        _prefs = prefs;
+        first_name = _prefs.getString('first_name') ?? '';
+        last_name = _prefs.getString('last_name') ?? '';
+      });
+    });
+    
+    print("initState() called");
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,11 +54,11 @@ class CitizenHome extends StatelessWidget {
           ),
           title: RichText(
               text: TextSpan(
-                  text: "Hello,\n",
+                  text: AppLocalizations.of(context)!.hello,
                   style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0, color: Colors.black38, height: 1.1),
                   children: [
                 TextSpan(
-                    text: "Fizza Rubab",
+                    text: first_name + ' ' + last_name,
                     style: GoogleFonts.poppins(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
@@ -62,7 +92,7 @@ class CitizenHome extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 14),
               child: Text(
-                "Do you need help?",
+                AppLocalizations.of(context)!.help,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.lato(fontSize: 28, fontWeight: FontWeight.w900, letterSpacing: 1.5, color: PrimaryColor),
               ),
@@ -70,7 +100,7 @@ class CitizenHome extends StatelessWidget {
             Padding(
                 padding: const EdgeInsets.only(bottom: 14),
                 child: Text(
-                  "Press the button below to\ncontact a lifesaver",
+                  AppLocalizations.of(context)!.instruct,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w700, letterSpacing: 0.2, color: Colors.black45),
                 )),
@@ -113,4 +143,9 @@ class CitizenHome extends StatelessWidget {
         ))
     );
   }
+  // @override
+  // void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  //   super.debugFillProperties(properties);
+  //   properties.add(StringProperty('last_name', last_name));
+  // }
 }
