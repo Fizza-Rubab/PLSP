@@ -69,7 +69,7 @@ class _ComingState extends State<Coming> {
       child: Scaffold(
         backgroundColor: Color.fromRGBO(255, 241, 236, 1),
         appBar: AppBar(
-          iconTheme: IconThemeData(color: appbar_icon_color),
+          // iconTheme: IconThemeData(color: appbar_icon_color),
           elevation: 0,
           backgroundColor: Colors.red,
           title: Center(
@@ -244,9 +244,9 @@ class _ComingState extends State<Coming> {
       padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
       child: ElevatedButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => TowardsEmergency(args:this.widget.args),
-          ));
+          // Navigator.of(context).push(MaterialPageRoute(
+          //   builder: (context) => TowardsEmergency(args:this.widget.args),
+          // ));
         },
         child: Icon(icon, color: Colors.redAccent),
         style: ElevatedButton.styleFrom(
@@ -262,9 +262,9 @@ class _ComingState extends State<Coming> {
       padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
       child: ElevatedButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => TowardsEmergency(args: this.widget.args,),
-          ));
+          // Navigator.of(context).push(MaterialPageRoute(
+          //   builder: (context) => TowardsEmergency(args: this.widget.args,),
+          // ));
         },
         child: Text(
           "CANCEL",

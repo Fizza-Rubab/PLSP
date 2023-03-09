@@ -3,6 +3,7 @@
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps/Alert/alert_details.dart';
 import 'package:google_maps/towards_emergency.dart';
 import 'package:http/http.dart';
 import '../input_design.dart';
@@ -130,7 +131,9 @@ class _CitizenHomeState extends State<CitizenHome> {
                     backgroundColor: Colors.redAccent,
                     foregroundColor: Colors.white,
                     splashColor: Colors.orange.shade400,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Alert_Details()));
+                    },
                     child: Icon(
                       Icons.call_outlined,
                       size: MediaQuery.of(context).size.width / 4,
