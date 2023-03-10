@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../input_design.dart';
 
 class Alert_Details extends StatefulWidget {
@@ -10,8 +11,19 @@ class Alert_Details extends StatefulWidget {
 }
 
 class _Alert_DetailsState extends State<Alert_Details> {
+  
   @override
   Widget build(BuildContext context) {
+    final Set<Marker> markers = new Set();
+  markers.add(Marker( //add first marker
+    markerId: MarkerId(LatLng(24.90587, 67.3827).toString()),
+    position: LatLng(24.90587, 67.3827), //position of marker
+    infoWindow: InfoWindow( //popup info
+      title: 'My current location',
+      snippet: 'Lifesaver to come here',
+    ),
+    icon: BitmapDescriptor.defaultMarker, //Icon for Marker
+    ));
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -39,6 +51,19 @@ class _Alert_DetailsState extends State<Alert_Details> {
               Container(
                 height: MediaQuery.of(context).size.height * (1 / 4),
                 color: Colors.blue,
+                child: SizedBox(
+                                width: double.infinity,
+                                height:  (MediaQuery.of(context).size.height) / 2.3,
+                                child: GoogleMap(
+                                  initialCameraPosition: CameraPosition(
+                                    target: LatLng(24.90587, 67.3827),
+                                    zoom: 15.0,
+                                  ),
+                                  mapType: MapType.normal,
+                                  compassEnabled: true,
+                                  markers: markers,
+                                ),
+                              ),
               ),
               const Divider(
                 color: Colors.redAccent,
