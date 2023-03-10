@@ -1,15 +1,13 @@
-import 'dart:io';
+
+// ignore_for_file: library_private_types_in_public_api, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:plsp/RegisterLogin/Login.dart';
 import '../constants.dart';
 import 'Login.dart';
-import '../shared.dart';
 import '../texttheme.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
-import "package:flutter_localizations/flutter_localizations.dart";
 import 'package:flutter/services.dart';
 
 enum LocaleMenu { en, ur, pa, ps }
@@ -17,6 +15,8 @@ TextDirection td = TextDirection.ltr;
 
 
 class Welcome extends StatefulWidget {
+  const Welcome({super.key});
+
   @override
   _Welcome createState() => _Welcome();
 }
@@ -30,6 +30,7 @@ class _Welcome extends State<Welcome> {
   }
 
   
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -134,10 +135,11 @@ class _WelcomeContentState extends State<WelcomeContent> {
                               onSelected: (LocaleMenu item) {
                                 setState(() {
                                   selected_lang = item.name;
-                                  if (selected_lang=='ur')
+                                  if (selected_lang=='ur') {
                                     td = TextDirection.rtl;
-                                  else
+                                  } else {
                                     td = TextDirection.ltr;
+                                  }
                                 });
                                 print(selected_lang);
                                 widget.setLocale(Locale.fromSubtags(languageCode: selected_lang));

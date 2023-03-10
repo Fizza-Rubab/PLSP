@@ -4,14 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps/Alert/alert_details.dart';
-import 'package:google_maps/towards_emergency.dart';
-import 'package:http/http.dart';
-import '../input_design.dart';
 import '../constants.dart';
-import 'package:flutter/material.dart';
 import '../profile.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
-import '../shared.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -58,7 +53,7 @@ class _CitizenHomeState extends State<CitizenHome> {
                   style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0, color: Colors.black38, height: 1.1),
                   children: [
                 TextSpan(
-                    text: first_name + ' ' + last_name,
+                    text: '$first_name $last_name',
                     style: GoogleFonts.poppins(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
