@@ -28,7 +28,7 @@ class _AboutToReachState extends State<AboutToReach> {
   LocationData? currentLocation;
 
   startTime() async {
-    var duration = new Duration(minutes:4);
+    var duration = new Duration(seconds:1);
     return new Timer(duration, route);
   }
   route() {
@@ -52,7 +52,7 @@ class _AboutToReachState extends State<AboutToReach> {
       googleMapController.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
-            zoom: 13.5,
+            zoom: 18,
             target: LatLng(newloc.latitude!, newloc.longitude!),
           ),
         ),
@@ -104,17 +104,17 @@ class _AboutToReachState extends State<AboutToReach> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        endDrawer: Drawer(
-          child: SingleChildScrollView(
-            child: Container(
-              child: Column(
-                children: [
-                  MyDrawerList(),
-                ],
-              ),
-            ),
-          ),
-        ),
+        // endDrawer: Drawer(
+        //   child: SingleChildScrollView(
+        //     child: Container(
+        //       child: Column(
+        //         children: [
+        //           MyDrawerList(),
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // ),
         bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,
           elevation: 0,
@@ -131,9 +131,10 @@ class _AboutToReachState extends State<AboutToReach> {
         appBar: AppBar(
           iconTheme: IconThemeData(color: Color.fromRGBO(255, 160, 161, 1)),
           elevation: 0,
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.transparent,
           title: Center(
-            child: Text("Life Saver Is About To Reach"),
+            child: Text("Life Saver Is About To Reach",
+            style: TextStyle(color: Colors.redAccent),),
           ),
           leading: IconButton(
               icon: Icon(
@@ -151,10 +152,14 @@ class _AboutToReachState extends State<AboutToReach> {
                       child: Text("Loading"),
                     )
                   : GoogleMap(
+                    zoomGesturesEnabled: true, //enable Zoom in, out on map
+                      minMaxZoomPreference: MinMaxZoomPreference(10, 20),
+                      onCameraMove:(CameraPosition cameraPosition){
+                      print(cameraPosition.zoom);},
                       initialCameraPosition: CameraPosition(
                           target: LatLng(currentLocation!.latitude!,
                               currentLocation!.longitude!),
-                          zoom: 12.0),
+                          zoom: 10.0),
                       polylines: {
                         Polyline(
                           polylineId: PolylineId("route"),
@@ -193,7 +198,7 @@ class _AboutToReachState extends State<AboutToReach> {
                     height: 70,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Colors.orange,
+                      color: Colors.redAccent,
                       borderRadius: BorderRadius.all(Radius.circular(40.0)),
                     ),
                     child: Padding(
@@ -205,7 +210,7 @@ class _AboutToReachState extends State<AboutToReach> {
                           Text(
                             "Harry Potter",
                             style: TextStyle(
-                              color: Colors.black45,
+                              color: Colors.white,
                               fontFamily: "Poppins",
                               fontSize: 20,
                             ),
@@ -215,7 +220,7 @@ class _AboutToReachState extends State<AboutToReach> {
                             child: Text(
                               "+923331234567",
                               style: TextStyle(
-                                color: Colors.black45,
+                                color: Colors.white,
                                 fontFamily: "Poppins",
                                 fontSize: 15,
                               ),
@@ -237,7 +242,7 @@ class _AboutToReachState extends State<AboutToReach> {
                           width: 2,
                         ),
                         image: DecorationImage(
-                          image: AssetImage('profileicon.png'),
+                          image: NetworkImage('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGh1bWFufGVufDB8fDB8fA%3D%3D&w=1000&q=80'),
                         ),
                       ),
                     ),
@@ -299,9 +304,9 @@ class _AboutToReachState extends State<AboutToReach> {
       padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
       child: ElevatedButton(
         onPressed: () {},
-        child: Icon(icon, color: Colors.redAccent),
+        child: Icon(icon, color: Colors.white),
         style: ElevatedButton.styleFrom(
-          primary: Colors.orangeAccent,
+          primary: Colors.redAccent,
           padding: EdgeInsets.fromLTRB(20, 12, 20, 12),
         ),
       ),
@@ -316,14 +321,14 @@ class _AboutToReachState extends State<AboutToReach> {
         child: Text(
           "CANCEL",
           style: TextStyle(
-            color: Colors.redAccent,
+            color: Colors.white,
             fontFamily: 'Poppins',
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
         style: ElevatedButton.styleFrom(
-          primary: Colors.orangeAccent,
+          primary: Colors.redAccent,
           padding: EdgeInsets.fromLTRB(20, 12, 20, 12),
         ),
       ),
