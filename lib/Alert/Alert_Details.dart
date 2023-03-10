@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../input_design.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'searching.dart';
+
+
 
 class Alert_Details extends StatefulWidget {
   const Alert_Details({Key? key}) : super(key: key);
@@ -11,7 +15,25 @@ class Alert_Details extends StatefulWidget {
 }
 
 class _Alert_DetailsState extends State<Alert_Details> {
-  
+  late SharedPreferences _prefs;
+  String first_name = '';
+  String last_name = '';
+  String contact_no = '';
+
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferences.getInstance().then((prefs) {
+      setState(() {
+        _prefs = prefs;
+        first_name = _prefs.getString('first_name') ?? '';
+        last_name = _prefs.getString('last_name') ?? '';
+        contact_no = _prefs.getString('contact_no') ?? '';
+      });
+    });
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     final Set<Marker> markers = new Set();
@@ -60,7 +82,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
                   )),
                 child: SizedBox(
                                 width: double.infinity,
-                                height:  (MediaQuery.of(context).size.height) / 2.3,
+                                height:  (MediaQuery.of(context).size.height) / 2.5,
                                 child: GoogleMap(
                                   initialCameraPosition: CameraPosition(
                                     target: LatLng(24.90587, 67.3827),
@@ -87,7 +109,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
                     topRight: Radius.circular(25),
                   )),),
             
-            const SizedBox(height: 4,),
+            const SizedBox(height: 3,),
             TextField(
               maxLines: 2,
               textAlignVertical: TextAlignVertical.top,
@@ -110,7 +132,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 2.2,
                   child: TextField(
-                    controller: TextEditingController(text: "Sameer Pervez"),
+                    controller: TextEditingController(text: first_name + ' ' + last_name),
                     decoration: buildInputDecoration(Icons.person, "Name", border: const BorderRadius.only(
                     topLeft: Radius.circular(25),
                     bottomLeft: Radius.circular(25),
@@ -121,7 +143,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 2.2,
                   child: TextField(
-                    controller: TextEditingController(text: "03352395720"),
+                    controller: TextEditingController(text: contact_no),
                     decoration: buildInputDecoration(Icons.call, "Contact Number",border: const BorderRadius.only(
                     topRight: Radius.circular(25),
                     bottomRight: Radius.circular(25),
@@ -139,7 +161,9 @@ class _Alert_DetailsState extends State<Alert_Details> {
                   fixedSize: Size(MediaQuery.of(context).size.width, 30),
                   textStyle: Theme.of(context).textTheme.bodyText2,
                 ),
-                onPressed: () {},
+                onPressed: () {Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Searching(args: {"latitude":24.9059, "longitude":24.9059},)));
+          },
                 child: const Text('Launch Alert'),
               ),
             ),
