@@ -9,7 +9,7 @@ import '../towards_emergency.dart';
 import '../myheaderdrawer.dart';
 import '../Home/Citizen_Home.dart';
 import '../coming.dart';
-import '../about_to_reach.dart';
+import './about_to_reach.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,7 +36,7 @@ class _SearchingState extends State<Searching> with SingleTickerProviderStateMix
   }
 
   startTime() async {
-    var duration = const Duration(seconds: 3000);
+    var duration = const Duration(seconds: 5);
     return Timer(duration, route);
   }
 

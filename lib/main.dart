@@ -62,7 +62,7 @@ import 'citizen_feedback.dart';
 import 'Welcome/Welcome.dart';
 void main(){
   sharedPrefInit();
-  runApp(Welcome());
+  runApp(const Welcome());
 }
 
 // void main(){
