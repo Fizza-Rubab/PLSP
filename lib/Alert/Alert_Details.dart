@@ -89,7 +89,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
             
             const SizedBox(height: 4,),
             TextField(
-              maxLines: 3,
+              maxLines: 2,
               textAlignVertical: TextAlignVertical.top,
               decoration: buildInputDecoration(Icons.info, "Other Important Details (optional)", border: const BorderRadius.only(
                     bottomLeft: Radius.circular(25),

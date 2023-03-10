@@ -83,7 +83,7 @@ class _CitizenHomeState extends State<CitizenHome> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Spacer(),
+            const Spacer(flex: 2,),
             Padding(
               padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * (1/32)),
               child: Text(
@@ -99,43 +99,42 @@ class _CitizenHomeState extends State<CitizenHome> {
                   textAlign: TextAlign.center,
                   style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w700, letterSpacing: 0.4, color: Colors.black45, height: MediaQuery.of(context).size.height * (1/512)),
                 )),
-            Padding(
-              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * (1/10), bottom: MediaQuery.of(context).size.height * (1/10)),
-              child: Container(
-                height: MediaQuery.of(context).size.width / 2 + 14,
-                width: MediaQuery.of(context).size.width / 2 + 14,
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: const BorderRadius.all(Radius.circular(100)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.redAccent.withOpacity(0.3),
-                      spreadRadius: 3,
-                      blurRadius: 20,
-                      offset: const Offset(0, 0),
-                    ),
-                  ],
-                ),
-                padding: const EdgeInsets.all(14),
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.width / 2,
-                  width: MediaQuery.of(context).size.width / 2,
-                  child: FloatingActionButton(
-                    elevation: 0,
-                    backgroundColor: Colors.redAccent,
-                    foregroundColor: Colors.white,
-                    splashColor: Colors.orange.shade400,
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Alert_Details()));
-                    },
-                    child: Icon(
-                      Icons.call_outlined,
-                      size: MediaQuery.of(context).size.width / 4,
-                    ),
+                const Spacer(),
+            Container(
+              height: MediaQuery.of(context).size.width / 2 + 14,
+              width: MediaQuery.of(context).size.width / 2 + 14,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: const BorderRadius.all(Radius.circular(100)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.redAccent.withOpacity(0.3),
+                    spreadRadius: 3,
+                    blurRadius: 20,
+                    offset: const Offset(0, 0),
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.all(14),
+              child: SizedBox(
+                height: MediaQuery.of(context).size.width / 2,
+                width: MediaQuery.of(context).size.width / 2,
+                child: FloatingActionButton(
+                  elevation: 0,
+                  backgroundColor: Colors.redAccent,
+                  foregroundColor: Colors.white,
+                  splashColor: Colors.orange.shade400,
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Alert_Details()));
+                  },
+                  child: Icon(
+                    Icons.call_outlined,
+                    size: MediaQuery.of(context).size.width / 4,
                   ),
                 ),
               ),
             ),
+            const Spacer(),
           ],
         ))
     );
