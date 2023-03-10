@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -115,7 +117,7 @@ class _CitizenProfileState extends State<CitizenProfile> {
                         alignment: Alignment.center,
                         child: Column(
                           children: [
-                            Text(first_name + ' ' + last_name,
+                            Text('$first_name $last_name',
                                 style: GoogleFonts.poppins(
                                   fontSize: 24,
                                   fontWeight: FontWeight.w600,

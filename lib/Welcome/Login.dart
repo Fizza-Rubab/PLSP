@@ -1,10 +1,9 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, non_constant_identifier_names
 
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:google_maps/Home/Citizen_Home.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import '../Home/Citizen.dart';
 import '../input_design.dart';
@@ -41,10 +40,7 @@ class _LoginState extends State<Login> {
           is_lifesaver = true;
         });
         final http.Response ls_result = await http.get(Uri.parse(
-            ApiConstants.baseUrl +
-                ApiConstants.lifesaverEndpoint +
-                '/' +
-                body['id'].toString()));
+            '${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${body['id']}'));
         Map<String, dynamic> ls_body = json.decode(ls_result.body);
         putString('id', ls_body['id'].toString());
         putString('first_name', ls_body['first_name']);
@@ -61,10 +57,7 @@ class _LoginState extends State<Login> {
           is_lifesaver = false;
         });
         final http.Response ct_result = await http.get(Uri.parse(
-            ApiConstants.baseUrl +
-                ApiConstants.citizenEndpoint +
-                '/' +
-                body['id'].toString()));
+            '${ApiConstants.baseUrl}${ApiConstants.citizenEndpoint}/${body['id']}'));
         Map<String, dynamic> ct_body = json.decode(ct_result.body);
         putString('id', ct_body['id'].toString());
         putString('first_name', ct_body['first_name']);

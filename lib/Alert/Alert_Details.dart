@@ -139,7 +139,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
                   )),
                   ),
                 ),
-                SizedBox(width: 4,),
+                const SizedBox(width: 4,),
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 2.2,
                   child: TextField(
