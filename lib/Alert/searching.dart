@@ -1,7 +1,10 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../Home/Citizen.dart';
 import '../towards_emergency.dart';
 import '../myheaderdrawer.dart';
 import '../Home/Citizen_Home.dart';
@@ -11,7 +14,6 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
 class Searching extends StatefulWidget {
   final Map<String, dynamic> args;
   const Searching({Key? key, required this.args}) : super(key: key);
@@ -20,8 +22,7 @@ class Searching extends StatefulWidget {
   State<Searching> createState() => _SearchingState();
 }
 
-class _SearchingState extends State<Searching>
-    with SingleTickerProviderStateMixin {
+class _SearchingState extends State<Searching> with SingleTickerProviderStateMixin {
   late AnimationController controller;
 
   @override
@@ -30,25 +31,28 @@ class _SearchingState extends State<Searching>
     startTime();
     controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
     );
   }
+
   startTime() async {
-    var duration = new Duration(seconds: 299);
-    return new Timer(duration, route);
+    var duration = const Duration(seconds: 3000);
+    return Timer(duration, route);
   }
+
   route() {
-    Navigator.pushReplacement(context, MaterialPageRoute(
-        builder: (context) => AboutToReach(args:this.widget.args)
-    )
-    );
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AboutToReach(args: this.widget.args)));
   }
+
+  @override
   Widget build(BuildContext context) {
-    final Set<Marker> markers = new Set();
-    markers.add(Marker( //add first marker
-      markerId: MarkerId(LatLng(24.9059, 67.1383).toString()),
-      position: LatLng(24.9059, 67.1383), //position of marker
-      infoWindow: InfoWindow( //popup info
+    final Set<Marker> markers = Set();
+    markers.add(Marker(
+      //add first marker
+      markerId: MarkerId(const LatLng(24.9059, 67.1383).toString()),
+      position: const LatLng(24.9059, 67.1383), //position of marker
+      infoWindow: const InfoWindow(
+        //popup info
         title: 'Aga Khan University Hospital',
         snippet: 'Health comes first!',
       ),
@@ -58,37 +62,26 @@ class _SearchingState extends State<Searching>
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        foregroundColor: Colors.black54,
-        title: Text("Emergency Details",
-            style: GoogleFonts.poppins(
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 0,
-              color: Colors.black45,
-            )),
-      ),
-        endDrawer: Drawer(
-          child: SingleChildScrollView(
-            child: Container(
-              child: Column(
-                children: [
-                  MyHeaderDrawer(),
-                  MyDrawerList(),
-                ],
-              ),
-            ),
-          ),
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          foregroundColor: Colors.black54,
+          title: Text("Finding Lifesaver",
+              style: GoogleFonts.poppins(
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0,
+                color: Colors.black45,
+              )),
         ),
-        body: Column(
+        body: Stack(
           children: [
             SizedBox(
               width: double.infinity,
-              height: (MediaQuery.of(context).size.height) / 1.5,
+              height: double.infinity,
               child: GoogleMap(
-                initialCameraPosition: CameraPosition(
+                initialCameraPosition: const CameraPosition(
                   target: LatLng(24.9059, 67.1383),
                   zoom: 15.0,
                 ),
@@ -97,33 +90,52 @@ class _SearchingState extends State<Searching>
                 markers: markers,
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(20),
-              child: Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Searching for Lifesaver Nearby",
-                          style: GoogleFonts.poppins(
-                            color: Colors.black45,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: 120,
+                padding: const EdgeInsets.all(20),
+                decoration: const BoxDecoration(color: Colors.white,
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25))),
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Column(
+                        children: [
+                          Text(
+                                "Stay Calm",
+                                style: GoogleFonts.poppins(
+                                  color: Colors.blue.shade500,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 22,
+                                ),
+                              ),
+                              const Spacer(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                "We are finding you help",
+                                style: GoogleFonts.lato(
+                                  color: Colors.black45,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize:20,
+                                ),
+                              ),
+                              Center(
+                                child: LoadingAnimationWidget.hexagonDots(
+                                  color: Colors.redAccent,
+                                  size: 40,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        Center(
-                          child: LoadingAnimationWidget.hexagonDots(
-                            color: Colors.redAccent,
-                            size: 40,
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
@@ -134,9 +146,7 @@ class _SearchingState extends State<Searching>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              
               BottomButton_2(),
-             
             ],
           ),
         ),
@@ -144,97 +154,96 @@ class _SearchingState extends State<Searching>
     );
   }
 
-  Widget MyDrawerList() {
-    return Container(
-      padding: EdgeInsets.only(top: 10),
-      child: Column(
-        children: [],
-        // Details of life saver
-      ),
-    );
-  }
+//   Widget MyDrawerList() {
+//     return Container(
+//       padding: const EdgeInsets.only(top: 10),
+//       child: Column(
+//         children: [],
+//         // Details of life saver
+//       ),
+//     );
+//   }
 
-  Widget DrawerListItem(int id, String title, IconData icon, bool selected) {
-    return Material(
-      color: selected ? Colors.grey[300] : Colors.transparent,
-      child: InkWell(
-        onTap: () {
-          Navigator.pop(context);
-          setState(() {});
-        },
-        child: Padding(
-          padding: EdgeInsets.all(15.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: Icon(
-                  icon,
-                  size: 20,
-                  color: Colors.black,
-                ),
-              ),
-              Expanded(
-                flex: 3,
-                child: Text(
-                  title,
-                  style: TextStyle(color: Colors.black, fontSize: 16),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+//   Widget DrawerListItem(int id, String title, IconData icon, bool selected) {
+//     return Material(
+//       color: selected ? Colors.grey[300] : Colors.transparent,
+//       child: InkWell(
+//         onTap: () {
+//           Navigator.pop(context);
+//           setState(() {});
+//         },
+//         child: Padding(
+//           padding: const EdgeInsets.all(15.0),
+//           child: Row(
+//             children: [
+//               Expanded(
+//                 child: Icon(
+//                   icon,
+//                   size: 20,
+//                   color: Colors.black,
+//                 ),
+//               ),
+//               Expanded(
+//                 flex: 3,
+//                 child: Text(
+//                   title,
+//                   style: const TextStyle(color: Colors.black, fontSize: 16),
+//                 ),
+//               )
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
 
-  Widget BottomButton(IconData icon) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-      child: ElevatedButton(
-        onPressed: ()async{
-          if (icon==Icons.call)
-            launch("tel://03222336019");
-          else {
-            Uri sms = Uri.parse('sms:101022?body=your+text+here');
-            if (await launchUrl(sms)) {
-              //app opened
-            } else {
-              //app is not opened
-            }
-          }
-        },
-        child: Icon(icon, color: Colors.redAccent),
-        style: ElevatedButton.styleFrom(
-          primary: Colors.orangeAccent,
-          padding: EdgeInsets.fromLTRB(20, 12, 20, 12),
-        ),
-      ),
-    );
-  }
+//   Widget BottomButton(IconData icon) {
+//     return Padding(
+//       padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+//       child: ElevatedButton(
+//         onPressed: () async {
+//           if (icon == Icons.call)
+//             launch("tel://03222336019");
+//           else {
+//             Uri sms = Uri.parse('sms:101022?body=your+text+here');
+//             if (await launchUrl(sms)) {
+//               //app opened
+//             } else {
+//               //app is not opened
+//             }
+//           }
+//         },
+//         child: Icon(icon, color: Colors.redAccent),
+//         style: ElevatedButton.styleFrom(
+//           primary: Colors.orangeAccent,
+//           padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
+//         ),
+//       ),
+//     );
+//   }
 
   Widget BottomButton_2() {
     return Padding(
-      padding: EdgeInsets.fromLTRB(5,0,5,10),
+      padding: const EdgeInsets.fromLTRB(5, 0, 5, 10),
       child: ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => CitizenHome(),
-            ));
-          },
-          child: Text(
-            "CANCEL",
-            style: GoogleFonts.poppins(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 0,
-            ),
-          ),
-          style: ElevatedButton.styleFrom(
-            
-            primary: Colors.redAccent,
-            padding: EdgeInsets.fromLTRB(60, 12, 60, 12),
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const Citizen(),
+          ));
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.redAccent,
+          padding: const EdgeInsets.fromLTRB(60, 12, 60, 12),
+        ),
+        child: Text(
+          "Cancel",
+          style: GoogleFonts.poppins(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0,
           ),
         ),
+      ),
     );
   }
 }

@@ -59,17 +59,17 @@ import 'shared.dart';
 // }
 
 import 'Welcome/Welcome.dart';
-// void main(){
-//   sharedPrefInit();
-//   runApp(Welcome());
-// }
-
 void main(){
   sharedPrefInit();
-  runApp(MaterialApp(
-      home:AboutToReach(args: {"latitude":24.9059, "longitude":24.9059},)))
-      ;
-  }
+  runApp(Welcome());
+}
+
+// void main(){
+//   sharedPrefInit();
+//   runApp(MaterialApp(
+//       home:AboutToReach(args: {"latitude":24.9059, "longitude":24.9059},)))
+//       ;
+//   }
 // class MyApp extends StatelessWidget {
 //   const MyApp({super.key});
 
