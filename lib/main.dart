@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps/Alert/searching.dart';
+import 'package:google_maps/Alert/about_to_reach.dart';
 import 'shared.dart';
 
 
@@ -57,17 +59,17 @@ import 'shared.dart';
 // }
 
 import 'Welcome/Welcome.dart';
-void main(){
-  sharedPrefInit();
-  runApp(Welcome());
-}
-
 // void main(){
 //   sharedPrefInit();
-//   runApp(MaterialApp(
-//       home:LogIn()))
-//       ;
-//   }
+//   runApp(Welcome());
+// }
+
+void main(){
+  sharedPrefInit();
+  runApp(MaterialApp(
+      home:AboutToReach(args: {"latitude":24.9059, "longitude":24.9059},)))
+      ;
+  }
 // class MyApp extends StatelessWidget {
 //   const MyApp({super.key});
 
