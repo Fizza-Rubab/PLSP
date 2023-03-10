@@ -42,6 +42,7 @@ class _Welcome extends State<Welcome> {
           textTheme: customTextTheme,
           navigationBarTheme: NavigationBarThemeData(
               backgroundColor: Colors.red.shade50,
+              elevation: 0,
               height: 72,
               labelTextStyle: MaterialStateProperty.all(
                 GoogleFonts.lato(
