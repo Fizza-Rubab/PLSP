@@ -3,15 +3,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:google_maps/Alert/Alert_Details.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:flutter/gestures.dart';
-import 'profile.dart';
 import 'register.dart';
-import 'Alert/Alert_Details.dart';
-import 'towards_emergency.dart';
 import "homepage.dart";
-import "arrived.dart";
 import 'constants.dart';
 import 'shared.dart';
 import 'package:multi_language_json/multi_language_json.dart';

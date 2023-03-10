@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Home/Citizen.dart';
 import 'myheaderdrawer.dart';
 import 'towards_emergency.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,8 @@ class _PostArrivalState extends State<PostArrival> {
               icon: Icon(
                 Icons.arrow_back,
               ),
-              onPressed: () {}),
+              onPressed: () {Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const Citizen()));}),
         ),
         endDrawer: Drawer(
           child: SingleChildScrollView(

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'towards_emergency.dart';
 import 'myheaderdrawer.dart';
-import 'arrived.dart';
+import 'Alert/Arrival.dart';
 
 class Coming extends StatefulWidget {
   final Map<String, dynamic> args;

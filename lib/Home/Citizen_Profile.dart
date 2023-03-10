@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps/Home/Profile_Editing.dart';
 import 'package:intl/intl.dart';
 
 import '../constants.dart';
@@ -9,7 +10,7 @@ import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CitizenProfile extends StatefulWidget {
-  CitizenProfile({super.key});
+  const CitizenProfile({super.key});
 
   @override
   State<CitizenProfile> createState() => _CitizenProfileState();
@@ -130,44 +131,42 @@ class _CitizenProfileState extends State<CitizenProfile> {
                             )
                           ],
                         ))),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                    Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6),
-                        child: infoCard(double.infinity, "Location", "53B/1, Khayaban-e-Bahria, Phase 5, DHA")),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6), child: infoCard(double.infinity, "Date of Birth", DateFormat.yMMMMd().format(DOB))),
-                    Padding(padding: const EdgeInsets.symmetric(vertical: 6), child: infoCard(double.infinity, "Contact", "03222336019")),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Row(
-                      children: [
-                        const Spacer(),
-                        TextButton(
-                            // icon: Icon(Icons.chevron_right),
-                            onPressed: () {
-                              // Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Citizen()));
-                            },
-                            child: Row(children: [
-                              const Padding(
-                                padding: EdgeInsets.all(2),
-                                child: Icon(
-                                  Icons.edit_outlined,
-                                  color: PrimaryColor,
-                                ),
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                  Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: infoCard(double.infinity, "Location", "53B/1, Khayaban-e-Bahria, Phase 5, DHA")),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6), child: infoCard(double.infinity, "Date of Birth", DateFormat.yMMMMd().format(DOB))),
+                  Padding(padding: const EdgeInsets.symmetric(vertical: 6), child: infoCard(double.infinity, "Contact", "03222336019")),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    children: [
+                      const Spacer(),
+                      TextButton(
+                          // icon: Icon(Icons.chevron_right),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ProfileEditing()));
+                          },
+                          child: Row(children: [
+                            const Padding(
+                              padding: EdgeInsets.all(2),
+                              child: Icon(
+                                Icons.edit_outlined,
+                                color: PrimaryColor,
                               ),
-                              Text(
-                                'Edit Profile',
-                                style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: 1.0, color: PrimaryColor),
-                              ),
-                            ])),
-                      ],
-                    )
-                      ],
-                    ),
+                            ),
+                            Text(
+                              'Edit Profile',
+                              style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: 1.0, color: PrimaryColor),
+                            ),
+                          ])),
+                    ],
+                  )
+                    ],
                   ),
                 )
               ],

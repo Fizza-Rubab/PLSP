@@ -1,8 +1,14 @@
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
-import 'input_design.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../Home/Citizen.dart';
+import '../input_design.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class Citizen_Feedback extends StatefulWidget {
+  const Citizen_Feedback({super.key});
+
   @override
   _MyWidgetState createState() => _MyWidgetState();
 }
@@ -24,7 +30,6 @@ class _MyWidgetState extends State<Citizen_Feedback> {
     });
   }
 
-  @override
   // void dispose() {
   //   _textController.dispose();
   //   super.dispose();
@@ -37,39 +42,33 @@ class _MyWidgetState extends State<Citizen_Feedback> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
-        title: Text(
+        title: const Text(
           "Post-Emergency Form",
           style: TextStyle(fontFamily: "Poppins", color: Colors.redAccent),
         ),
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.redAccent,
           ),
           onPressed: () {},
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.settings,
-              color: Colors.redAccent,
-            ),
-          ),
-        ],
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Name of patient(s):",
-              style: TextStyle(
-                  fontStyle: FontStyle.italic, color: Colors.redAccent),
+              "Name of patient(s):", style: GoogleFonts.poppins(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0,
+                  color: Colors.redAccent,
+                ),
             ),
-            Container(
+            SizedBox(
               height: 200,
               child: ListView.builder(
                 itemCount: _entries.length + 1,
@@ -79,7 +78,7 @@ class _MyWidgetState extends State<Citizen_Feedback> {
                     return TextField(
                       controller: _textController,
                       decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.person_outline),
+                        prefixIcon: const Icon(Icons.person_outline),
                         filled: true,
                         fillColor: Colors.grey.shade200,
                         focusColor: Colors.red.shade50,
@@ -99,7 +98,7 @@ class _MyWidgetState extends State<Citizen_Feedback> {
                               style: BorderStyle.none, width: 0),
                         ),
                         suffixIcon: IconButton(
-                          icon: Icon(Icons.add),
+                          icon: const Icon(Icons.add),
                           onPressed: _addEntry,
                         ),
                       ),
@@ -109,7 +108,7 @@ class _MyWidgetState extends State<Citizen_Feedback> {
                     return ListTile(
                       title: Text(_entries[index]),
                       trailing: IconButton(
-                        icon: Icon(Icons.delete),
+                        icon: const Icon(Icons.delete),
                         onPressed: () {
                           _deleteEntry(index);
                         },
@@ -121,25 +120,29 @@ class _MyWidgetState extends State<Citizen_Feedback> {
             ),
             Text(
               "Details:",
-              style: TextStyle(
-                  fontStyle: FontStyle.italic, color: Colors.redAccent),
+              style:GoogleFonts.poppins(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0,
+                  color: Colors.redAccent,
+                ),
             ),
             TextField(
               maxLines: 2,
               decoration: buildInputDecoration(Icons.person_outline, ""),
             ),
-            Divider(
+            const Divider(
               color: Colors.redAccent,
             ),
-            Text(
+            const Text(
               "Caller Details:",
               style: TextStyle(
                   fontStyle: FontStyle.italic, color: Colors.redAccent),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Center(
+            const Center(
               child: Text(
                 "Caller: Sara Khan",
                 style: TextStyle(
@@ -148,7 +151,7 @@ class _MyWidgetState extends State<Citizen_Feedback> {
                     color: Colors.redAccent),
               ),
             ),
-            Center(
+            const Center(
               child: Text(
                 "Contact: 03332428145",
                 style: TextStyle(
@@ -157,7 +160,7 @@ class _MyWidgetState extends State<Citizen_Feedback> {
                     color: Colors.redAccent),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             TextField(
@@ -165,7 +168,7 @@ class _MyWidgetState extends State<Citizen_Feedback> {
               decoration: buildInputDecoration(
                   Icons.person_outline, "Post Emergency Details"),
             ),
-            Text(
+            const Text(
               "Rate the Life saver",
               style: TextStyle(
                   fontStyle: FontStyle.italic, color: Colors.redAccent),
@@ -177,8 +180,8 @@ class _MyWidgetState extends State<Citizen_Feedback> {
               allowHalfRating: true,
               itemCount: 5,
               itemSize: 40,
-              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-              itemBuilder: (context, _) => Icon(
+              itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+              itemBuilder: (context, _) => const Icon(
                 Icons.health_and_safety,
                 color: Colors.redAccent,
               ),
@@ -187,15 +190,22 @@ class _MyWidgetState extends State<Citizen_Feedback> {
                   _rating = rating;
                 });
               },
-            ), ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.redAccent,
-                fixedSize: Size(MediaQuery.of(context).size.width, 30),
-                textStyle: const TextStyle(
-                    fontSize: 18, fontFamily: 'Poppins', color: Colors.white),
+            ),
+            SizedBox(
+              height: 48,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.redAccent,
+                  fixedSize: Size(MediaQuery.of(context).size.width, 30),
+                  textStyle: const TextStyle(
+                      fontSize: 18, fontFamily: 'Poppins', color: Colors.white),
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const Citizen()));
+                },
+                child: const Text('Submit'),
               ),
-              onPressed: () {},
-              child: const Text('Submit'),
             ),
           ],
         ),

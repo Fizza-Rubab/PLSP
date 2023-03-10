@@ -2,16 +2,10 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../Home/Citizen.dart';
-import '../towards_emergency.dart';
-import '../myheaderdrawer.dart';
-import '../Home/Citizen_Home.dart';
-import '../coming.dart';
-import './about_to_reach.dart';
+import 'About_To_Reach.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Searching extends StatefulWidget {
@@ -41,12 +35,12 @@ class _SearchingState extends State<Searching> with SingleTickerProviderStateMix
   }
 
   route() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AboutToReach(args: this.widget.args)));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AboutToReach(args: widget.args)));
   }
 
   @override
   Widget build(BuildContext context) {
-    final Set<Marker> markers = Set();
+    final Set<Marker> markers = {};
     markers.add(Marker(
       //add first marker
       markerId: MarkerId(const LatLng(24.9059, 67.1383).toString()),

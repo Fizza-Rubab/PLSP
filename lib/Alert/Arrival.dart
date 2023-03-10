@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps/post_arrival.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'myheaderdrawer.dart';
-import 'towards_emergency.dart';
+import 'Citizen_Feedback.dart';
 
 class Arrived extends StatefulWidget {
   final Map<String, dynamic> args;
@@ -20,8 +18,8 @@ class _ArrivedState extends State<Arrived> {
 
     markers.add(Marker(
       //add first marker
-      markerId: MarkerId(LatLng(this.widget.args['latitude'], this.widget.args['longitude']).toString()),
-      position: LatLng(this.widget.args['latitude'], this.widget.args['longitude']), //position of markerconst
+      markerId: MarkerId(LatLng(widget.args['latitude'], widget.args['longitude']).toString()),
+      position: LatLng(widget.args['latitude'], widget.args['longitude']), //position of markerconst
       infoWindow: const InfoWindow(
         //popup info
         title: 'My Location',
@@ -32,8 +30,8 @@ class _ArrivedState extends State<Arrived> {
     markers.add(Marker(
     //add first marker
       //37.42681245606211, -122.08065576215935
-    markerId: MarkerId(LatLng(this.widget.args['latitude']+0.000003052, this.widget.args['longitude']-0.0000040210).toString()),
-    position: LatLng(this.widget.args['latitude']+0.000070052, this.widget.args['longitude']-0.0000050210), //position of markerconst
+    markerId: MarkerId(LatLng(widget.args['latitude']+0.000003052, widget.args['longitude']-0.0000040210).toString()),
+    position: LatLng(widget.args['latitude']+0.000070052, widget.args['longitude']-0.0000050210), //position of markerconst
     infoWindow: const InfoWindow(
     //popup info
     title: 'Lifesavers Location',
@@ -43,7 +41,7 @@ class _ArrivedState extends State<Arrived> {
     ));
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(255, 241, 236, 1),
+        backgroundColor: const Color.fromRGBO(255, 241, 236, 1),
         appBar: AppBar(
           // iconTheme: IconThemeData(color: appbar_icon_color),
           elevation: 0,
@@ -56,19 +54,9 @@ class _ArrivedState extends State<Arrived> {
                 Icons.arrow_back,
                 color: Colors.redAccent,
               ),
-              onPressed: () {}),
-        ),
-        endDrawer: Drawer(
-          child: SingleChildScrollView(
-            child: Container(
-              child: Column(
-                children: [
-                  MyHeaderDrawer(),
-                  MyDrawerList(),
-                ],
-              ),
-            ),
-          ),
+              onPressed: () {
+                
+              }),
         ),
         body: Column(
           children: [
@@ -81,9 +69,11 @@ class _ArrivedState extends State<Arrived> {
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => PostArrival(args:this.widget.args)));
+                          builder: (context) => Citizen_Feedback()));
                     },
-                    child: Text(
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                    child: const Text(
                       "Verify arrival",
                       style: TextStyle(
                         fontSize: 20.0,
@@ -92,8 +82,6 @@ class _ArrivedState extends State<Arrived> {
                         color: Colors.black,
                       ),
                     ),
-                    style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.green),
                   ),
                 ),
               ),
@@ -103,7 +91,7 @@ class _ArrivedState extends State<Arrived> {
               height: (MediaQuery.of(context).size.height) * (11.6 / 19.6),
               child: GoogleMap(
                 initialCameraPosition: CameraPosition(
-                  target: LatLng(this.widget.args['latitude'], this.widget.args['longitude']),
+                  target: LatLng(widget.args['latitude'], widget.args['longitude']),
                   zoom: 15.0,
                 ),
                 mapType: MapType.normal,
@@ -112,22 +100,22 @@ class _ArrivedState extends State<Arrived> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+              padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
               child: Stack(
                 children: [
                   Container(
                     height: 70,
                     width: double.infinity,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.redAccent,
                       borderRadius: BorderRadius.all(Radius.circular(40.0)),
                     ),
                     child: Padding(
                       padding:
-                          EdgeInsets.only(right: 30.0, top: 10.0, bottom: 10.0),
+                          const EdgeInsets.only(right: 30.0, top: 10.0, bottom: 10.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
+                        children: const [
                           Text(
                             "Sameer Pervez",
                             style: TextStyle(
@@ -159,10 +147,10 @@ class _ArrivedState extends State<Arrived> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: Color.fromRGBO(173, 78, 40, 1.0),
+                          color: const Color.fromRGBO(173, 78, 40, 1.0),
                           width: 2,
                         ),
-                        image: DecorationImage(
+                        image: const DecorationImage(
                           image: AssetImage('assets/images/profileicon.png'),
                         ),
                       ),
@@ -192,9 +180,9 @@ class _ArrivedState extends State<Arrived> {
 
   Widget MyDrawerList() {
     return Container(
-      padding: EdgeInsets.only(top: 15),
+      padding: const EdgeInsets.only(top: 15),
       child: Column(
-        children: [],
+        children: const [],
         // Details of life saver
       ),
     );
@@ -209,7 +197,7 @@ class _ArrivedState extends State<Arrived> {
           setState(() {});
         },
         child: Padding(
-          padding: EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(10.0),
           child: Row(
             children: [
               Expanded(
@@ -223,7 +211,7 @@ class _ArrivedState extends State<Arrived> {
                 flex: 3,
                 child: Text(
                   title,
-                  style: TextStyle(color: Colors.black, fontSize: 16),
+                  style: const TextStyle(color: Colors.black, fontSize: 16),
                 ),
               )
             ],
@@ -235,7 +223,7 @@ class _ArrivedState extends State<Arrived> {
 
   Widget BottomButton(IconData icon) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
       child: ElevatedButton(
        
         onPressed: ()async{
@@ -250,19 +238,19 @@ class _ArrivedState extends State<Arrived> {
             }
           }
         },
-        child: Icon(icon, color: Colors.white),
         style: ElevatedButton.styleFrom(
           
-          primary: Colors.redAccent,
-          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+          backgroundColor: Colors.redAccent,
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
         ),
+        child: Icon(icon, color: Colors.white),
       ),
     );
   }
 
   Widget BottomButton_2(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
       child: ElevatedButton(
         onPressed: () {
           showDialog(
@@ -270,7 +258,7 @@ class _ArrivedState extends State<Arrived> {
               builder: (context) {
                 return Container(
                   child: AlertDialog(
-                    title: Text(
+                    title: const Text(
                       "Please verify the arrival of lifesaver",
                       style: TextStyle(color: Colors.black45),
                     ),
@@ -279,7 +267,7 @@ class _ArrivedState extends State<Arrived> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text(
+                          child: const Text(
                             "YES",
                             style: TextStyle(color: Colors.redAccent),
                           )),
@@ -287,7 +275,7 @@ class _ArrivedState extends State<Arrived> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          child: Text(
+                          child: const Text(
                             "NO",
                             style: TextStyle(color: Colors.redAccent),
                           )),
@@ -296,7 +284,11 @@ class _ArrivedState extends State<Arrived> {
                 );
               });
         },
-        child: Text(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.redAccent,
+          padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+        ),
+        child: const Text(
           "CANCEL",
           style: TextStyle(
             color: Colors.white,
@@ -304,10 +296,6 @@ class _ArrivedState extends State<Arrived> {
             fontSize: 15,
             fontWeight: FontWeight.bold,
           ),
-        ),
-        style: ElevatedButton.styleFrom(
-          primary: Colors.redAccent,
-          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
         ),
       ),
     );
