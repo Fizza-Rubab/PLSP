@@ -24,33 +24,40 @@ class _Alert_DetailsState extends State<Alert_Details> {
     ),
     icon: BitmapDescriptor.defaultMarker, //Icon for Marker
     ));
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          backgroundColor: Colors.redAccent,
-          shadowColor: Colors.red,
-          title: Text("Emergency Details",
-              style: GoogleFonts.poppins(
-                fontSize: 24,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0,
-                color: Colors.white,
-              )),
-        ),
-        body: Container(
-          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-          child: Column(
-            children: [
-              TextField(
-                decoration: buildInputDecoration(Icons.location_on, "Location"),
-              ),
-              const Spacer(
-                flex: 1,
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height * (1 / 4),
-                color: Colors.blue,
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        foregroundColor: Colors.black54,
+        title: Text("Emergency Details",
+            style: GoogleFonts.poppins(
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0,
+              color: Colors.black45,
+            )),
+      ),
+      body: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              decoration: buildInputDecoration(Icons.location_on, "Location of Emergency",
+                  border: const BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25),
+                  )),
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height * (1 / 3.5),
+              decoration: const BoxDecoration(
+                  color: Colors.cyanAccent,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(25),
+                    bottomRight: Radius.circular(25),
+                  )),
                 child: SizedBox(
                                 width: double.infinity,
                                 height:  (MediaQuery.of(context).size.height) / 2.3,
@@ -64,59 +71,79 @@ class _Alert_DetailsState extends State<Alert_Details> {
                                   markers: markers,
                                 ),
                               ),
-              ),
-              const Divider(
-                color: Colors.redAccent,
-              ),
-              TextField(
-                decoration: buildInputDecoration(Icons.numbers, "No. of Patients"),
-              ),
-              const Spacer(
-                flex: 1,
-              ),
-              TextField(
-                decoration: buildInputDecoration(Icons.menu, "Other Details (if any)"),
-              ),
-              const Divider(
-                color: Colors.redAccent,
-              ),
-              const Text(
-                "Callers' Information:",
-                style: TextStyle(fontStyle: FontStyle.italic),
-              ),
-              const Spacer(
-                flex: 1,
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width / 2.15,
-                    child: TextField(
-                      controller: TextEditingController(text: "Default Name"),
-                      decoration: buildInputDecoration(Icons.person_outline, "Name"),
-                    ),
+            ),
+            const Spacer(flex: 2),
+            Text("Patient's Information:",
+                style: GoogleFonts.poppins(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0,
+                  color: Colors.black45,
+                )),
+            const Spacer(flex: 2,),
+            TextField(
+              decoration: buildInputDecoration(Icons.groups, "How Many Patients?", border: const BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25),
+                  )),),
+            
+            const SizedBox(height: 4,),
+            TextField(
+              maxLines: 3,
+              textAlignVertical: TextAlignVertical.top,
+              decoration: buildInputDecoration(Icons.info, "Other Important Details (optional)", border: const BorderRadius.only(
+                    bottomLeft: Radius.circular(25),
+                    bottomRight: Radius.circular(25),
+                  )),
+            ),
+            const Spacer(flex: 2),
+            Text("Caller's Information:",
+                style: GoogleFonts.poppins(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0,
+                  color: Colors.black45,
+                )),
+            const Spacer(flex: 2,),
+            Row(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 2.2,
+                  child: TextField(
+                    controller: TextEditingController(text: "Sameer Pervez"),
+                    decoration: buildInputDecoration(Icons.person, "Name", border: const BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    bottomLeft: Radius.circular(25),
+                  )),
                   ),
-                  const Spacer(),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 2.15,
-                    child: TextField(
-                      controller: TextEditingController(text: "Default Contact"),
-                      decoration: buildInputDecoration(Icons.call, "Contact No."),
-                    ),
+                ),
+                SizedBox(width: 4,),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 2.2,
+                  child: TextField(
+                    controller: TextEditingController(text: "03352395720"),
+                    decoration: buildInputDecoration(Icons.call, "Contact Number",border: const BorderRadius.only(
+                    topRight: Radius.circular(25),
+                    bottomRight: Radius.circular(25),
+                  )),
                   ),
-                ],
-              ),
-              ElevatedButton(
+                ),
+              ],
+            ),
+            const Spacer(flex: 4),
+            SizedBox(
+              height: 48,
+              child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.redAccent,
+                  backgroundColor: Colors.redAccent,
                   fixedSize: Size(MediaQuery.of(context).size.width, 30),
-                  textStyle: const TextStyle(fontSize: 18, fontFamily: 'Poppins', color: Colors.white),
+                  textStyle: Theme.of(context).textTheme.bodyText2,
                 ),
                 onPressed: () {},
                 child: const Text('Launch Alert'),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
