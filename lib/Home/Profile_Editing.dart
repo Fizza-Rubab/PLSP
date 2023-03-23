@@ -3,6 +3,8 @@ import '../input_design.dart';
 import 'Citizen.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'package:google_fonts/google_fonts.dart';
+
+
 class ProfileEditing extends StatefulWidget {
   const ProfileEditing({Key? key}) : super(key: key);
 
@@ -142,7 +144,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
-                        ), backgroundColor: Colors.grey,
+                        ), backgroundColor: Color.fromARGB(250, 245, 171, 61),
                         fixedSize:
                             Size(MediaQuery.of(context).size.width / 2.4, 30),
                         textStyle: const TextStyle(
@@ -159,7 +161,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
-                        ), backgroundColor: Colors.redAccent,
+                        ), backgroundColor: Color.fromARGB(255, 253, 129, 107),
                         fixedSize:
                             Size(MediaQuery.of(context).size.width / 2.4, 30),
                         textStyle: const TextStyle(
@@ -205,7 +207,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
               : null,
           prefixIcon: const Icon(Icons.key),
           filled: true,
-          fillColor: Colors.grey.shade200,
+          fillColor: Colors.grey.shade100,
           focusColor: Colors.red.shade50,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(50.0),

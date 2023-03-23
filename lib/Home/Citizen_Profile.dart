@@ -17,7 +17,7 @@ class CitizenProfile extends StatefulWidget {
 }
 
 class _CitizenProfileState extends State<CitizenProfile> {
-  final expandedHeight = 180.0;
+  final expandedHeight = 240.0;
 
   final collapsedHeight = 60.0;
 
@@ -28,7 +28,7 @@ class _CitizenProfileState extends State<CitizenProfile> {
   String address = '';
   String contact_no = '';
 
-  @override
+    @override
   void initState() {
     super.initState();
     SharedPreferences.getInstance().then((prefs) {
@@ -41,6 +41,7 @@ class _CitizenProfileState extends State<CitizenProfile> {
         contact_no = _prefs.getString('contact_no') ?? '';
       });
     });
+    
   }
 
   @override
@@ -79,12 +80,9 @@ class _CitizenProfileState extends State<CitizenProfile> {
                       padding: const EdgeInsets.only(bottom: 60),
                       child: Container(
                         decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(25),
-                              bottomRight: Radius.circular(25)),
+                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25), bottomRight: Radius.circular(25)),
                           image: DecorationImage(
-                            image: AssetImage("assets/images/welcome-bg.png"),
-                            fit: BoxFit.cover,
+                            image: AssetImage("assets/images/welcome-bg.png"), fit: BoxFit.cover,
                             // colorFilter: ColorFilter.mode(Colors.white12, BlendMode.overlay)
                           ),
                         ),
@@ -100,9 +98,8 @@ class _CitizenProfileState extends State<CitizenProfile> {
                         shape: CircleBorder(),
                       ),
                       child: const CircleAvatar(
-                        backgroundImage:
-                            AssetImage("assets/images/profileicon.png"),
-                        radius: 60,
+                        backgroundImage: AssetImage("assets/images/profileicon.png"),
+                        radius: 55,
                       ),
                     ),
                   ),
@@ -113,7 +110,7 @@ class _CitizenProfileState extends State<CitizenProfile> {
         ),
         body: Container(
             padding: const EdgeInsets.symmetric(horizontal: 14),
-            child: SingleChildScrollView(child: Column(
+            child: Column(
               children: [
                 Padding(
                     padding: const EdgeInsets.only(bottom: 14),
@@ -130,65 +127,50 @@ class _CitizenProfileState extends State<CitizenProfile> {
                                 )),
                             Text(
                               "Citizen",
-                              style: GoogleFonts.lato(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  letterSpacing: 0.4,
-                                  color: Colors.black38,
-                                  height: 1),
+                              style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.4, color: Colors.black38, height: 1),
                             )
                           ],
                         ))),
-                Column(
-                  children: [
-                Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 6),
-                    child: infoCard(double.infinity, "Location",
-                        "53B/1, Khayaban-e-Bahria, Phase 5, DHA")),
-                Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 6),
-                    child: infoCard(double.infinity, "Date of Birth",
-                        DateFormat.yMMMMd().format(DOB))),
-                Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 6),
-                    child: infoCard(
-                        double.infinity, "Contact", "03222336019")),
-                const SizedBox(
-                  height: 8,
-                ),
-                Row(
-                  children: [
-                    const Spacer(),
-                    TextButton(
-                        // icon: Icon(Icons.chevron_right),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  const ProfileEditing()));
-                        },
-                        child: Row(children: [
-                          const Padding(
-                            padding: EdgeInsets.all(2),
-                            child: Icon(
-                              Icons.edit_outlined,
-                              color: PrimaryColor,
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                  Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6),
+                      child: infoCard(double.infinity, "Location", "53B/1, Khayaban-e-Bahria, Phase 5, DHA")),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 6), child: infoCard(double.infinity, "Date of Birth", DateFormat.yMMMMd().format(DOB))),
+                  Padding(padding: const EdgeInsets.symmetric(vertical: 6), child: infoCard(double.infinity, "Contact", "03222336019")),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    children: [
+                      const Spacer(),
+                      TextButton(
+                          // icon: Icon(Icons.chevron_right),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ProfileEditing()));
+                          },
+                          child: Row(children: [
+                            const Padding(
+                              padding: EdgeInsets.all(2),
+                              child: Icon(
+                                Icons.edit_outlined,
+                                color: PrimaryColor,
+                              ),
                             ),
-                          ),
-                          Text(
-                            'Edit Profile',
-                            style: GoogleFonts.poppins(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 1.0,
-                                color: PrimaryColor),
-                          ),
-                        ])),
-                  ],
-                )
-                  ],
+                            Text(
+                              'Edit Profile',
+                              style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: 1.0, color: PrimaryColor),
+                            ),
+                          ])),
+                    ],
+                  )
+                    ],
+                  ),
                 )
               ],
-            ))));
+            )));
   }
 }
 
@@ -205,23 +187,15 @@ Container infoCard(double width, String title, String text) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.only(bottom: 5),
             child: Text(
               title,
-              style: GoogleFonts.lato(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0.4,
-                  color: Colors.black54),
+              style: GoogleFonts.lato(fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: 0.4, color: Colors.black54),
             ),
           ),
           Text(
             text,
-            style: GoogleFonts.lato(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 0.8,
-                color: Colors.black45),
+            style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, letterSpacing: 0.8, color: Colors.black45),
           )
         ],
       ));
