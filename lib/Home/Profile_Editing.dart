@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../input_design.dart';
 import 'Citizen.dart';
-
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import 'package:google_fonts/google_fonts.dart';
 class ProfileEditing extends StatefulWidget {
   const ProfileEditing({Key? key}) : super(key: key);
 
@@ -10,34 +11,89 @@ class ProfileEditing extends StatefulWidget {
 }
 
 class _ProfileEditingState extends State<ProfileEditing> {
+    final expandedHeight = 220.0;
+
+  final collapsedHeight = 60.0;
   bool isObscurePass = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        shadowColor: Colors.transparent,
-        title: const Text(
-          "Editing Profile",
-          style: TextStyle(fontFamily: "Poppins", color: Colors.redAccent),
-        ),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.redAccent,
-          ),
-          onPressed: () {},
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.settings,
-              color: Colors.redAccent,
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(expandedHeight),
+          child: AppBar(
+            elevation: 0.0,
+            centerTitle: true,
+            title: Text(AppLocalizations.of(context)!.profile,
+                style: GoogleFonts.poppins(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0,
+                  color: Colors.black45,
+                )),
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.transparent,
+            flexibleSpace: FlexibleSpaceBar(
+              collapseMode: CollapseMode.pin,
+              // title: Text(AppLocalizations.of(context)!.profile,
+              //     style: GoogleFonts.poppins(
+              //       fontSize: 24,
+              //       fontWeight: FontWeight.w600,
+              //       letterSpacing: 0,
+              //       color: Colors.black45,
+              //     )),
+              background: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Container(
+                    color: Colors.transparent,
+                    height: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 60),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(25),
+                              bottomRight: Radius.circular(25)),
+                          image: DecorationImage(
+                            image: AssetImage("assets/images/welcome-bg.png"),
+                            fit: BoxFit.cover,
+                            // colorFilter: ColorFilter.mode(Colors.white12, BlendMode.overlay)
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: const ShapeDecoration(
+                        color: Colors.white,
+                        shape: CircleBorder(),
+                      ),
+                      child: const CircleAvatar(
+                        backgroundImage:
+                            AssetImage("assets/images/profileicon.png"),
+                        radius: 60,
+                      ),
+                    ),
+                  ), Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(width: 4, color: Colors.white),
+                              color: Colors.redAccent),
+                          child: const Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                          ),
+                        ),
+                ],
+              ),
             ),
           ),
-        ],
-      ),
+        ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
         child: GestureDetector(
@@ -46,51 +102,6 @@ class _ProfileEditingState extends State<ProfileEditing> {
           },
           child: ListView(
             children: [
-              Center(
-                child: Stack(
-                  children: [
-                    Container(
-                      width: 130,
-                      height: 130,
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 4, color: Colors.redAccent),
-                        boxShadow: [
-                          BoxShadow(
-                            spreadRadius: 2,
-                            blurRadius: 10,
-                            color: Colors.redAccent.withOpacity(0.1),
-                          ),
-                        ],
-                        shape: BoxShape.circle,
-                        image: const DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(
-                              'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80'),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(width: 4, color: Colors.white),
-                            color: Colors.redAccent),
-                        child: const Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
               TextField(
                 controller: TextEditingController(text: "Fizza"),
                 decoration:
