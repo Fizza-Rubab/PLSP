@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Lobby</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+</head>
+<body>
+    <h1>Send Live Location!</h1>
+
+    <form id="form">
+        <label for="user_id">Enter Lifesaver ID</label>
+        <input type="text" name="user_id"/><br>
+        <label for="latitude">Enter latitude</label>
+        <input type="text" name="latitude"/><br>
+        <label for="longitude">Enter longitude</label>
+        <input type="text" name="longitude"/>
+        <input type="submit">
+    </form>
+
+    <div id="messages"></div>
+
+    <script type="text/javascript">
+        let url = `ws://${window.location.host}/ws/socket-server/`
+        console.log(url);
+        const chatSocket = new WebSocket(url)
+
+        chatSocket.onmessage = function(e){
+            let data = JSON.parse(e.data)
+            console.log('Data:', data)
+
+            if(data.type === 'chat'){
+                let messages = document.getElementById('messages')
+
+                messages.insertAdjacentHTML('beforeend', `<div>
+                                        <p>${data.message}</p>
+                                    </div>`)
+            }
+        }
+
+        let form = document.getElementById('form')
+        form.addEventListener('submit', (e)=> {
+            e.preventDefault()
+            let user_id = e.target.user_id.value
+            let latitude = e.target.latitude.value
+            let longitude = e.target.longitude.value 
+            chatSocket.send(JSON.stringify({
+                'user_id':user_id,
+                'latitude':latitude,
+                'longitude':longitude
+            }))
+            form.reset()
+        })
+
+    </script>
+</body>
+</html>

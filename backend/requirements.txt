@@ -1,0 +1,15 @@
+
+channels==3.0.4
+daphne==3.0.2
+Django==4.0.1
+djangorestframework
+markdown
+django-filter
+mysqlclient
+geopy
+django-allauth
+Pillow==9.3.0
+djangorestframework-simplejwt
+geopy
+djangochannelsrestframework
+websocket
