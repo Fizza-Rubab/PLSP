@@ -30,12 +30,12 @@ class _SearchingState extends State<Searching> with SingleTickerProviderStateMix
   }
 
   startTime() async {
-    var duration = const Duration(seconds: 5);
+    var duration = const Duration(seconds: 7);
     return Timer(duration, route);
   }
 
   route() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AboutToReach(args: widget.args)));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AboutToReach(args: {})));
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps/Alert/Arrival.dart';
 import 'shared.dart';
 
 
@@ -56,6 +57,7 @@ import 'shared.dart';
 // }
 
 import 'Welcome/Welcome.dart';
+
 void main(){
   sharedPrefInit();
   runApp(const Welcome());

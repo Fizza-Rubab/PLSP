@@ -25,15 +25,15 @@ class _AboutToReachState extends State<AboutToReach> {
   LocationData? currentLocation;
 
   startTime() async {
-    var duration = const Duration(seconds: 5);
-    return Timer(duration, route);
+    var duration = const Duration(minutes: 1);
+    return Timer(duration, endRoute);
   }
 
-  route() {
+  endRoute() {
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => Arrived(args: widget.args)));
+            builder: (context) => const Arrived(args: {"latitude":24.9059, "longitude":67.1383})));
   }
 
   void getCurrentLocation() async {
@@ -62,7 +62,7 @@ class _AboutToReachState extends State<AboutToReach> {
   void getPolyPoints() async {
     PolylinePoints polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      "AIzaSyAStNr3B-MFk6VIfCC9sIerlba-T1ek-8A",
+      "AIzaSyDDDOTa7k6dTtZ7L5IBox_NIJjTofP_iF8",
       PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
       PointLatLng(destinationLocation.latitude, destinationLocation.longitude),
     );
@@ -122,7 +122,7 @@ class _AboutToReachState extends State<AboutToReach> {
           backgroundColor: Colors.transparent,
           title: const Center(
             child: Text(
-              "Life Saver Is About To Reach",
+              "Life Saver is on his Way",
               style: TextStyle(color: Colors.redAccent),
             ),
           ),

@@ -60,19 +60,19 @@ class _LoginState extends State<Login> {
             '${ApiConstants.baseUrl}${ApiConstants.citizenEndpoint}/${body['id']}'));
         Map<String, dynamic> ct_body = json.decode(ct_result.body);
         putString('id', ct_body['id'].toString());
+        putString('email', email.text);
+        putString('password', password.text);
         putString('first_name', ct_body['first_name']);
         putString('last_name', ct_body['last_name']);
         putString('date_of_birth', ct_body['date_of_birth']);
         putString('address', ct_body['address']);
         putString('contact_no', ct_body['contact_no']);
-        Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Citizen()));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Citizen()));
       }
       // ignore: use_build_context_synchronously
 
     }
     else{
-      print("i m here");
     email.clear();
     password.clear();
     }

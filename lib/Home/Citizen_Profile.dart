@@ -136,10 +136,10 @@ class _CitizenProfileState extends State<CitizenProfile> {
                     children: [
                   Padding(
                       padding: const EdgeInsets.symmetric(vertical: 6),
-                      child: infoCard(double.infinity, "Location", "53B/1, Khayaban-e-Bahria, Phase 5, DHA")),
+                      child: infoCard(double.infinity, "Address", address)),
                   Padding(
                       padding: const EdgeInsets.symmetric(vertical: 6), child: infoCard(double.infinity, "Date of Birth", DateFormat.yMMMMd().format(DOB))),
-                  Padding(padding: const EdgeInsets.symmetric(vertical: 6), child: infoCard(double.infinity, "Contact", "03222336019")),
+                  Padding(padding: const EdgeInsets.symmetric(vertical: 6), child: infoCard(double.infinity, "Contact", contact_no)),
                   const SizedBox(
                     height: 8,
                   ),
