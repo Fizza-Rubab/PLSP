@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../Welcome/register.dart';
 // import 'package:plsp/RegisterLogin/Login.dart';
 import '../constants.dart';
 import 'Login.dart';
@@ -176,7 +177,10 @@ class _WelcomeContentState extends State<WelcomeContent> {
                             SizedBox(
                                 height: 48,
                                 child: TextButton(
-                                    onPressed: () {},
+                                    onPressed: () => (Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const Register()))),
                                     style: TextButton.styleFrom(
                                         backgroundColor: Colors.white24),
                                     child: Padding(

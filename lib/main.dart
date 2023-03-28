@@ -57,10 +57,14 @@ import 'shared.dart';
 // }
 
 import 'Welcome/Welcome.dart';
+import 'Home/Citizen.dart';
+
 
 void main(){
   sharedPrefInit();
-  runApp(const Welcome());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MaterialApp(home:const Welcome()));
+
 }
 
 // void main(){
