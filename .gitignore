@@ -45,3 +45,14 @@ app.*.map.json
 
 # Config files
 /lib/config.dart
+
+
+# Environments 
+/backend/.env 
+/backend/.venv 
+/backend/env/ 
+/backend/venv/ 
+/backend/ENV/ 
+/backend/env.bak/ 
+/backend/venv.bak/ 
+/backend/.ebextensions
