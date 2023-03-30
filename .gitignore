@@ -56,3 +56,5 @@ app.*.map.json
 /backend/env.bak/ 
 /backend/venv.bak/ 
 /backend/.ebextensions
+
+/android/app/src/main/AndroidManifest.xml
