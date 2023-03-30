@@ -4,6 +4,8 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'Arrival.dart';
+import '../config.dart';
+
 
 class AboutToReach extends StatefulWidget {
   final Map<String, dynamic> args;
@@ -62,7 +64,7 @@ class _AboutToReachState extends State<AboutToReach> {
   void getPolyPoints() async {
     PolylinePoints polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      "AIzaSyDDDOTa7k6dTtZ7L5IBox_NIJjTofP_iF8",
+      api_key,
       PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
       PointLatLng(destinationLocation.latitude, destinationLocation.longitude),
     );
