@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps/Alert/Arrival.dart';
 import 'shared.dart';
 
 
@@ -57,13 +56,12 @@ import 'shared.dart';
 // }
 
 import 'Welcome/Welcome.dart';
-import 'Home/Citizen.dart';
 
 
 void main(){
   sharedPrefInit();
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MaterialApp(home:const Welcome()));
+  runApp(const MaterialApp(home:Welcome()));
 
 }
 
