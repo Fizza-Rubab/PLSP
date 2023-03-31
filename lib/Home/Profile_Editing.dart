@@ -4,6 +4,12 @@ import 'Citizen.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../shared.dart';
+import '../constants.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+
 
 class ProfileEditing extends StatefulWidget {
   const ProfileEditing({Key? key}) : super(key: key);
@@ -14,37 +20,66 @@ class ProfileEditing extends StatefulWidget {
 
 class _ProfileEditingState extends State<ProfileEditing> {
   final expandedHeight = 220.0;
-
   final collapsedHeight = 60.0;
   bool isObscurePass = true;
+  String DOB = '2001-02-12';
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController first_name = TextEditingController();
+  TextEditingController last_name = TextEditingController();
+  TextEditingController address = TextEditingController();
+  TextEditingController contact_no = TextEditingController();
 
 
-  late SharedPreferences _prefs;
-  DateTime DOB = DateTime.parse("2021-01-01");
-  String first_name = '';
-  String last_name = '';
-  String address = '';
-  String contact_no = '';
-  String email = '';
-  String password = '';
+  Future<void> _loadProfileData() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String fn = prefs.getString('first_name') ?? '';
+  String ln = prefs.getString('last_name') ?? '';
+  String add = prefs.getString('address') ?? '';
+  String cont = prefs.getString('contact_no') ?? '';
+  String dob = prefs.getString('date_of_birth') ?? '';
+  setState(() {
+    first_name.text = fn;
+    last_name.text = ln;
+    address.text = add;
+    contact_no.text = cont;
+    DOB = dob;
+  });
+  }
 
-
-    @override
+  @override
   void initState() {
     super.initState();
-    SharedPreferences.getInstance().then((prefs) {
-      setState(() {
-        _prefs = prefs;
-        first_name = _prefs.getString('first_name') ?? '';
-        last_name = _prefs.getString('last_name') ?? '';
-        address = _prefs.getString('address') ?? '';
-        DOB = DateTime.parse(_prefs.getString('date_of_birth') ?? '');
-        contact_no = _prefs.getString('contact_no') ?? '';
-        email = _prefs.getString('email') ?? '';
-        password = _prefs.getString('password') ?? '';
-      });
-    });
-    
+    _loadProfileData();
+  }
+
+
+  Future _updateProfileData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String id = prefs.getString('id') ?? '';
+    print(ApiConstants.baseUrl + ApiConstants.citizenEndpoint + '/' + id);
+    final http.Response result = await http.put(
+    Uri.parse(ApiConstants.baseUrl + ApiConstants.citizenEndpoint + '/' + id),
+    body: {
+          "first_name": first_name.text,
+          "last_name": last_name.text,
+          "date_of_birth": DOB,
+          "address": address.text,
+          "contact_no": contact_no.text
+      }
+    );
+    if (result.statusCode == 200) {
+      Map<String, dynamic> res_body = json.decode(result.body);
+        putString('first_name', res_body['first_name']);
+        putString('last_name', res_body['last_name']);
+        putString('date_of_birth', res_body['date_of_birth']);
+        putString('address', res_body['address']);
+        putString('contact_no', res_body['contact_no']);
+        Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Citizen()));
+    }
+    else {
+      throw Exception('Failed to update.');
+    }
   }
 
 
@@ -130,44 +165,65 @@ class _ProfileEditingState extends State<ProfileEditing> {
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-        child: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
+        child: Form(
+          key: _formKey,
           child: ListView(
             children: [
-              TextField(
-                controller: TextEditingController(text: first_name),
+              TextFormField(
+                controller: first_name,
                 decoration:
                     buildInputDecoration(Icons.person_outline, "First Name"),
+                validator: (value) {
+                  if (value != null && value.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(
                 height: 10,
               ),
-              TextField(
-                controller: TextEditingController(text: last_name),
+              TextFormField(
+                controller: last_name,
                 decoration:
                     buildInputDecoration(Icons.person_outline, "Last Name"),
+                validator: (value) {
+                  if (value != null && value.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(
                 height: 10,
               ),
-              TextField(
-                controller: TextEditingController(
-                    text: address),
+              TextFormField(
+                controller: address,
                 decoration: buildInputDecoration(Icons.location_on, "Address"),
+                validator: (value) {
+                  if (value != null && value.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(
                 height: 10,
               ),
-              TextField(
-                controller: TextEditingController(text: contact_no),
+              TextFormField(
+                controller: contact_no,
                 decoration: buildInputDecoration(Icons.call, "Contact"),
+                validator: (value) {
+                  if (value != null && value.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(
                 height: 10,
               ),
-              buildTextField("Password", password, true),
+              // buildTextField("Password", password, true),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -186,7 +242,11 @@ class _ProfileEditingState extends State<ProfileEditing> {
                             fontFamily: 'Poppins',
                             color: Colors.white),
                       ),
-                      onPressed: () {},
+                      onPressed: (){
+                        if (_formKey.currentState!.validate()) {
+                          _updateProfileData();
+                        }
+                      },
                       child: Text(
                         'Save',
                         style: GoogleFonts.poppins(
