@@ -20,6 +20,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   bool rememberFlag = false;
   bool is_lifesaver = false;
+  bool loginSuccess = true;
   //TextController to read text entered in text field
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -27,9 +28,8 @@ class _LoginState extends State<Login> {
   final _formkey = GlobalKey<FormState>();
 
   Future userLogin() async {
-    final http.Response result = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.loginEndpoint),
-        body: {'email': email.text, 'password': password.text});
+    final http.Response result =
+        await http.post(Uri.parse(ApiConstants.baseUrl + ApiConstants.loginEndpoint), body: {'email': email.text, 'password': password.text});
     Map<String, dynamic> body = json.decode(result.body);
     print(body);
     if (body.containsKey('access')) {
@@ -39,8 +39,7 @@ class _LoginState extends State<Login> {
         setState(() {
           is_lifesaver = true;
         });
-        final http.Response ls_result = await http.get(Uri.parse(
-            '${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${body['id']}'));
+        final http.Response ls_result = await http.get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${body['id']}'));
         Map<String, dynamic> ls_body = json.decode(ls_result.body);
         putString('id', ls_body['id'].toString());
         putString('first_name', ls_body['first_name']);
@@ -49,15 +48,13 @@ class _LoginState extends State<Login> {
         putString('address', ls_body['address']);
         putString('contact_no', ls_body['contact_no']);
         putString('cnic', ls_body['cnic']);
-        Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Citizen()));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Citizen()));
       } else {
         putBool('is_lifesaver', body['is_lifesaver']);
         setState(() {
           is_lifesaver = false;
         });
-        final http.Response ct_result = await http.get(Uri.parse(
-            '${ApiConstants.baseUrl}${ApiConstants.citizenEndpoint}/${body['id']}'));
+        final http.Response ct_result = await http.get(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.citizenEndpoint}/${body['id']}'));
         Map<String, dynamic> ct_body = json.decode(ct_result.body);
         putString('id', ct_body['id'].toString());
         putString('email', email.text);
@@ -71,10 +68,11 @@ class _LoginState extends State<Login> {
       }
       // ignore: use_build_context_synchronously
 
-    }
-    else{
-    email.clear();
-    password.clear();
+    } else {
+      loginSuccess = false;
+      setState(() {
+        
+      });
     }
 
     // else if (body.containsKey('detail')) {
@@ -106,19 +104,11 @@ class _LoginState extends State<Login> {
                 children: [
                   Text(
                     AppLocalizations.of(context)!.welcome_back,
-                    style: GoogleFonts.poppins(
-                        fontSize: 36,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: -0.5,
-                        color: Colors.black54),
+                    style: GoogleFonts.poppins(fontSize: 36, fontWeight: FontWeight.w700, letterSpacing: -0.5, color: Colors.black54),
                   ),
                   Text(
                     AppLocalizations.of(context)!.login_desc,
-                    style: GoogleFonts.lato(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: 0.2,
-                        color: Colors.black45),
+                    style: GoogleFonts.lato(fontSize: 15, fontWeight: FontWeight.w400, letterSpacing: 0.2, color: Colors.black45),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.125),
                   Padding(
@@ -127,15 +117,13 @@ class _LoginState extends State<Login> {
                       controller: email,
                       autofocus: true,
                       keyboardType: TextInputType.text,
-                      decoration: buildInputDecoration(Icons.email_rounded,
-                          AppLocalizations.of(context)!.email),
+                      decoration: buildInputDecoration(Icons.email_rounded, AppLocalizations.of(context)!.email),
                       validator: (String? value) {
                         if (value!.isEmpty) {
-                          return 'Please a Enter';
+                          return 'Please enter your email';
                         }
-                        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
-                            .hasMatch(value)) {
-                          return 'Please a valid Email';
+                        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
+                          return 'Email is invalid';
                         }
                         return null;
                       },
@@ -148,11 +136,13 @@ class _LoginState extends State<Login> {
                       obscureText: true,
                       controller: password,
                       keyboardType: TextInputType.text,
-                      decoration: buildInputDecoration(Icons.key_rounded,
-                          AppLocalizations.of(context)!.password),
+                      decoration: buildInputDecoration(Icons.key_rounded, AppLocalizations.of(context)!.password),
                       validator: (String? value) {
                         if (value!.isEmpty) {
-                          return 'Please a Enter Password';
+                          return 'Please enter your password';
+                        }
+                        else if(!loginSuccess) {
+                          return 'Email or password is incorrect';
                         }
                         return null;
                       },
@@ -160,8 +150,7 @@ class _LoginState extends State<Login> {
                   ),
                   CheckboxListTile(
                     controlAffinity: ListTileControlAffinity.trailing,
-                    title: Text(AppLocalizations.of(context)!.rememberme,
-                        style: Theme.of(context).textTheme.caption),
+                    title: Text(AppLocalizations.of(context)!.rememberme, style: Theme.of(context).textTheme.caption),
                     activeColor: PrimaryColor,
                     value: rememberFlag,
                     onChanged: ((value) {
@@ -177,18 +166,21 @@ class _LoginState extends State<Login> {
                       TextButton(
                           // icon: Icon(Icons.chevron_right),
                           onPressed: () {
-                            userLogin();
+                            if (_formkey.currentState!.validate()) {
+                              // If the form is valid, display a snackbar. In the real world,
+                              // you'd often call a server or save the information in a database.
+                              userLogin();
+                            }
                           },
                           child: Row(children: [
                             Text(
                               AppLocalizations.of(context)!.login,
-                              style: GoogleFonts.poppins(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                  letterSpacing: 1.0,
-                                  color: PrimaryColor),
+                              style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: 1.0, color: PrimaryColor),
                             ),
-                            const Icon(Icons.chevron_right_rounded, color: PrimaryColor,)
+                            const Icon(
+                              Icons.chevron_right_rounded,
+                              color: PrimaryColor,
+                            )
                           ])),
                     ],
                   )
