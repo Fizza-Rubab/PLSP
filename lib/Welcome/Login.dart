@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print, non_constant_identifier_names
 
 import 'package:google_fonts/google_fonts.dart';
+import '../Lifesaver/Lifesaver.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -47,8 +48,7 @@ class _LoginState extends State<Login> {
         putString('date_of_birth', ls_body['date_of_birth']);
         putString('address', ls_body['address']);
         putString('contact_no', ls_body['contact_no']);
-        putString('cnic', ls_body['cnic']);
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Citizen()));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Lifesaver()));
       } else {
         putBool('is_lifesaver', body['is_lifesaver']);
         setState(() {

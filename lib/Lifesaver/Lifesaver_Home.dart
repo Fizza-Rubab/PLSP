@@ -14,12 +14,12 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 
 const double padding_val = 30; 
 
-class LifeSaverMain extends StatefulWidget {
-  const LifeSaverMain({super.key});
+class LifesaverHome extends StatefulWidget {
+  const LifesaverHome({super.key});
   
 
   @override
-  State<LifeSaverMain> createState() => _LifeSaverMainState();
+  State<LifesaverHome> createState() => _LifesaverHomeState();
 }
 List<IconData> icons = [  Icons.monitor_heart,  
 Icons.notes,  
@@ -35,12 +35,12 @@ List<String> titles = [
   "Helpline",
   "Others"
 ]; 
-class _LifeSaverMainState extends State<LifeSaverMain> {
+class _LifesaverHomeState extends State<LifesaverHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       
-      appBar: MyAppBar("Hello ", "Shamsa"),
+      appBar: MyAppBar("Hello\n", "Shamsa Hafeez"),
    
     
       body: Column  (

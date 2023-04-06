@@ -60,8 +60,8 @@ import 'shared.dart';
 
 import 'Welcome/Welcome.dart';
 import 'Home/Citizen.dart';
-import 'Lifesaver/mainscreen_ls.dart'; 
-import 'Lifesaver/lifesaver_history.dart'; 
+import 'Lifesaver/Lifesaver_Home.dart'; 
+import 'Lifesaver/Lifesaver_History.dart'; 
 
 void main(){
   sharedPrefInit();

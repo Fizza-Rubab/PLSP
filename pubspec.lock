@@ -7,12 +7,13 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.9.0"
+    version: "2.10.0"
   awesome_dialog:
     dependency: "direct main"
     description:
       name: awesome_dialog
-      url: "https://pub.dartlang.org"
+      sha256: ac08268b991f228fc6b8880b68ec030d2941bcc8df8b6a6551fb79f2bd36b7da
+      url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
   boolean_selector:
@@ -214,7 +215,8 @@ packages:
     dependency: transitive
     description:
       name: graphs
-      url: "https://pub.dartlang.org"
+      sha256: f9e130f3259f52d26f0cfc0e964513796dafed572fa52e45d2f8d6ca14db39b2
+      url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
   http:
@@ -256,7 +258,8 @@ packages:
     dependency: "direct main"
     description:
       name: lite_rolling_switch
-      url: "https://pub.dartlang.org"
+      sha256: "79dbd6a7907234b626ca2b0d3bab90a1de8cf9ca930420c1b4b68d0eb7374076"
+      url: "https://pub.dev"
     source: hosted
     version: "0.1.1"
   loading_animation_widget:
@@ -389,7 +392,8 @@ packages:
     dependency: transitive
     description:
       name: rive
-      url: "https://pub.dartlang.org"
+      sha256: "22e3755b75f4ea4492d2fecf4fc2acf1c8d0073df39781d290a20cbfe74c3760"
+      url: "https://pub.dev"
     source: hosted
     version: "0.9.1"
   rxdart:
