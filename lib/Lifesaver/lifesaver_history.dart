@@ -33,14 +33,14 @@ Row DetailsAdded(String title, String content) {
   );
 }
 
-class LifeSaverHistory extends StatefulWidget {
-  const LifeSaverHistory({Key? key}) : super(key: key);
+class LifesaverHistory extends StatefulWidget {
+  const LifesaverHistory({Key? key}) : super(key: key);
 
   @override
-  _LifeSaverHistoryState createState() => _LifeSaverHistoryState();
+  _LifesaverHistoryState createState() => _LifesaverHistoryState();
 }
 
-class _LifeSaverHistoryState extends State<LifeSaverHistory> {
+class _LifesaverHistoryState extends State<LifesaverHistory> {
   List names = [
     "Shamsa Hafeez",
     "Ruhama Naeem",
