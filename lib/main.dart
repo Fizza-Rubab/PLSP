@@ -66,7 +66,7 @@ import 'Lifesaver/lifesaver_history.dart';
 void main(){
   sharedPrefInit();
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MaterialApp(home:  LifeSaverHistory(),),); // Welcome 
+  runApp(const MaterialApp(home:Welcome()));
 
 }
 
