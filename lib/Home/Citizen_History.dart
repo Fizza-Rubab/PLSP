@@ -41,11 +41,13 @@ class _CitizenHistoryState extends State<CitizenHistory> {
             )),
       ),
       body: ListView.builder(
+
         itemCount: 4,
         shrinkWrap: true,
         itemBuilder: (BuildContext context, int index) => Container(
           width: MediaQuery.of(context).size.width,
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+      
           child: Card(
             elevation: 2.0,
             color: Colors.red.shade50,
@@ -57,11 +59,6 @@ class _CitizenHistoryState extends State<CitizenHistory> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 5,
               padding: const EdgeInsets.only(left: 14.0, right: 14.0, bottom: 12.0),
-              // child: Row(
-              //   mainAxisAlignment: MainAxisAlignment.start,
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   children: [
-              //     Expanded(
               child: Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +73,9 @@ class _CitizenHistoryState extends State<CitizenHistory> {
                         const Spacer(),
                         TextButton(
                             // icon: Icon(Icons.chevron_right),
-                            onPressed: () {},
+                            onPressed: () {
+
+                            },
                             child: Row(children: [
                               Text(
                                 "Details",
@@ -87,53 +86,19 @@ class _CitizenHistoryState extends State<CitizenHistory> {
                                 color: PrimaryColor,
                               )
                             ])),
-                        // Container(
-                        //     alignment: Alignment.topRight,
-                        //     padding: const EdgeInsets.symmetric(
-                        //         horizontal: 5.0, vertical: 5.0),
-                        //     child: TextButton(
-                        //       onPressed: () {},
-                        //       style: ElevatedButton.styleFrom(
-                        //         // side: const BorderSide(
-                        //         //   width: 2.0,
-                        //         //   // color: Colors.redAccent,
-                        //         // ),
-                        //         // primary: Colors.white,
-                        //         shape: RoundedRectangleBorder(
-                        //           borderRadius: BorderRadius.circular(20.0),
-                        //         ),
-                        //       ),
-                        //       child: const Text(
-                        //         "Details",
-                        //         style: TextStyle(
-                        //           color: Colors.redAccent,
-                        //           fontWeight: FontWeight.bold,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
+                       
                       ],
                     ),
                     Text(
                       details[index],
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.lato(
-                        letterSpacing: 0,
-                        color: Colors.black45,
-                        fontSize: 14.0,
-                      ),
+                      style: generalfontStyle,
                     ),
                     const Spacer(),
                     Text(
                       date_time[index],
-                      style: const TextStyle(
-                        fontStyle: FontStyle.italic,
-                        letterSpacing: -0.5,
-                        fontFamily: 'Poppins',
-                        color: Colors.black45,
-                        fontSize: 12.0,
-                      ),
+                      style: generalfontStyle
                     ),
                     const SizedBox(
                       height: 5.0,

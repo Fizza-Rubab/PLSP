@@ -1,6 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 const PrimaryColor = Colors.redAccent;
+
+
+
+var titleFontStyle = GoogleFonts.poppins(fontSize: 20, 
+                fontWeight: FontWeight.bold, 
+                letterSpacing: 0, 
+                color: Colors.black); 
+
+var generalfontStyle = GoogleFonts.poppins(fontSize: 14, 
+                fontWeight: FontWeight.w500, 
+                letterSpacing: 0, 
+                color: Colors.black38); 
 
 const double defaultPadding = 16.0;
 
