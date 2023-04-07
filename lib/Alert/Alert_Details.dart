@@ -38,7 +38,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
   Widget build(BuildContext context) {
     final Set<Marker> markers = new Set();
   markers.add(Marker( //add first marker
-    markerId: MarkerId(LatLng(24.90587, 67.3827).toString()),
+    markerId: MarkerId(LatLng(24.8918, 67.0731).toString()),
     position: LatLng(24.90587, 67.3827), //position of marker
     infoWindow: InfoWindow( //popup info
       title: 'My current location',
@@ -73,9 +73,9 @@ class _Alert_DetailsState extends State<Alert_Details> {
                   )),
             ),
             Container(
-              height: MediaQuery.of(context).size.height * (1 / 3.5),
-              decoration: const BoxDecoration(
-                  color: Colors.cyanAccent,
+              height: MediaQuery.of(context).size.height * (1 / 4),
+              decoration: BoxDecoration(
+                  color: Colors.red.shade100,
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(25),
                     bottomRight: Radius.circular(25),
@@ -152,19 +152,22 @@ class _Alert_DetailsState extends State<Alert_Details> {
                 ),
               ],
             ),
-            const Spacer(flex: 4),
-            SizedBox(
-              height: 48,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.redAccent,
-                  fixedSize: Size(MediaQuery.of(context).size.width, 30),
-                  textStyle: Theme.of(context).textTheme.bodyText2,
+            const Spacer(flex: 6),
+            Container(
+              margin: const EdgeInsets.only(bottom: 20.0),
+              child: SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.redAccent,
+                    fixedSize: Size(MediaQuery.of(context).size.width, 30),
+                    textStyle: Theme.of(context).textTheme.bodyText2,
+                  ),
+                  onPressed: () {Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => Searching(args: {"latitude":24.9059, "longitude":24.9059},)));
+                      },
+                  child: const Text('Launch Alert'),
                 ),
-                onPressed: () {Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Searching(args: {"latitude":24.9059, "longitude":24.9059},)));
-          },
-                child: const Text('Launch Alert'),
               ),
             ),
           ],

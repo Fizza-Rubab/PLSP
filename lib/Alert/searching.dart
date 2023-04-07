@@ -30,7 +30,7 @@ class _SearchingState extends State<Searching> with SingleTickerProviderStateMix
   }
 
   startTime() async {
-    var duration = const Duration(seconds: 7);
+    var duration = const Duration(seconds: 20);
     return Timer(duration, route);
   }
 

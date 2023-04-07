@@ -18,7 +18,7 @@ class _CitizenState extends State<Citizen> {
     CitizenProfile(),
   ];
   PageController _pageController = PageController();
-  int index = 1; // To change to 0 
+  int index = 0; // To change to 0 
 
   @override
   Widget build(BuildContext context) {

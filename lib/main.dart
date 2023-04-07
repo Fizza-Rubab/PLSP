@@ -66,7 +66,9 @@ import 'Lifesaver/Lifesaver_History.dart';
 void main(){
   sharedPrefInit();
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MaterialApp(home:LifeSaverMain()));
+  // runApp(const MaterialApp(home:Arrived(args:{"latitude":24.9059, "longitude":67.1383})));
+  runApp(const MaterialApp(home: Welcome()));
+
 
 }
 
