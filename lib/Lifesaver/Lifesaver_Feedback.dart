@@ -88,6 +88,7 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                 Text(
                   'Yes',
                   style: GoogleFonts.poppins(
+                    fontSize: 16,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0,
                     color: Colors.grey.shade800,
@@ -105,6 +106,7 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                 ),
                 Text('No',
                 style: GoogleFonts.poppins(
+                  fontSize: 16,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0,
                     color: Colors.grey.shade800,
@@ -135,6 +137,7 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                 ),
                 Text('CPR',
                 style: GoogleFonts.poppins(
+                  fontSize: 16,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0,
                     color: Colors.grey.shade800,
@@ -150,7 +153,9 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                   activeColor: Colors.redAccent,
                 ),
                 Text('Bleeding Control',
+                
                 style: GoogleFonts.poppins(
+                  fontSize: 16,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0,
                     color: Colors.grey.shade800,
@@ -167,6 +172,7 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                 ),
                 Text('Both',
                 style: GoogleFonts.poppins(
+                  fontSize: 16,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0,
                     color: Colors.grey.shade800,
@@ -198,6 +204,7 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                 ),
                 Text('Yes',
                 style: GoogleFonts.poppins(
+                  fontSize: 16,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0,
                     color: Colors.grey.shade800,
@@ -215,6 +222,7 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                 ),
                 Text('No',
                 style: GoogleFonts.poppins(
+                  fontSize: 16,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0,
                     color: Colors.grey.shade800,
