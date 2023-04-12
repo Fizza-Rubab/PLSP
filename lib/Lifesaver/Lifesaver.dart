@@ -84,11 +84,13 @@ class _LifesaverState extends State<Lifesaver> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(seconds: 20), () {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) => CustomAlertDialog(),
-      );
+    Future.delayed(Duration(seconds: 30), () {
+      // showDialog(
+      //   context: context,
+      //   builder: (BuildContext context) => CustomAlertDialog(),
+      // );
+      Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => RedirectDestination()));
   });
  
   }
