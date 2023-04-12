@@ -4,20 +4,20 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'Arrival.dart';
+import '../Alert/Arrival.dart';
 import '../config.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 
-class AboutToReach extends StatefulWidget {
+class MapScreen extends StatefulWidget {
   final Map<String, dynamic> args;
-  const AboutToReach({Key? key, required this.args}) : super(key: key);
+  const MapScreen({Key? key, required this.args}) : super(key: key);
 
   @override
-  State<AboutToReach> createState() => _AboutToReachState();
+  State<MapScreen> createState() => _MapScreenState();
 }
 
-class _AboutToReachState extends State<AboutToReach> {
+class _MapScreenState extends State<MapScreen> {
   final Completer<GoogleMapController> _controller = Completer();
   static const LatLng sourceLocation = LatLng(24.8918, 67.0731);
   static const LatLng destinationLocation = LatLng(24.9061, 67.1384);

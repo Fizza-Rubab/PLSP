@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../input_design.dart';
-import 'Citizen.dart';
+import 'Lifesaver.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,6 +8,7 @@ import '../shared.dart';
 import '../constants.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 
 
@@ -56,9 +57,9 @@ class _ProfileEditingState extends State<ProfileEditing> {
   Future _updateProfileData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String id = prefs.getString('id') ?? '';
-    print(ApiConstants.baseUrl + ApiConstants.citizenEndpoint + '/' + id);
+    print(ApiConstants.baseUrl + ApiConstants.lifesaverEndpoint + '/' + id);
     final http.Response result = await http.put(
-    Uri.parse(ApiConstants.baseUrl + ApiConstants.citizenEndpoint + '/' + id),
+    Uri.parse(ApiConstants.baseUrl + ApiConstants.lifesaverEndpoint + '/' + id),
     body: {
           "first_name": first_name.text,
           "last_name": last_name.text,
@@ -75,7 +76,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
         putString('address', res_body['address']);
         putString('contact_no', res_body['contact_no']);
         Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Citizen()));
+          .push(MaterialPageRoute(builder: (context) => Lifesaver()));
     }
     else {
       throw Exception('Failed to update.');
@@ -85,14 +86,13 @@ class _ProfileEditingState extends State<ProfileEditing> {
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(expandedHeight),
         child: AppBar(
           elevation: 0.0,
           centerTitle: true,
-          title: Text(localizations.profile,
+          title: Text(AppLocalizations.of(context)!.profile,
               style: GoogleFonts.poppins(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
@@ -103,7 +103,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
           backgroundColor: Colors.transparent,
           flexibleSpace: FlexibleSpaceBar(
             collapseMode: CollapseMode.pin,
-            // title: Text(localizations.profile,
+            // title: Text(AppLocalizations.of(context)!.profile,
             //     style: GoogleFonts.poppins(
             //       fontSize: 24,
             //       fontWeight: FontWeight.w600,

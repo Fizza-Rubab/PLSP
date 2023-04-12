@@ -2,9 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps/Alert/Thankyou.dart';
 import '../Home/Citizen.dart';
 import '../input_design.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class Citizen_Feedback extends StatefulWidget {
   const Citizen_Feedback({super.key});
@@ -37,22 +39,22 @@ class _MyWidgetState extends State<Citizen_Feedback> {
   double _rating = 0.0;
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        // iconTheme: IconThemeData(color: appbar_icon_color),
+        elevation: 0,
         backgroundColor: Colors.transparent,
-        shadowColor: Colors.transparent,
-        title: const Text(
-          "Post-Emergency Form",
-          style: TextStyle(fontFamily: "Poppins", color: Colors.redAccent),
-        ),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.redAccent,
-          ),
-          onPressed: () {},
-        ),
+        title:  Text("Post Emergency Form", style: GoogleFonts.poppins(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0,
+                color: Colors.redAccent,
+              ),),
+        centerTitle: true,
+
+        
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
@@ -69,7 +71,7 @@ class _MyWidgetState extends State<Citizen_Feedback> {
                 ),
             ),
             SizedBox(
-              height: 200,
+              height: 150,
               child: ListView.builder(
                 itemCount: _entries.length + 1,
                 itemBuilder: (context, index) {
@@ -128,85 +130,112 @@ class _MyWidgetState extends State<Citizen_Feedback> {
                 ),
             ),
             TextField(
-              maxLines: 2,
-              decoration: buildInputDecoration(Icons.person_outline, ""),
+              maxLines: 3,
+              decoration: buildInputDecoration(Icons.person_outline, "", border: BorderRadius.all(Radius.circular(20))),
             ),
             const Divider(
               color: Colors.redAccent,
             ),
-            const Text(
-              "Caller Details:",
-              style: TextStyle(
-                  fontStyle: FontStyle.italic, color: Colors.redAccent),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            const Center(
-              child: Text(
-                "Caller: Sara Khan",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.redAccent),
-              ),
-            ),
-            const Center(
-              child: Text(
-                "Contact: 03332428145",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.redAccent),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            TextField(
-              maxLines: 2,
-              decoration: buildInputDecoration(
-                  Icons.person_outline, "Post Emergency Details"),
-            ),
-            const Text(
-              "Rate the Life saver",
-              style: TextStyle(
-                  fontStyle: FontStyle.italic, color: Colors.redAccent),
-            ),
-            RatingBar.builder(
-              initialRating: _rating,
-              minRating: 1,
-              direction: Axis.horizontal,
-              allowHalfRating: true,
-              itemCount: 5,
-              itemSize: 40,
-              itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-              itemBuilder: (context, _) => const Icon(
-                Icons.health_and_safety,
-                color: Colors.redAccent,
-              ),
-              onRatingUpdate: (rating) {
-                setState(() {
-                  _rating = rating;
-                });
-              },
-            ),
-            SizedBox(
-              height: 48,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.redAccent,
-                  fixedSize: Size(MediaQuery.of(context).size.width, 30),
-                  textStyle: const TextStyle(
-                      fontSize: 18, fontFamily: 'Poppins', color: Colors.white),
+            Text(
+              "Attending Lifesaver Details:",
+              style: GoogleFonts.poppins(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0,
+                  color: Colors.redAccent,
                 ),
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const Citizen()));
-                },
-                child: const Text('Submit'),
+            ),
+            Text(
+              "Lifesaver Name: Sara Khan",
+              style: GoogleFonts.lato(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0,
+                color: Colors.grey.shade800,
               ),
             ),
+            Text(
+              "Lifesaver Contact: 03332428145",
+              style: GoogleFonts.lato(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0,
+                color: Colors.grey.shade800,
+              ),
+            ),
+            Text(
+              "Rate the Life saver",
+              style: GoogleFonts.poppins(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0,
+                  color: Colors.redAccent,
+                ),
+            ),
+            Center(
+              child: RatingBar.builder(
+                initialRating: _rating,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemSize: 40,
+                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                itemBuilder: (context, _) => const Icon(
+                  Icons.health_and_safety,
+                  color: Colors.redAccent,
+                ),
+                onRatingUpdate: (rating) {
+                  setState(() {
+                    _rating = rating;
+                  });
+                },
+              ),
+            ),
+            Center(
+              child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          backgroundColor: Colors.redAccent,
+                          fixedSize:
+                              Size(MediaQuery.of(context).size.width / 2.4, 30),
+                          textStyle: const TextStyle(
+                              fontSize: 18,
+                              fontFamily: 'Poppins',
+                              color: Colors.white),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ThankYouScreen()));
+                        },
+                        child: Text(
+                          'Submit',
+                          style: GoogleFonts.poppins(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 1.0,
+                              color: Colors.grey.shade100),
+                        ),
+                      ),
+            ),
+            // SizedBox(
+            //   height: 48,
+            //   child: ElevatedButton(
+            //     style: ElevatedButton.styleFrom(
+            //       backgroundColor: Colors.redAccent,
+            //       fixedSize: Size(MediaQuery.of(context).size.width, 30),
+            //       textStyle: const TextStyle(
+            //           fontSize: 18, fontFamily: 'Poppins', color: Colors.white),
+            //     ),
+            //     onPressed: () {
+            //       Navigator.of(context).push(
+            //           MaterialPageRoute(builder: (context) => Citizen()));
+            //     },
+            //     child: const Text('Submit'),
+            //   ),
+            // ),
           ],
         ),
       ),

@@ -2,21 +2,20 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_maps/Home/Profile_Editing.dart';
+import 'Profile_Editing.dart';
 import 'package:intl/intl.dart';
-
 import '../constants.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'package:shared_preferences/shared_preferences.dart';
 
-class CitizenProfile extends StatefulWidget {
-  const CitizenProfile({super.key});
+class LifesaverProfile extends StatefulWidget {
+  const LifesaverProfile({super.key});
 
   @override
-  State<CitizenProfile> createState() => _CitizenProfileState();
+  State<LifesaverProfile> createState() => _LifesaverProfileState();
 }
 
-class _CitizenProfileState extends State<CitizenProfile> {
+class _LifesaverProfileState extends State<LifesaverProfile> {
   final expandedHeight = 240.0;
 
   final collapsedHeight = 60.0;
@@ -46,14 +45,13 @@ class _CitizenProfileState extends State<CitizenProfile> {
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(expandedHeight),
           child: AppBar(
             elevation: 0.0,
             centerTitle: true,
-            title: Text(localizations.profile,
+            title: Text(AppLocalizations.of(context)!.profile,
                 style: GoogleFonts.poppins(
                   fontSize: 24,
                   fontWeight: FontWeight.w600,
@@ -64,7 +62,7 @@ class _CitizenProfileState extends State<CitizenProfile> {
             backgroundColor: Colors.transparent,
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.pin,
-              // title: Text(localizations.profile,
+              // title: Text(AppLocalizations.of(context)!.profile,
               //     style: GoogleFonts.poppins(
               //       fontSize: 24,
               //       fontWeight: FontWeight.w600,
@@ -127,7 +125,7 @@ class _CitizenProfileState extends State<CitizenProfile> {
                                   color: Colors.black45,
                                 )),
                             Text(
-                              "Citizen",
+                              "Lifesaver",
                               style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.4, color: Colors.black38, height: 1),
                             )
                           ],

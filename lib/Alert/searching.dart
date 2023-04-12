@@ -7,6 +7,7 @@ import '../Home/Citizen.dart';
 import 'About_To_Reach.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class Searching extends StatefulWidget {
   final Map<String, dynamic> args;
@@ -30,7 +31,7 @@ class _SearchingState extends State<Searching> with SingleTickerProviderStateMix
   }
 
   startTime() async {
-    var duration = const Duration(seconds: 7);
+    var duration = const Duration(seconds: 20);
     return Timer(duration, route);
   }
 
@@ -40,6 +41,7 @@ class _SearchingState extends State<Searching> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
     final Set<Marker> markers = {};
     markers.add(Marker(
       //add first marker

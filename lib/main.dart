@@ -1,4 +1,8 @@
+// @dart=2.9
 import 'package:flutter/material.dart';
+import 'package:google_maps/Alert/Arrival.dart';
+import 'package:google_maps/Home/Citizen_History.dart';
+import 'package:google_maps/Lifesaver/Lifesaver.dart';
 import 'shared.dart';
 
 
@@ -56,12 +60,38 @@ import 'shared.dart';
 // }
 
 import 'Welcome/Welcome.dart';
-
-
+import 'Home/Citizen.dart';
+import 'Lifesaver/Lifesaver_Home.dart'; 
+import 'Lifesaver/Lifesaver_History.dart'; 
+import 'Alert/searching.dart'; 
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'Alert/about_to_reach.dart';
 void main(){
+  AwesomeNotifications().initialize(
+    null, 
+    [
+      NotificationChannel(
+        channelKey: 'high_importance_channel' , 
+        channelName: 'Basic Notification', 
+        channelDescription: 'Notification channel ', 
+        importance: NotificationImportance.Max,
+        channelShowBadge: true,
+        playSound: true,
+        onlyAlertOnce: true,
+        criticalAlerts: true,
+       
+  
+      ), 
+  
+      
+    ],
+debug: true, 
+  ); 
   sharedPrefInit();
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MaterialApp(home:Welcome()));
+  // runApp(const MaterialApp(home:Arrived(args:{"latitude":24.9059, "longitude":67.1383})));
+  runApp(const MaterialApp(home: Welcome()));
+
 
 }
 

@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 import '../constants.dart';
 
-class CitizenHistory extends StatefulWidget {
-  const CitizenHistory({super.key});
+class LifesaverHistory extends StatefulWidget {
+  const LifesaverHistory({super.key});
 
   @override
-  State<CitizenHistory> createState() => _CitizenHistoryState();
+  State<LifesaverHistory> createState() => _LifesaverHistoryState();
 }
 
-class _CitizenHistoryState extends State<CitizenHistory> {
+class _LifesaverHistoryState extends State<LifesaverHistory> {
   List names = ["Shamsa", "Ruhama", "Sameer", "Fizza"];
   List details = [
     "Address comes here: Garden East, Karachi.i.........Address comes here: Garden East, Karachi.i.........",
@@ -26,7 +25,6 @@ class _CitizenHistoryState extends State<CitizenHistory> {
   List date_time = [DateFormat.yMMMMd().format(DateTime.now()), DateFormat.yMMMMd().format(DateTime.now()),DateFormat.yMMMMd().format(DateTime.now()),DateFormat.yMMMMd().format(DateTime.now()),];
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -43,13 +41,11 @@ class _CitizenHistoryState extends State<CitizenHistory> {
             )),
       ),
       body: ListView.builder(
-
         itemCount: 4,
         shrinkWrap: true,
         itemBuilder: (BuildContext context, int index) => Container(
           width: MediaQuery.of(context).size.width,
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-      
           child: Card(
             elevation: 2.0,
             color: Colors.red.shade50,
@@ -61,6 +57,11 @@ class _CitizenHistoryState extends State<CitizenHistory> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 5,
               padding: const EdgeInsets.only(left: 14.0, right: 14.0, bottom: 12.0),
+              // child: Row(
+              //   mainAxisAlignment: MainAxisAlignment.start,
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     Expanded(
               child: Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,9 +76,7 @@ class _CitizenHistoryState extends State<CitizenHistory> {
                         const Spacer(),
                         TextButton(
                             // icon: Icon(Icons.chevron_right),
-                            onPressed: () {
-
-                            },
+                            onPressed: () {},
                             child: Row(children: [
                               Text(
                                 "Details",
@@ -88,19 +87,53 @@ class _CitizenHistoryState extends State<CitizenHistory> {
                                 color: PrimaryColor,
                               )
                             ])),
-                       
+                        // Container(
+                        //     alignment: Alignment.topRight,
+                        //     padding: const EdgeInsets.symmetric(
+                        //         horizontal: 5.0, vertical: 5.0),
+                        //     child: TextButton(
+                        //       onPressed: () {},
+                        //       style: ElevatedButton.styleFrom(
+                        //         // side: const BorderSide(
+                        //         //   width: 2.0,
+                        //         //   // color: Colors.redAccent,
+                        //         // ),
+                        //         // primary: Colors.white,
+                        //         shape: RoundedRectangleBorder(
+                        //           borderRadius: BorderRadius.circular(20.0),
+                        //         ),
+                        //       ),
+                        //       child: const Text(
+                        //         "Details",
+                        //         style: TextStyle(
+                        //           color: Colors.redAccent,
+                        //           fontWeight: FontWeight.bold,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
                       ],
                     ),
                     Text(
                       details[index],
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: generalfontStyle,
+                      style: GoogleFonts.lato(
+                        letterSpacing: 0,
+                        color: Colors.black45,
+                        fontSize: 14.0,
+                      ),
                     ),
                     const Spacer(),
                     Text(
                       date_time[index],
-                      style: generalfontStyle
+                      style: const TextStyle(
+                        fontStyle: FontStyle.italic,
+                        letterSpacing: -0.5,
+                        fontFamily: 'Poppins',
+                        color: Colors.black45,
+                        fontSize: 12.0,
+                      ),
                     ),
                     const SizedBox(
                       height: 5.0,
