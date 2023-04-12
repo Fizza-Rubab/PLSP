@@ -74,7 +74,6 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                     letterSpacing: 0,
                     color: Colors.grey.shade800,
                   ),
-                  style: option_style
                 ),
                 Radio(
                   value: false,

@@ -64,80 +64,9 @@ import 'Home/Citizen.dart';
 import 'Lifesaver/Lifesaver_Home.dart'; 
 import 'Lifesaver/Lifesaver_History.dart'; 
 import 'Alert/searching.dart'; 
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'Alert/about_to_reach.dart';
 void main(){
-  AwesomeNotifications().initialize(
-    null, 
-    [
-      NotificationChannel(
-        channelKey: 'high_importance_channel' , 
-        channelName: 'Basic Notification', 
-        channelDescription: 'Notification channel ', 
-        importance: NotificationImportance.Max,
-        channelShowBadge: true,
-        playSound: true,
-        onlyAlertOnce: true,
-        criticalAlerts: true,
-       
-  
-      ), 
-  
-      
-    ],
-debug: true, 
-  ); 
   sharedPrefInit();
   WidgetsFlutterBinding.ensureInitialized();
-  // runApp(const MaterialApp(home:Arrived(args:{"latitude":24.9059, "longitude":67.1383})));
   runApp(const MaterialApp(home: Welcome()));
-
-
 }
-
-// void main(){
-//   sharedPrefInit();
-//   runApp(MaterialApp(
-//       home:AboutToReach(args: {"latitude":24.9059, "longitude":24.9059},)))
-//       ;
-//   }
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       title: 'PLSP',
-//       theme: ThemeData(
-//         primarySwatch: Colors.red,
-//         scaffoldBackgroundColor: Colors.white,
-//         textTheme: customTextTheme,
-
-//         navigationBarTheme: NavigationBarThemeData(
-//           backgroundColor: Colors.red.shade50,
-//           height: 64,
-//           labelTextStyle: MaterialStateProperty.all(GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.red.shade900),)
-//         ),
-
-//         elevatedButtonTheme: ElevatedButtonThemeData(
-//           style: ElevatedButton.styleFrom(
-//             elevation: 0,
-//             shape: const StadiumBorder(),
-//           ),
-//         ),
-//         outlinedButtonTheme: OutlinedButtonThemeData(
-//           style: OutlinedButton.styleFrom(
-//             shape: const StadiumBorder(),
-//           ),
-//         ),
-//         textButtonTheme: TextButtonThemeData(
-//           style: TextButton.styleFrom(
-//             shape: const StadiumBorder(),
-//           ),
-//         ),
-//       ),
-//       home: Welcome(),
-//     );
-//   }
-// }
