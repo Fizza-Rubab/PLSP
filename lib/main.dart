@@ -65,8 +65,15 @@ import 'Lifesaver/Lifesaver_Home.dart';
 import 'Lifesaver/Lifesaver_History.dart'; 
 import 'Alert/searching.dart'; 
 import 'Alert/about_to_reach.dart';
+
+
+
 void main(){
   sharedPrefInit();
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MaterialApp(home: Welcome()));
+    if (getString('token')!=null){
+      runApp(const MaterialApp(home: Welcome(who: 'logged_in', )));
+    }
+    else
+      runApp(const MaterialApp(home: Welcome(who: 'logged_out',)));
 }

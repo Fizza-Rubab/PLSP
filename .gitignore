@@ -58,3 +58,4 @@ app.*.map.json
 /backend/.ebextensions
 
 android/app/src/main/AndroidManifest.xml
+/android/app/google-services.json

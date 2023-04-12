@@ -3,20 +3,24 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps/Home/Citizen.dart';
+import 'package:google_maps/Lifesaver/Lifesaver.dart';
 import '../Welcome/register.dart';
 // import 'package:plsp/RegisterLogin/Login.dart';
 import '../constants.dart';
 import 'Login.dart';
+import '../shared.dart';
 import '../texttheme.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'package:flutter/services.dart';
 
-enum LocaleMenu { en, ur, pa, ps }
+enum LocaleMenu { en, ur}
 TextDirection td = TextDirection.ltr;
 
 
 class Welcome extends StatefulWidget {
-  const Welcome({super.key});
+  final String who;
+  const Welcome ({Key? key, required this.who}) : super(key: key);
 
   @override
   _Welcome createState() => _Welcome();
@@ -24,15 +28,28 @@ class Welcome extends StatefulWidget {
 
 class _Welcome extends State<Welcome> {
   Locale? _locale;
+  bool is_lifesaver = false;
   void setLocale(Locale val) {
     setState(() {
       _locale = val;
     });
   }
+  void updateCheck() async{
+    bool x = await getBool('is_lifesaver')??false;
+    setState(() {
+      is_lifesaver = x;
+    });
+  }
+  @override
+  void initState() {
+    super.initState(); 
+    updateCheck();
+  }
 
   
   @override
   Widget build(BuildContext context) {
+    print(widget.who);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'PLSP',
@@ -71,7 +88,9 @@ class _Welcome extends State<Welcome> {
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         locale: _locale,
-        home: WelcomeContent(setLocale: setLocale));
+        home: widget.who=='logged_in'? (is_lifesaver?Lifesaver(): Citizen()): WelcomeContent(setLocale: setLocale)
+        )
+        ;
   }
 }
 
