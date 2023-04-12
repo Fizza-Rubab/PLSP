@@ -8,13 +8,12 @@ packages:
       sha256: bfe67ef28df125b7dddcea62755991f807aa39a2492a23e1550161692950bbe0
       url: "https://pub.dev"
     source: hosted
-    version: "2.10.0"
+    version: "2.9.0"
   awesome_dialog:
     dependency: "direct main"
     description:
       name: awesome_dialog
-      sha256: ac08268b991f228fc6b8880b68ec030d2941bcc8df8b6a6551fb79f2bd36b7da
-      url: "https://pub.dev"
+      url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.2"
   boolean_selector:
@@ -241,16 +240,14 @@ packages:
     dependency: "direct main"
     description:
       name: google_maps_webservice
-      sha256: "188bbb363adf1bc69c708029e315f383020c1caba8c5146176de1a6f6feb3524"
-      url: "https://pub.dev"
+      url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.19"
   graphs:
     dependency: transitive
     description:
       name: graphs
-      sha256: f9e130f3259f52d26f0cfc0e964513796dafed572fa52e45d2f8d6ca14db39b2
-      url: "https://pub.dev"
+      url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.0"
   http:
@@ -297,8 +294,7 @@ packages:
     dependency: "direct main"
     description:
       name: lite_rolling_switch
-      sha256: "79dbd6a7907234b626ca2b0d3bab90a1de8cf9ca930420c1b4b68d0eb7374076"
-      url: "https://pub.dev"
+      url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.1"
   loading_animation_widget:
@@ -449,8 +445,7 @@ packages:
     dependency: transitive
     description:
       name: rive
-      sha256: "22e3755b75f4ea4492d2fecf4fc2acf1c8d0073df39781d290a20cbfe74c3760"
-      url: "https://pub.dev"
+      url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.1"
   rxdart:
@@ -500,7 +495,7 @@ packages:
       sha256: "824bfd02713e37603b2bdade0842e47d56e7db32b1dcdd1cae533fb88e2913fc"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.1"
+    version: "2.2.0"
   shared_preferences_web:
     dependency: transitive
     description:
