@@ -57,4 +57,5 @@ app.*.map.json
 /backend/venv.bak/ 
 /backend/.ebextensions
 
-/android/app/src/main/AndroidManifest.xml
+pubspec.lock
+android/app/src/main/AndroidManifest.xml
