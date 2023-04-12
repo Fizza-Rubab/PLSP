@@ -31,7 +31,8 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                 color: Colors.grey.shade800,
               ); 
 
-  TextStyle option_style = GoogleFonts.poppins(
+  TextStyle option_style = GoogleFonts.lato(
+                    fontSize: 14,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0,
                     color: Colors.grey.shade800,
@@ -44,11 +45,12 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
       appBar: SimpleAppBar("Post Emergency form"),
       body: Container(
         padding: EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(height: 20.0),
+            SizedBox(height: 15.0),
             Text(
               'Did you perform any life-saving intervention?',
               style: question_style
@@ -68,12 +70,7 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                 ),
                 Text(
                   'Yes',
-                  style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0,
-                    color: Colors.grey.shade800,
-                  ),
+                  style: option_style
                 ),
                 Radio(
                   value: false,
@@ -85,13 +82,6 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                   },
                   activeColor: Colors.redAccent,
                 ),
-                Text('No',
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0,
-                    color: Colors.grey.shade800,
-                  ),),
                 Text(
                   'No',
                   style:option_style
@@ -99,80 +89,70 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
               ],
             ),
 
-            SizedBox(height: 20.0),
+            SizedBox(height: 15.0),
             Text(
               'What was the life-saving intervention you performed?',
               style: question_style
             ),
-            Row(
+            Column(
               children: <Widget>[
-                Radio(
-                  value: 'CPR',
-                  groupValue: _lifeSavingIntervention,
-                  onChanged: (value) {
-                    setState(() {
-                      _lifeSavingIntervention = value!;
-                    });
-                  },
-                  activeColor: Colors.redAccent,
+                Row(
+                  children: [
+                    Radio(
+                      value: 'CPR',
+                      groupValue: _lifeSavingIntervention,
+                      onChanged: (value) {
+                        setState(() {
+                          _lifeSavingIntervention = value!;
+                        });
+                      },
+                      activeColor: Colors.redAccent,
+                    ),
+                    Text(
+                      'CPR',
+                      style: option_style
+                    ),
+                  ],
                 ),
-                Text('CPR',
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0,
-                    color: Colors.grey.shade800,
-                  ),),
-                Text(
-                  'CPR',
-                  style: option_style
+                Row(
+                  children: [
+                    Radio(
+                      value: 'Bleeding Control',
+                      groupValue: _lifeSavingIntervention,
+                      onChanged: (value) {
+                        setState(() {
+                          _lifeSavingIntervention = value!;
+                        });
+                      },
+                      activeColor: Colors.redAccent,
+                    ),
+                    Text(
+                      'Bleeding Control',
+                      style: option_style
+                    ),
+                  ],
                 ),
-                Radio(
-                  value: 'Bleeding Control',
-                  groupValue: _lifeSavingIntervention,
-                  onChanged: (value) {
-                    setState(() {
-                      _lifeSavingIntervention = value!;
-                    });
-                  },
-                  activeColor: Colors.redAccent,
-                ),
-                Text('Bleeding Control',
-                
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0,
-                    color: Colors.grey.shade800,
-                  ),),
-                Text(
-                  'Bleeding Control',
-                  style: option_style
-                ),
-                Radio(
-                  value: 'Both',
-                  groupValue: _lifeSavingIntervention,
-                  onChanged: (value) {
-                    setState(() {
-                      _lifeSavingIntervention = value!;
-                    });
-                  },
-                  activeColor: Colors.redAccent,
-                ),
-                Text('Both',
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0,
-                    color: Colors.grey.shade800,
-                  ),),
-                Text(
-                  'Both',
-                  style: option_style
+                Row(
+                  children: [
+                    Radio(
+                      value: 'Both',
+                      groupValue: _lifeSavingIntervention,
+                      onChanged: (value) {
+                        setState(() {
+                          _lifeSavingIntervention = value!;
+                        });
+                      },
+                      activeColor: Colors.redAccent,
+                    ),
+                    Text(
+                      'Both',
+                      style: option_style
+                    ),
+                  ],
                 ),
               ],
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 15.0),
             Text(
               'Did the medical help arrive at the location or was the patient taken to the hospital?',
               style: question_style
@@ -193,13 +173,6 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                   'Yes',
                   style: option_style
                 ),
-                Text('Yes',
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0,
-                    color: Colors.grey.shade800,
-                  ),),
                 Radio(
                   value: false,
                   groupValue: _didMedicalHelpArrive,
@@ -214,16 +187,9 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                   'No',
                   style: option_style
                 ),
-                Text('No',
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0,
-                    color: Colors.grey.shade800,
-                  ),),
               ],
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 15.0),
             Text(
               'Any other feedback?',
               style: question_style
@@ -274,6 +240,7 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
             ),
           ],
         ),
+      ),
       ),
     );
   }
