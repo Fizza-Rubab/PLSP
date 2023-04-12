@@ -7,6 +7,39 @@ import 'package:flutter/services.dart';
 import '../texttheme.dart';
 import '../constants.dart';
 
+
+ class SimpleAppBar extends StatelessWidget implements PreferredSizeWidget {
+
+  SimpleAppBar(this.title_text);
+  
+
+  final String title_text; 
+
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+
+  @override 
+  Widget build(BuildContext context) {
+    return AppBar(
+        // iconTheme: IconThemeData(color: appbar_icon_color),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: Text(
+          title_text,
+          style: GoogleFonts.poppins(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0,
+            color: Colors.redAccent,
+          ),
+        ),
+        centerTitle: true,
+      );   }
+
+}
+
+
+
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   MyAppBar(this.name, this.name1);
