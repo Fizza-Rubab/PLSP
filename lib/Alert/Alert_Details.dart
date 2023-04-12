@@ -4,7 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../input_design.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'searching.dart';
-
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 
 class Alert_Details extends StatefulWidget {
@@ -36,7 +36,8 @@ class _Alert_DetailsState extends State<Alert_Details> {
 
   @override
   Widget build(BuildContext context) {
-    final Set<Marker> markers = new Set();
+  final Set<Marker> markers = new Set();
+  final AppLocalizations localizations = AppLocalizations.of(context)!;
   markers.add(Marker( //add first marker
     markerId: MarkerId(LatLng(24.8918, 67.0731).toString()),
     position: LatLng(24.90587, 67.3827), //position of marker

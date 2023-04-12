@@ -22,6 +22,7 @@ class _CitizenState extends State<Citizen> {
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
       body: SizedBox.expand(
         child: PageView(
@@ -48,7 +49,7 @@ class _CitizenState extends State<Citizen> {
                 color: Colors.red.shade900,
               ),
               icon: const Icon(Icons.home_outlined),
-              label: AppLocalizations.of(context)!.home_icon),
+              label: localizations.home_icon),
           NavigationDestination(
               selectedIcon: Icon(
                 Icons.history_rounded,
@@ -56,7 +57,7 @@ class _CitizenState extends State<Citizen> {
                 color: Colors.red.shade900,
               ),
               icon: const Icon(Icons.history_rounded),
-              label: AppLocalizations.of(context)!.history),
+              label: localizations.history),
           NavigationDestination(
               selectedIcon: Icon(
                 Icons.person_outline_rounded,
@@ -64,7 +65,7 @@ class _CitizenState extends State<Citizen> {
                 color: Colors.red.shade900,
               ),
               icon: const Icon(Icons.person_outline_rounded),
-              label: AppLocalizations.of(context)!.profile),
+              label: localizations.profile),
         ],
       ),
     );

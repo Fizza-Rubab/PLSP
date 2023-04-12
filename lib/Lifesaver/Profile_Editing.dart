@@ -8,6 +8,7 @@ import '../shared.dart';
 import '../constants.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 
 
@@ -273,8 +274,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
                             color: Colors.white),
                       ),
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const Lifesaver()));
+                        Navigator.of(context).pop();
                       },
                       child: Text(
                         'Cancel',

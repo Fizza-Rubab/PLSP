@@ -46,13 +46,14 @@ class _CitizenProfileState extends State<CitizenProfile> {
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(expandedHeight),
           child: AppBar(
             elevation: 0.0,
             centerTitle: true,
-            title: Text(AppLocalizations.of(context)!.profile,
+            title: Text(localizations.profile,
                 style: GoogleFonts.poppins(
                   fontSize: 24,
                   fontWeight: FontWeight.w600,
@@ -63,7 +64,7 @@ class _CitizenProfileState extends State<CitizenProfile> {
             backgroundColor: Colors.transparent,
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.pin,
-              // title: Text(AppLocalizations.of(context)!.profile,
+              // title: Text(localizations.profile,
               //     style: GoogleFonts.poppins(
               //       fontSize: 24,
               //       fontWeight: FontWeight.w600,

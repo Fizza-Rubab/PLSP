@@ -85,13 +85,14 @@ class _ProfileEditingState extends State<ProfileEditing> {
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(expandedHeight),
         child: AppBar(
           elevation: 0.0,
           centerTitle: true,
-          title: Text(AppLocalizations.of(context)!.profile,
+          title: Text(localizations.profile,
               style: GoogleFonts.poppins(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
@@ -102,7 +103,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
           backgroundColor: Colors.transparent,
           flexibleSpace: FlexibleSpaceBar(
             collapseMode: CollapseMode.pin,
-            // title: Text(AppLocalizations.of(context)!.profile,
+            // title: Text(localizations.profile,
             //     style: GoogleFonts.poppins(
             //       fontSize: 24,
             //       fontWeight: FontWeight.w600,
@@ -273,8 +274,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
                             color: Colors.white),
                       ),
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const Citizen()));
+                        Navigator.of(context).pop();
                       },
                       child: Text(
                         'Cancel',

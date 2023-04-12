@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps/Home/Citizen.dart';
+import 'package:google_maps/Lifesaver/Lifesaver.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
-class ThankYouScreen extends StatelessWidget {
+class ThankYouScreen extends StatefulWidget {
+  @override
+  State<ThankYouScreen> createState() => _ThankYouScreenState();
+}
+
+class _ThankYouScreenState extends State<ThankYouScreen> {
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -36,8 +45,8 @@ class ThankYouScreen extends StatelessWidget {
             ),
             margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
           ),
-          Image.network(
-            'https://i.pinimg.com/originals/a7/7f/7b/a77f7bf8d6aa5d82ffc2565132ca9c40.gif',
+          Image.asset(
+            'assets/images/thanku.gif',
             height: 200,
             fit: BoxFit.cover,
           ),
@@ -80,10 +89,17 @@ class ThankYouScreen extends StatelessWidget {
                               fontFamily: 'Poppins',
                               color: Colors.white),
                         ),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => Citizen()));
-                        },
+                        onPressed: () async {
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          bool value = prefs.getBool("is_lifesaver")??false;
+                          print(value); // or do whatever you want with the retrieved value 
+                          if (value)
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Lifesaver()));
+                          else
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Citizen()));
+                          },
                         child: Text(
                           'Goto Home',
                           style: GoogleFonts.poppins(

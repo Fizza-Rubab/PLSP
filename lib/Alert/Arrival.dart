@@ -6,6 +6,7 @@ import 'Citizen_Feedback.dart';
 import '../input_design.dart';
 import '../config.dart';
 import '../constants.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 
 class Arrived extends StatefulWidget {
@@ -20,7 +21,7 @@ class _ArrivedState extends State<Arrived> {
   @override
   Widget build(BuildContext context) {
     final Set<Marker> markers = new Set();
-
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
     markers.add(Marker(
       //add first marker
       markerId: MarkerId(LatLng(widget.args['latitude'], widget.args['longitude']).toString()),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 import '../constants.dart';
 
@@ -25,6 +26,7 @@ class _CitizenHistoryState extends State<CitizenHistory> {
   List date_time = [DateFormat.yMMMMd().format(DateTime.now()), DateFormat.yMMMMd().format(DateTime.now()),DateFormat.yMMMMd().format(DateTime.now()),DateFormat.yMMMMd().format(DateTime.now()),];
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

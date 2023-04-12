@@ -6,6 +6,7 @@ import 'package:google_maps/Alert/Thankyou.dart';
 import '../Home/Citizen.dart';
 import '../input_design.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class Citizen_Feedback extends StatefulWidget {
   const Citizen_Feedback({super.key});
@@ -38,20 +39,21 @@ class _MyWidgetState extends State<Citizen_Feedback> {
   double _rating = 0.0;
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         // iconTheme: IconThemeData(color: appbar_icon_color),
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title:  Center(
-          child: Text("Post Emergency Form", style: GoogleFonts.poppins(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0,
-                  color: Colors.redAccent,
-                ),),
-        ),
+        title:  Text("Post Emergency Form", style: GoogleFonts.poppins(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0,
+                color: Colors.redAccent,
+              ),),
+        centerTitle: true,
+
         
       ),
       body: Padding(

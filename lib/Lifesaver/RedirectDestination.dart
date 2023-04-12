@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../input_design.dart';
 import 'NavigateScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 
 class RedirectDestination extends StatefulWidget {
@@ -180,7 +180,7 @@ class _RedirectDestinationState extends State<RedirectDestination> {
                         ),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => MapScreen(destination: LatLng(24.9061, 67.1384),)));
+                              builder: (context) => MapScreen(args: {})));
                         },
                         child: Text(
                           'Take me there!',

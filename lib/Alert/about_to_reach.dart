@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'Arrival.dart';
 import '../config.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 
 class AboutToReach extends StatefulWidget {
@@ -28,7 +29,7 @@ class _AboutToReachState extends State<AboutToReach> {
   LocationData? currentLocation;
 
   startTime() async {
-    var duration = const Duration(seconds: 20);
+    var duration = const Duration(minutes: 2);
     return Timer(duration, endRoute);
   }
 
@@ -107,6 +108,7 @@ class _AboutToReachState extends State<AboutToReach> {
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
     return MaterialApp(
       home: Scaffold(
         bottomNavigationBar: BottomAppBar(
