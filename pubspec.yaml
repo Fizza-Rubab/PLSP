@@ -51,6 +51,7 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   lite_rolling_switch: ^0.1.1
   awesome_dialog: ^3.0.2
+  awesome_notifications: ^0.7.4+1
   
  
 dev_dependencies:
