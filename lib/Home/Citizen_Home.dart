@@ -37,6 +37,7 @@ class _CitizenHomeState extends State<CitizenHome> {
   }
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
           titleSpacing: 14,
@@ -49,7 +50,7 @@ class _CitizenHomeState extends State<CitizenHome> {
           ),
           title: RichText(
               text: TextSpan(
-                  text: AppLocalizations.of(context)!.hello,
+                  text: localizations.hello,
                   style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0, color: Colors.black38, height: 1.1),
                   children: [
                 TextSpan(
@@ -87,7 +88,7 @@ class _CitizenHomeState extends State<CitizenHome> {
             Padding(
               padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * (1/32)),
               child: Text(
-                AppLocalizations.of(context)!.help,
+                localizations.help,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.lato(fontSize: 28, fontWeight: FontWeight.w900, letterSpacing: 1.5, color: PrimaryColor),
               ),
@@ -95,7 +96,7 @@ class _CitizenHomeState extends State<CitizenHome> {
             Padding(
                 padding: const EdgeInsets.only(bottom: 14),
                 child: Text(
-                  AppLocalizations.of(context)!.instruct,
+                  localizations.instruct,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w700, letterSpacing: 0.4, color: Colors.black45, height: MediaQuery.of(context).size.height * (1/512)),
                 )),

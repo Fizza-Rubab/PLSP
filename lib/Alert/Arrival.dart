@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'Citizen_Feedback.dart';
+import '../input_design.dart';
 import '../config.dart';
+import '../constants.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 
 class Arrived extends StatefulWidget {
@@ -17,7 +21,7 @@ class _ArrivedState extends State<Arrived> {
   @override
   Widget build(BuildContext context) {
     final Set<Marker> markers = new Set();
-
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
     markers.add(Marker(
       //add first marker
       markerId: MarkerId(LatLng(widget.args['latitude'], widget.args['longitude']).toString()),
@@ -25,7 +29,6 @@ class _ArrivedState extends State<Arrived> {
       infoWindow: const InfoWindow(
         //popup info
         title: 'My Location',
-        snippet: 'Here',
       ),
       icon: BitmapDescriptor.defaultMarker, //Icon for Marker
     ));
@@ -37,36 +40,35 @@ class _ArrivedState extends State<Arrived> {
     infoWindow: const InfoWindow(
     //popup info
     title: 'Lifesavers Location',
-    snippet: 'Lifesaver here',
+    snippet: 'Lifesaver is here',
     ),
     icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue), //Icon for Marker
     ));
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color.fromRGBO(255, 241, 236, 1),
         appBar: AppBar(
-          // iconTheme: IconThemeData(color: appbar_icon_color),
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          title: const Center(
-            child: Text("Life Saver Arrived", style: TextStyle(color: Colors.redAccent),),
-          ),
-          leading: IconButton(
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.redAccent,
-              ),
-              onPressed: () {
-                
-              }),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        foregroundColor: Colors.black54,
+        title: Center(
+          child: Text("Lifesaver has Arrived",
+              style: GoogleFonts.poppins(
+                fontSize: 21,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0,
+                color: Colors.black45,
+              )),
         ),
+          automaticallyImplyLeading: false,
+      ),
         body: Column(
           children: [
             SizedBox(
               width: double.infinity,
-              height: (MediaQuery.of(context).size.height) / 14,
+              height: (MediaQuery.of(context).size.height) / 13,
               child: Container(
-                color: Colors.green,
+                margin: EdgeInsets.fromLTRB(0,5,0,0),
+                color: Colors.blue.shade50,
                 child: Center(
                   child: ElevatedButton(
                     onPressed: () {
@@ -74,15 +76,15 @@ class _ArrivedState extends State<Arrived> {
                           builder: (context) => Citizen_Feedback()));
                     },
                     style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.green),
-                    child: const Text(
+                        ElevatedButton.styleFrom(backgroundColor: Colors.blue.shade100),
+                    child: Text(
                       "Verify arrival",
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+                      style: GoogleFonts.lato(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 0,
+                      color: Colors.grey.shade800,
+                    ),
                     ),
                   ),
                 ),
@@ -90,7 +92,7 @@ class _ArrivedState extends State<Arrived> {
             ),
             SizedBox(
               width: double.infinity,
-              height: (MediaQuery.of(context).size.height) * (11.6 / 19.6),
+              height: (MediaQuery.of(context).size.height) * (9.6 / 19.6),
               child: GoogleMap(
                 initialCameraPosition: CameraPosition(
                   target: LatLng(widget.args['latitude'], widget.args['longitude']),
@@ -102,7 +104,7 @@ class _ArrivedState extends State<Arrived> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
               child: Stack(
                 children: [
                   Container(
@@ -117,24 +119,26 @@ class _ArrivedState extends State<Arrived> {
                           const EdgeInsets.only(right: 30.0, top: 10.0, bottom: 10.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
-                        children: const [
+                        children: [
                           Text(
                             "Sameer Pervez",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: "Poppins",
-                              fontSize: 20,
-                            ),
+                            style: GoogleFonts.poppins(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 0,
+                            color: Colors.white,
+                          ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 5.0),
+                            padding: EdgeInsets.only(top: 0.0),
                             child: Text(
                               "+923352395720",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: "Poppins",
-                                fontSize: 15,
-                              ),
+                              style: GoogleFonts.lato(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 0,
+                            color: Colors.white,
+                          ),
                             ),
                           ),
                         ],

@@ -9,6 +9,7 @@ import '../constants.dart';
 import 'appbar.dart';
 import 'ButtonOption.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 const double padding_val = 30;
 
