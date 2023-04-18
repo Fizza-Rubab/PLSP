@@ -78,28 +78,22 @@ class _LoginState extends State<Login> {
       loginSuccess = false;
       setState(() {});
     }
-
-    // else if (body.containsKey('detail')) {
-    //   setState(() {
-    //     valid = false;
-    //   });
-    // } else {
-    //   setState(() {
-    //     valid = false;
-    //   });
-    // }
   }
 
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
-    return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Container(
-            height: double.infinity,
-            width: double.infinity,
-            padding: const EdgeInsets.fromLTRB(14, 86, 14, 14),
-            // child: SingleChildScrollView(
+    return SafeArea(
+      child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            iconTheme: IconThemeData(color: Colors.redAccent),
+            elevation: 0,
+          ),
+          body: Padding(
+            padding:
+                EdgeInsets.only(left: defaultPadding, right: defaultPadding),
             child: Form(
               key: _formkey,
               // child: Expanded(l
@@ -228,6 +222,8 @@ class _LoginState extends State<Login> {
                   )
                 ],
               ),
-            )));
+            ),
+          )),
+    );
   }
 }
