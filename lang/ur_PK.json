@@ -1,0 +1,29 @@
+{
+    "home" : {
+      "title" : "PLSP لائف سیور",
+      "btn" : "زبان تبدیل کریں",
+      "btn2" :"آگے بڑھو"
+    },
+    "common" : {
+      "add" : "Add",
+      "cancel" : "Cancel",
+      "close" : "Close"
+    },
+    "dialog" : {
+      "title" : "زبان کا انتخاب",
+      "btn_negative" : "منسوخ"
+    },
+    "config" : {
+      "iso_code" : "PK",
+      "prefix" : "ur_PK",
+      "title" : "اردو"
+    },
+    "login" : {
+      "rememberme": "مجھے پہچانتے ہو",
+      "login" : "لاگ ان",
+      "register" : "رجسٹر کریں",
+      "email" :"ای میل",
+      "password": "پاس ورڈ",
+      "signin": "داخل کریں"
+    }
+  }

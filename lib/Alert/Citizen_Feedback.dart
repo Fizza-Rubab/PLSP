@@ -1,0 +1,244 @@
+// ignore_for_file: camel_case_types
+
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps/Alert/Thankyou.dart';
+import '../Home/Citizen.dart';
+import '../input_design.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+
+class Citizen_Feedback extends StatefulWidget {
+  const Citizen_Feedback({super.key});
+
+  @override
+  _MyWidgetState createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<Citizen_Feedback> {
+  final _textController = TextEditingController();
+  List<String> _entries = [];
+
+  void _addEntry() {
+    setState(() {
+      _entries.add(_textController.text);
+      _textController.clear();
+    });
+  }
+
+  void _deleteEntry(int index) {
+    setState(() {
+      _entries.removeAt(index);
+    });
+  }
+
+  // void dispose() {
+  //   _textController.dispose();
+  //   super.dispose();
+  // }
+  double _rating = 0.0;
+  @override
+  Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        // iconTheme: IconThemeData(color: appbar_icon_color),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title:  Text("Post Emergency Form", style: GoogleFonts.poppins(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0,
+                color: Colors.redAccent,
+              ),),
+        centerTitle: true,
+
+        
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Name of patient(s):", style: GoogleFonts.poppins(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0,
+                  color: Colors.redAccent,
+                ),
+            ),
+            SizedBox(
+              height: 150,
+              child: ListView.builder(
+                itemCount: _entries.length + 1,
+                itemBuilder: (context, index) {
+                  if (index == _entries.length) {
+                    // Add a new entry field with the plus icon
+                    return TextField(
+                      controller: _textController,
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.person_outline),
+                        filled: true,
+                        fillColor: Colors.grey.shade200,
+                        focusColor: Colors.red.shade50,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50.0),
+                          borderSide: const BorderSide(
+                              style: BorderStyle.none, width: 0),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50.0),
+                          borderSide: const BorderSide(
+                              style: BorderStyle.none, width: 0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50.0),
+                          borderSide: const BorderSide(
+                              style: BorderStyle.none, width: 0),
+                        ),
+                        suffixIcon: IconButton(
+                          icon: const Icon(Icons.add),
+                          onPressed: _addEntry,
+                        ),
+                      ),
+                    );
+                  } else {
+                    // Show the existing entry
+                    return ListTile(
+                      title: Text(_entries[index]),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () {
+                          _deleteEntry(index);
+                        },
+                      ),
+                    );
+                  }
+                },
+              ),
+            ),
+            Text(
+              "Details:",
+              style:GoogleFonts.poppins(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0,
+                  color: Colors.redAccent,
+                ),
+            ),
+            TextField(
+              maxLines: 3,
+              decoration: buildInputDecoration(Icons.person_outline, "", border: BorderRadius.all(Radius.circular(20))),
+            ),
+            const Divider(
+              color: Colors.redAccent,
+            ),
+            Text(
+              "Attending Lifesaver Details:",
+              style: GoogleFonts.poppins(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0,
+                  color: Colors.redAccent,
+                ),
+            ),
+            Text(
+              "Lifesaver Name: Sara Khan",
+              style: GoogleFonts.lato(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0,
+                color: Colors.grey.shade800,
+              ),
+            ),
+            Text(
+              "Lifesaver Contact: 03332428145",
+              style: GoogleFonts.lato(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0,
+                color: Colors.grey.shade800,
+              ),
+            ),
+            Text(
+              "Rate the Life saver",
+              style: GoogleFonts.poppins(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0,
+                  color: Colors.redAccent,
+                ),
+            ),
+            Center(
+              child: RatingBar.builder(
+                initialRating: _rating,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemSize: 40,
+                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                itemBuilder: (context, _) => const Icon(
+                  Icons.health_and_safety,
+                  color: Colors.redAccent,
+                ),
+                onRatingUpdate: (rating) {
+                  setState(() {
+                    _rating = rating;
+                  });
+                },
+              ),
+            ),
+            Center(
+              child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          backgroundColor: Colors.redAccent,
+                          fixedSize:
+                              Size(MediaQuery.of(context).size.width / 2.4, 30),
+                          textStyle: const TextStyle(
+                              fontSize: 18,
+                              fontFamily: 'Poppins',
+                              color: Colors.white),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ThankYouScreen()));
+                        },
+                        child: Text(
+                          'Submit',
+                          style: GoogleFonts.poppins(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 1.0,
+                              color: Colors.grey.shade100),
+                        ),
+                      ),
+            ),
+            // SizedBox(
+            //   height: 48,
+            //   child: ElevatedButton(
+            //     style: ElevatedButton.styleFrom(
+            //       backgroundColor: Colors.redAccent,
+            //       fixedSize: Size(MediaQuery.of(context).size.width, 30),
+            //       textStyle: const TextStyle(
+            //           fontSize: 18, fontFamily: 'Poppins', color: Colors.white),
+            //     ),
+            //     onPressed: () {
+            //       Navigator.of(context).push(
+            //           MaterialPageRoute(builder: (context) => Citizen()));
+            //     },
+            //     child: const Text('Submit'),
+            //   ),
+            // ),
+          ],
+        ),
+      ),
+    );
+  }
+}

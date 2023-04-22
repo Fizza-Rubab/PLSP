@@ -1,0 +1,25 @@
+{
+    "home" : {
+      "title" : "PLSP Lifesavers",
+      "btn" : "Click Here to Change Language",
+      "btn2" : "Proceed"
+
+    },
+    "dialog" : {
+      "title" : "Change Language:",
+      "btn_negative" : "Cancel"
+    },
+    "config" : {
+      "iso_code" : "US",
+      "prefix" : "en_US",
+      "title" : "English"
+    },
+    "login" : {
+      "rememberme": "Remember me",
+      "login" : "LogIn",
+      "register" : "Register",
+      "email" :"Email Address",
+      "password": "Password",
+      "signin": "Sign In"
+    }
+  }

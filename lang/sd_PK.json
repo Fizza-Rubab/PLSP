@@ -1,0 +1,21 @@
+{
+    "home" : {
+      "title" : "PLSP زندگي بچائيندڙ",
+      "btn" : "ٻولي تبديل ڪرڻ",
+      "btn2" :"اڳتي وڌو"
+    },
+    "common" : {
+      "add" : "Add",
+      "cancel" : "Cancel",
+      "close" : "Close"
+    },
+    "dialog" : {
+      "title" : "ٻولي جي چونڊ",
+      "btn_negative" : "منسوخ ڪريو"
+    },
+    "config" : {
+      "iso_code" : "PK",
+      "prefix" : "sd_PK",
+      "title" : "سنڌي"
+    }
+  }
