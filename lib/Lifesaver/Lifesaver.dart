@@ -81,6 +81,19 @@ class _LifesaverState extends State<Lifesaver> {
   int index = 0;
 
   @override
+  // void initState() {
+    
+    // TODO: implement initState
+  //   super.initState();
+  //   Future.delayed(Duration(seconds: 20), () {
+  //     showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) => CustomAlertDialog(),
+  //     );
+  // });
+ 
+  // }
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();

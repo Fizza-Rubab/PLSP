@@ -27,7 +27,7 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
   String address = '';
   String contact_no = '';
 
-    @override
+  @override
   void initState() {
     super.initState();
     SharedPreferences.getInstance().then((prefs) {
@@ -40,7 +40,6 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
         contact_no = _prefs.getString('contact_no') ?? '';
       });
     });
-    
   }
 
   @override
@@ -79,9 +78,12 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
                       padding: const EdgeInsets.only(bottom: 60),
                       child: Container(
                         decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25), bottomRight: Radius.circular(25)),
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(25),
+                              bottomRight: Radius.circular(25)),
                           image: DecorationImage(
-                            image: AssetImage("assets/images/welcome-bg.png"), fit: BoxFit.cover,
+                            image: AssetImage("assets/images/welcome-bg.png"),
+                            fit: BoxFit.cover,
                             // colorFilter: ColorFilter.mode(Colors.white12, BlendMode.overlay)
                           ),
                         ),
@@ -97,7 +99,8 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
                         shape: CircleBorder(),
                       ),
                       child: const CircleAvatar(
-                        backgroundImage: AssetImage("assets/images/profileicon.png"),
+                        backgroundImage:
+                            AssetImage("assets/images/profileicon.png"),
                         radius: 55,
                       ),
                     ),
@@ -107,69 +110,94 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
             ),
           ),
         ),
-        body: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            child: Column(
-              children: [
-                Padding(
-                    padding: const EdgeInsets.only(bottom: 14),
-                    child: Container(
-                        alignment: Alignment.center,
-                        child: Column(
+        body: SingleChildScrollView(
+          child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14),
+              child: Column(
+                children: [
+                  Padding(
+                      padding: const EdgeInsets.only(bottom: 14),
+                      child: Container(
+                          alignment: Alignment.center,
+                          child: Column(
+                            children: [
+                              Text('$first_name $last_name',
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: 0,
+                                    color: Colors.black45,
+                                  )),
+                              Text(
+                                AppLocalizations.of(context)!.life_saver,
+                                style: GoogleFonts.lato(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    letterSpacing: 0.4,
+                                    color: Colors.black38,
+                                    height: 1),
+                              )
+                            ],
+                          ))),
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            child: infoCard(
+                                double.infinity,
+                                AppLocalizations.of(context)!.address,
+                                address)),
+                        Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            child: infoCard(
+                                double.infinity,
+                                AppLocalizations.of(context)!.date_of_birth,
+                                DateFormat.yMMMMd().format(DOB))),
+                        Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            child: infoCard(
+                                double.infinity,
+                                AppLocalizations.of(context)!.contact,
+                                contact_no)),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Row(
                           children: [
-                            Text('$first_name $last_name',
-                                style: GoogleFonts.poppins(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600,
-                                  letterSpacing: 0,
-                                  color: Colors.black45,
-                                )),
-                            Text(
-                              "Lifesaver",
-                              style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.4, color: Colors.black38, height: 1),
-                            )
+                            const Spacer(),
+                            TextButton(
+                                // icon: Icon(Icons.chevron_right),
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ProfileEditing()));
+                                },
+                                child: Row(children: [
+                                  const Padding(
+                                    padding: EdgeInsets.all(2),
+                                    child: Icon(
+                                      Icons.edit_outlined,
+                                      color: PrimaryColor,
+                                    ),
+                                  ),
+                                  Text(
+                                       AppLocalizations.of(context)!.edit_profile,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                        letterSpacing: 1.0,
+                                        color: PrimaryColor),
+                                  ),
+                                ])),
                           ],
-                        ))),
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                  Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6),
-                      child: infoCard(double.infinity, "Address", address)),
-                  Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6), child: infoCard(double.infinity, "Date of Birth", DateFormat.yMMMMd().format(DOB))),
-                  Padding(padding: const EdgeInsets.symmetric(vertical: 6), child: infoCard(double.infinity, "Contact", contact_no)),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Row(
-                    children: [
-                      const Spacer(),
-                      TextButton(
-                          // icon: Icon(Icons.chevron_right),
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ProfileEditing()));
-                          },
-                          child: Row(children: [
-                            const Padding(
-                              padding: EdgeInsets.all(2),
-                              child: Icon(
-                                Icons.edit_outlined,
-                                color: PrimaryColor,
-                              ),
-                            ),
-                            Text(
-                              'Edit Profile',
-                              style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: 1.0, color: PrimaryColor),
-                            ),
-                          ])),
-                    ],
+                        )
+                      ],
+                    ),
                   )
-                    ],
-                  ),
-                )
-              ],
-            )));
+                ],
+              )),
+        ));
   }
 }
 
@@ -189,12 +217,20 @@ Container infoCard(double width, String title, String text) {
             padding: const EdgeInsets.only(bottom: 5),
             child: Text(
               title,
-              style: GoogleFonts.lato(fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: 0.4, color: Colors.black54),
+              style: GoogleFonts.lato(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.4,
+                  color: Colors.black54),
             ),
           ),
           Text(
             text,
-            style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, letterSpacing: 0.8, color: Colors.black45),
+            style: GoogleFonts.lato(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.8,
+                color: Colors.black45),
           )
         ],
       ));

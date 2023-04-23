@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:flutter/gestures.dart';
 import 'constants.dart';
 import 'profile.dart';
+
 import 'old_login.dart';
 
 const Profile_Name = TextStyle(
@@ -124,326 +126,321 @@ class _RegisterState extends State<Register> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.all(40.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                    child: Image(
-                      image: AssetImage('assets/images/Image2.png'),
-                      height: 80,
-                      width: 150,
-                    ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: Image(
+                    image: AssetImage('assets/images/Image2.png'),
+                    height: 80,
+                    width: 150,
                   ),
-                  // Log In and Register Buttons
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0.0, 0.0, 0, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                ),
+                // Log In and Register Buttons
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => LogIn()));
+                      },
+                      child: const Text(
+                        'Log In',
+                        style: not_pressed,
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Color.fromRGBO(255, 241, 236, 1),
+                        padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'Register',
+                        style: TextStyle(
+                          color: Color.fromRGBO(255, 241, 236, 1),
+                          fontFamily: 'Poppins',
+                          fontSize: 18,
+                          letterSpacing: 0,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Color.fromRGBO(255, 0, 95, 1),
+                        padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
+                      ),
+                    ),
+                  ],
+                ),
+
+                // Email Address
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.email_outlined,
+                      color: Colors.black45,
+                    ),
+                    SizedBox(width: 15), // Just for spacing
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          labelText: 'Email Address',
+                          labelStyle: text_field,
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            email = val;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+
+                //Full Name
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(Icons.account_circle, color: Colors.black45),
+                    SizedBox(width: 15), // Just for spacing
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          labelText: 'First Name',
+                          labelStyle: text_field,
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            firstName = val;
+                          });
+                        },
+
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(Icons.account_circle, color: Colors.black45),
+                    SizedBox(width: 15), // Just for spacing
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          labelText: 'Last Name',
+                          labelStyle: text_field,
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            lastName = val;
+                          });
+                        },
+                      ),
+                    )
+                  ],
+                ),
+                //Phone Number
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(Icons.phone, color: Colors.black45),
+                    SizedBox(width: 15), // Just for spacing
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                        
+                          labelText: 'Phone Number',
+                          labelStyle: text_field,
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            phoneNumber = val;
+                          });
+                        },
+                      ),
+                    )
+                  ],
+                ),
+
+                // CNIC
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(Icons.card_membership, color: Colors.black45),
+                    SizedBox(width: 15), // Just for spacing
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          labelText: 'CNIC',
+                          labelStyle: text_field,
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            cnic = val;
+                          });
+                        },
+                      ),
+                    )
+                  ],
+                ),
+
+                // Address
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(Icons.location_city, color: Colors.black45),
+                    SizedBox(width: 15), // Just for spacing
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          labelText: 'Address',
+                          labelStyle: text_field,
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            address = val;
+                          });
+                        },
+                      ),
+                    )
+                  ],
+                ),
+
+                // Password
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(Icons.lock_outline, color: Colors.black45),
+                    SizedBox(width: 15), // Just for spacing
+                    Expanded(
+                      child: TextField(
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          labelStyle: text_field,
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            password = val;
+                          });
+                        },
+                      ),
+                    )
+                  ],
+                ),
+
+                // Confirm
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(Icons.lock_outline, color: Colors.black45),
+                    SizedBox(width: 15), // Just for spacing
+                    Expanded(
+                      child: TextField(
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          labelText: 'Confirm Password',
+                          labelStyle: text_field,
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            password2 = val;
+                          });
+                        },
+                      ),
+                    )
+                  ],
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: RadioListTile(
+                        value: 1,
+                        title: Text(
+                          "Life Saver",
+                          style: radio_buttons,
+                        ),
+                        groupValue: selectedRadio,
+                        activeColor: Color.fromRGBO(255, 0, 95, 1),
+                        onChanged: (val) {
+                          print(val);
+                          print("Radio Button value changed");
+                          setSelectedRadio(val);
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: RadioListTile(
+                        value: 2,
+                        title: Text(
+                          "Citizen",
+                          style: radio_buttons,
+                        ),
+                        groupValue: selectedRadio,
+                        activeColor: Color.fromRGBO(255, 0, 95, 1),
+                        onChanged: (val) {
+                          print(val);
+                          print("Radio Button value changed");
+                          setSelectedRadio(val);
+                        },
+                      ),
+                    )
+                  ],
+                ),
+
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
                       children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => LogIn()));
-                          },
-                          child: const Text(
-                            'Log In',
-                            style: not_pressed,
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            primary: Color.fromRGBO(255, 241, 236, 1),
-                            padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
-                          ),
+                        TextSpan(
+                          text:
+                              'By signing in to this application, you are agreeing to our',
+                          style: disclaimerText,
                         ),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Register',
-                            style: TextStyle(
-                              color: Color.fromRGBO(255, 241, 236, 1),
-                              fontFamily: 'Poppins',
-                              fontSize: 18,
-                              letterSpacing: 0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            primary: Color.fromRGBO(255, 0, 95, 1),
-                            padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
-                          ),
-                        ),
+                        TextSpan(
+                            style: linkText,
+                            text: " Terms and privacy policy.",
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                const url = "https://google.com.pk";
+                                launchUrlString(url);
+                              }),
                       ],
                     ),
                   ),
-
-                  // Email Address
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.email_outlined,
-                        color: Colors.black45,
-                      ),
-                      SizedBox(width: 15), // Just for spacing
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            labelText: 'Email Address',
-                            labelStyle: text_field,
-                          ),
-                          onChanged: (val) {
-                            setState(() {
-                              email = val;
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  //Full Name
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.account_circle, color: Colors.black45),
-                      SizedBox(width: 15), // Just for spacing
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            labelText: 'First Name',
-                            labelStyle: text_field,
-                          ),
-                          onChanged: (val) {
-                            setState(() {
-                              firstName = val;
-                            });
-                          },
-
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.account_circle, color: Colors.black45),
-                      SizedBox(width: 15), // Just for spacing
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            labelText: 'Last Name',
-                            labelStyle: text_field,
-                          ),
-                          onChanged: (val) {
-                            setState(() {
-                              lastName = val;
-                            });
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                  //Phone Number
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.phone, color: Colors.black45),
-                      SizedBox(width: 15), // Just for spacing
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            labelText: 'Phone Number',
-                            labelStyle: text_field,
-                          ),
-                          onChanged: (val) {
-                            setState(() {
-                              phoneNumber = val;
-                            });
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-
-                  // CNIC
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.card_membership, color: Colors.black45),
-                      SizedBox(width: 15), // Just for spacing
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            labelText: 'CNIC',
-                            labelStyle: text_field,
-                          ),
-                          onChanged: (val) {
-                            setState(() {
-                              cnic = val;
-                            });
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-
-                  // Address
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.location_city, color: Colors.black45),
-                      SizedBox(width: 15), // Just for spacing
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            labelText: 'Address',
-                            labelStyle: text_field,
-                          ),
-                          onChanged: (val) {
-                            setState(() {
-                              address = val;
-                            });
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-
-                  // Password
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.lock_outline, color: Colors.black45),
-                      SizedBox(width: 15), // Just for spacing
-                      Expanded(
-                        child: TextField(
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                            labelStyle: text_field,
-                          ),
-                          onChanged: (val) {
-                            setState(() {
-                              password = val;
-                            });
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-
-                  // Confirm
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.lock_outline, color: Colors.black45),
-                      SizedBox(width: 15), // Just for spacing
-                      Expanded(
-                        child: TextField(
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            labelText: 'Confirm Password',
-                            labelStyle: text_field,
-                          ),
-                          onChanged: (val) {
-                            setState(() {
-                              password2 = val;
-                            });
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: RadioListTile(
-                          value: 1,
-                          title: Text(
-                            "Life Saver",
-                            style: radio_buttons,
-                          ),
-                          groupValue: selectedRadio,
-                          activeColor: Color.fromRGBO(255, 0, 95, 1),
-                          onChanged: (val) {
-                            print(val);
-                            print("Radio Button value changed");
-                            setSelectedRadio(val);
-                          },
-                        ),
-                      ),
-                      Expanded(
-                        child: RadioListTile(
-                          value: 2,
-                          title: Text(
-                            "Citizen",
-                            style: radio_buttons,
-                          ),
-                          groupValue: selectedRadio,
-                          activeColor: Color.fromRGBO(255, 0, 95, 1),
-                          onChanged: (val) {
-                            print(val);
-                            print("Radio Button value changed");
-                            setSelectedRadio(val);
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text:
-                                'By signing in to this application, you are agreeing to our',
-                            style: disclaimerText,
-                          ),
-                          TextSpan(
-                              style: linkText,
-                              text: " Terms and privacy policy.",
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  const url = "https://google.com.pk";
-                                  launchUrlString(url);
-                                }),
-                        ],
-                      ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    register();
+                    print(created);
+                    if (created)
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => Profile()));
+                  },
+                  child: Text(
+                    'Continue',
+                    style: TextStyle(
+                      color:  Color.fromRGBO(255, 241, 236, 1),
+                      fontFamily: 'Poppins',
+                      fontSize: 18,
+                      letterSpacing: 0,
+                      fontWeight: FontWeight.normal,
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      register();
-                      print(created);
-                      if (created)
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Profile()));
-                    },
-                    child: const Text(
-                      'Continue',
-                      style: TextStyle(
-                        color: Color.fromRGBO(255, 241, 236, 1),
-                        fontFamily: 'Poppins',
-                        fontSize: 18,
-                        letterSpacing: 0,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color.fromRGBO(255, 0, 95, 1),
-                      padding: EdgeInsets.fromLTRB(100, 2, 100, 2),
-                    ),
+                  style: ElevatedButton.styleFrom(
+                    primary: Color.fromRGBO(255, 0, 95, 1),
+                    padding: EdgeInsets.fromLTRB(100, 2, 100, 2),
                   ),
-                  // Image
-                ],
-              ),
+                ),
+                // Image
+              ],
             ),
             // SizedBox(
             //   height: 130,

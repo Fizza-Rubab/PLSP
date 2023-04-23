@@ -31,8 +31,7 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                 color: Colors.grey.shade800,
               ); 
 
-  TextStyle option_style = GoogleFonts.lato(
-                    fontSize: 14,
+  TextStyle option_style = GoogleFonts.poppins(
                     fontWeight: FontWeight.w500,
                     letterSpacing: 0,
                     color: Colors.grey.shade800,
@@ -45,12 +44,11 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
       appBar: SimpleAppBar("Post Emergency form"),
       body: Container(
         padding: EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(height: 15.0),
+            SizedBox(height: 20.0),
             Text(
               'Did you perform any life-saving intervention?',
               style: question_style
@@ -89,70 +87,58 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
               ],
             ),
 
-            SizedBox(height: 15.0),
+            SizedBox(height: 20.0),
             Text(
               'What was the life-saving intervention you performed?',
               style: question_style
             ),
-            Column(
+            Row(
               children: <Widget>[
-                Row(
-                  children: [
-                    Radio(
-                      value: 'CPR',
-                      groupValue: _lifeSavingIntervention,
-                      onChanged: (value) {
-                        setState(() {
-                          _lifeSavingIntervention = value!;
-                        });
-                      },
-                      activeColor: Colors.redAccent,
-                    ),
-                    Text(
-                      'CPR',
-                      style: option_style
-                    ),
-                  ],
+                Radio(
+                  value: 'CPR',
+                  groupValue: _lifeSavingIntervention,
+                  onChanged: (value) {
+                    setState(() {
+                      _lifeSavingIntervention = value!;
+                    });
+                  },
+                  activeColor: Colors.redAccent,
                 ),
-                Row(
-                  children: [
-                    Radio(
-                      value: 'Bleeding Control',
-                      groupValue: _lifeSavingIntervention,
-                      onChanged: (value) {
-                        setState(() {
-                          _lifeSavingIntervention = value!;
-                        });
-                      },
-                      activeColor: Colors.redAccent,
-                    ),
-                    Text(
-                      'Bleeding Control',
-                      style: option_style
-                    ),
-                  ],
+                Text(
+                  'CPR',
+                  style: option_style
                 ),
-                Row(
-                  children: [
-                    Radio(
-                      value: 'Both',
-                      groupValue: _lifeSavingIntervention,
-                      onChanged: (value) {
-                        setState(() {
-                          _lifeSavingIntervention = value!;
-                        });
-                      },
-                      activeColor: Colors.redAccent,
-                    ),
-                    Text(
-                      'Both',
-                      style: option_style
-                    ),
-                  ],
+                Radio(
+                  value: 'Bleeding Control',
+                  groupValue: _lifeSavingIntervention,
+                  onChanged: (value) {
+                    setState(() {
+                      _lifeSavingIntervention = value!;
+                    });
+                  },
+                  activeColor: Colors.redAccent,
+                ),
+                Text(
+                  'Bleeding Control',
+                  style: option_style
+                ),
+                Radio(
+                  value: 'Both',
+                  groupValue: _lifeSavingIntervention,
+                  onChanged: (value) {
+                    setState(() {
+                      _lifeSavingIntervention = value!;
+                    });
+                  },
+                  activeColor: Colors.redAccent,
+                ),
+                Text(
+                  'Both',
+                  style: option_style
                 ),
               ],
             ),
-            SizedBox(height: 15.0),
+            SizedBox(height: 20.0),
             Text(
               'Did the medical help arrive at the location or was the patient taken to the hospital?',
               style: question_style
@@ -189,7 +175,7 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                 ),
               ],
             ),
-            SizedBox(height: 15.0),
+            SizedBox(height: 20.0),
             Text(
               'Any other feedback?',
               style: question_style
@@ -240,7 +226,6 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
             ),
           ],
         ),
-      ),
       ),
     );
   }

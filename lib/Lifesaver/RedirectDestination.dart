@@ -37,7 +37,6 @@ class _RedirectDestinationState extends State<RedirectDestination> {
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations localizations = AppLocalizations.of(context)!;
     final Set<Marker> markers = new Set();
   markers.add(Marker( //add first marker
     markerId: MarkerId(LatLng(24.8918, 67.0731).toString()),

@@ -1,4 +1,3 @@
-
 // ignore_for_file: library_private_types_in_public_api, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
@@ -10,10 +9,11 @@ import 'Login.dart';
 import '../texttheme.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'package:flutter/services.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 enum LocaleMenu { en, ur, pa, ps }
-TextDirection td = TextDirection.ltr;
 
+TextDirection td = TextDirection.ltr;
 
 class Welcome extends StatefulWidget {
   const Welcome({super.key});
@@ -30,7 +30,6 @@ class _Welcome extends State<Welcome> {
     });
   }
 
-  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -85,15 +84,7 @@ class WelcomeContent extends StatefulWidget {
 class _WelcomeContentState extends State<WelcomeContent> {
   String selected_lang = 'English - en';
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   if (Platform.isAndroid) {
-  //     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-  //         systemNavigationBarColor: Colors.deepOrange,
-  //         systemNavigationBarIconBrightness: Brightness.light));
-  //   }
-  
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,14 +128,15 @@ class _WelcomeContentState extends State<WelcomeContent> {
                               onSelected: (LocaleMenu item) {
                                 setState(() {
                                   selected_lang = item.name;
-                                  if (selected_lang=='ur') {
+                                  if (selected_lang == 'ur') {
                                     td = TextDirection.rtl;
                                   } else {
                                     td = TextDirection.ltr;
                                   }
                                 });
                                 print(selected_lang);
-                                widget.setLocale(Locale.fromSubtags(languageCode: selected_lang));
+                                widget.setLocale(Locale.fromSubtags(
+                                    languageCode: selected_lang));
                               },
                               itemBuilder: (BuildContext context) =>
                                   <PopupMenuEntry<LocaleMenu>>[
@@ -177,10 +169,10 @@ class _WelcomeContentState extends State<WelcomeContent> {
                             SizedBox(
                                 height: 48,
                                 child: TextButton(
-                                    onPressed: () => (Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const Register()))),
+                                    onPressed: () => (Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                            builder: (context) =>
+                                                const Register()))),
                                     style: TextButton.styleFrom(
                                         backgroundColor: Colors.white24),
                                     child: Padding(
@@ -248,7 +240,21 @@ class _WelcomeContentState extends State<WelcomeContent> {
                             height: 48,
                             width: double.infinity,
                             child: TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  AwesomeDialog(
+                                          context: context,
+                                          dialogType: DialogType.success,
+                                          animType: AnimType.topSlide,
+                                          descTextStyle: generalfontStyle,
+                                          titleTextStyle: titleFontStyle,
+                                          title:    AppLocalizations.of(context)!
+                                        .request_sent,
+                                          desc:
+                                               AppLocalizations.of(context)!
+                                        .request_sent_disc,
+                                          btnOkOnPress: () {})
+                                      .show();
+                                },
                                 style: TextButton.styleFrom(
                                   backgroundColor: Colors.red.withOpacity(0.15),
                                 ),
@@ -256,7 +262,8 @@ class _WelcomeContentState extends State<WelcomeContent> {
                                   padding: const EdgeInsets.only(
                                       left: 12, right: 12),
                                   child: Text(
-                                    AppLocalizations.of(context)!.become_lifesaver,
+                                    AppLocalizations.of(context)!
+                                        .become_lifesaver,
                                     style: GoogleFonts.poppins(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w600,
