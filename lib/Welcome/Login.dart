@@ -1,6 +1,8 @@
 // ignore_for_file: avoid_print, non_constant_identifier_names
 
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps/Welcome/ForgotPassword.dart';
 import '../Lifesaver/Lifesaver.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -10,6 +12,8 @@ import '../Home/Citizen.dart';
 import '../input_design.dart';
 import '../constants.dart';
 import '../shared.dart';
+import 'ForgotPassword.dart';
+import '../Lifesaver/appbar.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -24,6 +28,7 @@ class _LoginState extends State<Login> {
   bool loginSuccess = true;
   bool _obscureText = true;
   //TextController to read text entered in text field
+  
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController confirmpassword = TextEditingController();
@@ -86,14 +91,10 @@ class _LoginState extends State<Login> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            iconTheme: IconThemeData(color: Colors.redAccent),
-            elevation: 0,
-          ),
+          appBar: SimpleAppBar(""),
           body: Padding(
             padding:
-                EdgeInsets.only(left: defaultPadding, right: defaultPadding),
+                EdgeInsets.all(defaultPadding),
             child: Form(
               key: _formkey,
               // child: Expanded(l
@@ -102,19 +103,12 @@ class _LoginState extends State<Login> {
                 children: [
                   Text(
                     AppLocalizations.of(context)!.welcome_back,
-                    style: GoogleFonts.poppins(
-                        fontSize: 36,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: -0.5,
-                        color: Colors.black54),
+                    style: boldheader,
                   ),
                   Text(
                     AppLocalizations.of(context)!.login_desc,
-                    style: GoogleFonts.lato(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: 0.2,
-                        color: Colors.black45),
+                    style: header_disc,
+
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.125),
                   Padding(
@@ -137,50 +131,71 @@ class _LoginState extends State<Login> {
                       },
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 4),
-                    child: TextFormField(
-                      obscureText: _obscureText,
-                      controller: password,
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50.0),
-                            borderSide: BorderSide.none),
-                        filled: true,
-                        fillColor: Colors.grey[200],
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 1, color: Colors.white), //<-- SEE HERE
+                  TextFormField(
+                    obscureText: _obscureText,
+                    controller: password,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50.0),
-                        ),
-                        labelText: AppLocalizations.of(context)!.password,
-                        prefixIcon: Icon(Icons.key_rounded),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _obscureText
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _obscureText = !_obscureText;
-                            });
-                          },
-                        ),
+                          borderSide: BorderSide.none),
+                      filled: true,
+                      fillColor: Colors.grey[200],
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 1, color: Colors.white), //<-- SEE HERE
+                        borderRadius: BorderRadius.circular(50.0),
                       ),
-                      validator: (String? value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter your password';
-                        } else if (!loginSuccess) {
-                          return 'Email or password is incorrect';
-                        }
-                        return null;
-                      },
+                      labelText: AppLocalizations.of(context)!.password,
+                      prefixIcon: Icon(Icons.key_rounded),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                      ),
                     ),
+                    validator: (String? value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your password';
+                      } else if (!loginSuccess) {
+                        return 'Email or password is incorrect';
+                      }
+                      return null;
+                    },
                   ),
+
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Padding(
+                    padding:  EdgeInsets.only(
+                        right: defaultPadding,
+                        left: defaultPadding,
+                        bottom: 4.0),
+                    child: Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
+                          onTap: () {
+                            // handle tap event here
+                           Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword())); 
+                          },
+                          child: Text(
+                           AppLocalizations.of(context)!.forgot_password,
+                            style: urlfontStyle,
+                          ),
+                        )),
+                  ),
+
+                 
                   CheckboxListTile(
-                    controlAffinity: ListTileControlAffinity.trailing,
+                    controlAffinity: ListTileControlAffinity.platform,
                     title: Text(AppLocalizations.of(context)!.rememberme,
                         style: Theme.of(context).textTheme.caption),
                     activeColor: PrimaryColor,
@@ -191,6 +206,7 @@ class _LoginState extends State<Login> {
                       });
                     }),
                   ),
+
                   const Spacer(),
                   Row(
                     children: [

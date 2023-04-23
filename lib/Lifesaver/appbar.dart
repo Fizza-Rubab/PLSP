@@ -21,6 +21,10 @@ import '../constants.dart';
   @override 
   Widget build(BuildContext context) {
     return AppBar(
+      leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.redAccent,),
+          onPressed: () => Navigator.pop(context),
+        ),
         // iconTheme: IconThemeData(color: appbar_icon_color),
         elevation: 0,
         backgroundColor: Colors.transparent,

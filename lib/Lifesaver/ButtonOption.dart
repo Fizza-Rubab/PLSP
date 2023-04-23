@@ -4,33 +4,18 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../texttheme.dart';
 import '../constants.dart';
 
-import 'package:url_launcher/url_launcher_string.dart';
-
-class ButtonOption extends StatefulWidget implements PreferredSizeWidget {
-  ButtonOption(this.icon, this.title, this.urls);
+class ButtonOption extends StatelessWidget implements PreferredSizeWidget {
+  ButtonOption(this.icon, this.title, this.url);
 
   final IconData icon;
   final String title;
-  final String urls;
-
-  @override
-  _ButtonOptionState createState() => _ButtonOptionState();
-
+  final String url;
+  
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
-}
-
-class _ButtonOptionState extends State<ButtonOption> {
-  Future <void> _launchURL(String Url) async {
-    final Uri uri = Uri(scheme: "https", host: Url ); 
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      throw "Can not launch url"; 
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,21 +23,19 @@ class _ButtonOptionState extends State<ButtonOption> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
-          onPressed: () {
-            _launchURL(widget.urls);
-          },
-          child: Icon(widget.icon, color: PrimaryColor),
+          onPressed: () {},
+          child: Icon(icon, color: PrimaryColor),
           style: ElevatedButton.styleFrom(
             shape: CircleBorder(),
             shadowColor: PrimaryColor,
             padding: EdgeInsets.all(20),
-            backgroundColor: Colors.white,
-            foregroundColor: PrimaryColor,
+            backgroundColor: Colors.white, // <-- Button color
+            foregroundColor: PrimaryColor, // <-- Splash color
           ),
         ),
-        SizedBox(height: 8),
+        SizedBox(height: 8), // add some spacing between the button and text
         Text(
-          widget.title,
+          title,
           style: generalfontStyle,
         ),
       ],

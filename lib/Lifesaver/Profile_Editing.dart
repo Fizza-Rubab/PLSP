@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_maps/Lifesaver/Lifesaver_Profile.dart';
+import 'package:google_maps/Welcome/NewPassword.dart';
 import '../input_design.dart';
 import 'Lifesaver.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
@@ -10,10 +12,19 @@ import '../shared.dart';
 import '../constants.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import "package:flutter_gen/gen_l10n/app_localizations.dart";
+
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+
+import 'package:intl/intl.dart';
+import 'package:flutter/gestures.dart';
+
+import '../Welcome/NewPassword.dart'; 
 class ProfileEditing extends StatefulWidget {
   const ProfileEditing({Key? key}) : super(key: key);
 
@@ -40,7 +51,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    "Select Image From",
+                    AppLocalizations.of(context)!.select_image_from,
                     style: titleFontStyle,
                     textAlign: TextAlign.center,
                   ),
@@ -56,7 +67,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
                     },
                     icon: const Icon(Icons.camera),
                     label: Text(
-                      "CAMERA",
+                        AppLocalizations.of(context)!.camera,
                       style: whitegeneralfontStyle,
                     ),
                   ),
@@ -72,7 +83,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
                     },
                     icon: const Icon(Icons.image),
                     label: Text(
-                      "GALLERY",
+                       AppLocalizations.of(context)!.gallery,
                       style: whitegeneralfontStyle,
                     ),
                   ),
@@ -87,7 +98,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
                       Get.back();
                     },
                     icon: const Icon(Icons.close),
-                    label: Text("CANCEL", style: whitegeneralfontStyle),
+                    label: Text(  AppLocalizations.of(context)!.cancel, style: whitegeneralfontStyle),
                   ),
                 ],
               ),
@@ -124,6 +135,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
   TextEditingController contact_no = TextEditingController();
 
   Future<void> _loadProfileData() async {
+    DateTime DOB = DateTime(2000, 1);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String fn = prefs.getString('first_name') ?? '';
     String ln = prefs.getString('last_name') ?? '';
@@ -135,10 +147,11 @@ class _ProfileEditingState extends State<ProfileEditing> {
       last_name.text = ln;
       address.text = add;
       contact_no.text = cont;
-      DOB = dob;
+      // DOB = dob;
     });
   }
 
+  TextEditingController dateInput = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -167,7 +180,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
       putString('address', res_body['address']);
       putString('contact_no', res_body['contact_no']);
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Lifesaver()));
+          .push(MaterialPageRoute(builder: (context) => LifesaverProfile()));
     } else {
       throw Exception('Failed to update.');
     }
@@ -231,11 +244,6 @@ class _ProfileEditingState extends State<ProfileEditing> {
                           color: Colors.white,
                           shape: CircleBorder(),
                         ),
-                        // child: const CircleAvatar(
-                        //   backgroundImage:
-                        //       AssetImage("assets/images/profileicon.png"),
-                        //   radius: 60,
-                        // ),
                         child: ClipOval(
                           child: pickedImage != null
                               ? Image.file(
@@ -289,7 +297,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
               TextFormField(
                 controller: first_name,
                 decoration:
-                    buildInputDecoration(Icons.person_outline, "First Name"),
+                    buildInputDecoration(Icons.person_outline,   AppLocalizations.of(context)!.first_name),
                 validator: (value) {
                   if (value != null && value.isEmpty) {
                     return 'Please enter your name';
@@ -303,7 +311,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
               TextFormField(
                 controller: last_name,
                 decoration:
-                    buildInputDecoration(Icons.person_outline, "Last Name"),
+                    buildInputDecoration(Icons.person_outline,   AppLocalizations.of(context)!.last_name),
                 validator: (value) {
                   if (value != null && value.isEmpty) {
                     return 'Please enter your name';
@@ -316,7 +324,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
               ),
               TextFormField(
                 controller: address,
-                decoration: buildInputDecoration(Icons.location_on, "Address"),
+                decoration: buildInputDecoration(Icons.location_on,   AppLocalizations.of(context)!.address),
                 validator: (value) {
                   if (value != null && value.isEmpty) {
                     return 'Please enter your name';
@@ -328,8 +336,9 @@ class _ProfileEditingState extends State<ProfileEditing> {
                 height: 10,
               ),
               TextFormField(
+                keyboardType: TextInputType.number,
                 controller: contact_no,
-                decoration: buildInputDecoration(Icons.call, "Contact"),
+                decoration: buildInputDecoration(Icons.call,   AppLocalizations.of(context)!.contact),
                 validator: (value) {
                   if (value != null && value.isEmpty) {
                     return 'Please enter your name';
@@ -340,21 +349,81 @@ class _ProfileEditingState extends State<ProfileEditing> {
               const SizedBox(
                 height: 10,
               ),
-              TextFormField(
-                controller: contact_no,
-                decoration:
-                    buildInputDecoration(Icons.calendar_month, "Date of Birth"),
-                validator: (value) {
-                  if (value != null && value.isEmpty) {
-                    return 'Please enter your DoB';
-                  }
-                  return null;
+              TextField(
+                controller: dateInput,
+                //editing controller of this TextField
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50.0),
+                      borderSide: BorderSide.none),
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        width: 1, color: Colors.white), //<-- SEE HERE
+                    borderRadius: BorderRadius.circular(50.0),
+                  ),
+                  labelText:   AppLocalizations.of(context)!.date_of_birth,
+                  prefixIcon: Icon(Icons.calendar_today),
+                ),
+                readOnly: true,
+                //set it true, so that user will not able to edit text
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1950),
+                      //DateTime.now() - not to allow to choose before today.
+                      lastDate: DateTime(2100));
+
+                  if (pickedDate != null) {
+                    print(
+                        pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                    String formattedDate =
+                        DateFormat('yyyy-MM-dd').format(pickedDate);
+                    print(
+                        formattedDate); //formatted date output using intl package =>  2021-03-16
+                    setState(() {
+                      dateInput.text =
+                          formattedDate; //set output date to TextField value.
+                    });
+                  } else {}
                 },
               ),
               const SizedBox(
                 height: 10,
               ),
-              // buildTextField("Password", password, true),
+              Row(
+                children: [
+                  const Spacer(),
+                  TextButton(
+                      // icon: Icon(Icons.chevron_right),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>  NewPassword()));
+                      },
+                      child: Row(children: [
+                        const Padding(
+                          padding: EdgeInsets.all(2),
+                          child: Icon(
+                            Icons.edit_outlined,
+                            color: PrimaryColor,
+                          ),
+                        ),
+                        Text(
+                           AppLocalizations.of(context)!.change_password,
+                          style: GoogleFonts.poppins(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 1.0,
+                              color: PrimaryColor),
+                        ),
+                      ])),
+                ],
+              ),
+               const SizedBox(
+                height: 10,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -379,7 +448,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
                         }
                       },
                       child: Text(
-                        'Save',
+                          AppLocalizations.of(context)!.save,
                         style: GoogleFonts.poppins(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -407,7 +476,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
                         Navigator.of(context).pop();
                       },
                       child: Text(
-                        'Cancel',
+                          AppLocalizations.of(context)!.cancel,
                         style: GoogleFonts.poppins(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,

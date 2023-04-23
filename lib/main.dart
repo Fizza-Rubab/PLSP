@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 // import 'package:google_maps/Home/Citizen_History.dart';
 // import 'package:google_maps/Lifesaver/Lifesaver.dart';
 import 'shared.dart';
+import 'Welcome/OTP.dart'; 
 
-
-
+import 'Welcome/ForgotPassword.dart';
 import 'Welcome/Welcome.dart';
 import 'Home/Citizen.dart';
 import 'Lifesaver/Lifesaver_Home.dart';
@@ -35,7 +35,7 @@ void main() {
   sharedPrefInit();
   WidgetsFlutterBinding.ensureInitialized();
   // runApp(const MaterialApp(home:Arrived(args:{"latitude":24.9059, "longitude":67.1383})));
-  runApp( GetMaterialApp(home: Welcome()));  
+  runApp( GetMaterialApp(home: Welcome()));   //Welcome
 }
 
 // void main(){

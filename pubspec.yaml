@@ -55,6 +55,8 @@ dependencies:
   awesome_notifications: ^0.7.4+1
   image_picker: ^0.8.7+3
   get: ^4.6.5
+  flutter_pdfview: ^1.2.7
+  
  
 
   

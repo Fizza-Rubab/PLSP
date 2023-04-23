@@ -247,9 +247,11 @@ class _WelcomeContentState extends State<WelcomeContent> {
                                           animType: AnimType.topSlide,
                                           descTextStyle: generalfontStyle,
                                           titleTextStyle: titleFontStyle,
-                                          title: "Request Sent",
+                                          title:    AppLocalizations.of(context)!
+                                        .request_sent,
                                           desc:
-                                              "Your request has been sent successfully. Our team will contact you shortly",
+                                               AppLocalizations.of(context)!
+                                        .request_sent_disc,
                                           btnOkOnPress: () {})
                                       .show();
                                 },

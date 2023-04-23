@@ -129,7 +129,7 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
                                     color: Colors.black45,
                                   )),
                               Text(
-                                "Lifesaver",
+                                AppLocalizations.of(context)!.life_saver,
                                 style: GoogleFonts.lato(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
@@ -144,16 +144,22 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
                       children: [
                         Padding(
                             padding: const EdgeInsets.symmetric(vertical: 6),
-                            child:
-                                infoCard(double.infinity, "Address", address)),
+                            child: infoCard(
+                                double.infinity,
+                                AppLocalizations.of(context)!.address,
+                                address)),
                         Padding(
                             padding: const EdgeInsets.symmetric(vertical: 6),
-                            child: infoCard(double.infinity, "Date of Birth",
+                            child: infoCard(
+                                double.infinity,
+                                AppLocalizations.of(context)!.date_of_birth,
                                 DateFormat.yMMMMd().format(DOB))),
                         Padding(
                             padding: const EdgeInsets.symmetric(vertical: 6),
                             child: infoCard(
-                                double.infinity, "Contact", contact_no)),
+                                double.infinity,
+                                AppLocalizations.of(context)!.contact,
+                                contact_no)),
                         const SizedBox(
                           height: 8,
                         ),
@@ -176,7 +182,7 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
                                     ),
                                   ),
                                   Text(
-                                    'Edit Profile',
+                                       AppLocalizations.of(context)!.edit_profile,
                                     style: GoogleFonts.poppins(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w600,

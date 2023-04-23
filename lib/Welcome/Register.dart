@@ -127,19 +127,11 @@ class _RegisterState extends State<Register> {
                 children: [
                   Text(
                     AppLocalizations.of(context)!.register,
-                    style: GoogleFonts.poppins(
-                        fontSize: 36,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: -0.5,
-                        color: Colors.black54),
+                    style: boldheader,
                   ),
                   Text(
                     AppLocalizations.of(context)!.register_desc,
-                    style: GoogleFonts.lato(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: 0.2,
-                        color: Colors.black45),
+                    style: header_disc,
                   ),
                   SizedBox(
                       height:
@@ -243,7 +235,7 @@ class _RegisterState extends State<Register> {
                           autofocus: true,
                           keyboardType: TextInputType.number,
                           decoration: buildInputDecoration(Icons.call,
-                              AppLocalizations.of(context)!.contact_no),
+                              AppLocalizations.of(context)!.contact),
                         ),
                         SizedBox(
                           height: space_between_val,
@@ -263,7 +255,8 @@ class _RegisterState extends State<Register> {
                                   color: Colors.white), //<-- SEE HERE
                               borderRadius: BorderRadius.circular(50.0),
                             ),
-                            labelText: "Date of Birth",
+                            labelText:    AppLocalizations.of(context)!
+                                        .date_of_birth, 
                             prefixIcon: Icon(Icons.calendar_today),
                           ),
                           readOnly: true,
@@ -299,11 +292,11 @@ class _RegisterState extends State<Register> {
                             children: [
                               TextSpan(
                                 text:
-                                    'By signing in to this application, you are agreeing to our ',
+                                     AppLocalizations.of(context)!.disclaimer,
                                     style: generalfontStyle
                               ),
                               TextSpan(
-                                  text: "Terms and privacy policy.",
+                                  text:    AppLocalizations.of(context)!.disclaimer_url, 
                                   style: urlfontStyle,
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
