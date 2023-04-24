@@ -16,7 +16,7 @@ class CitizenHistory extends StatefulWidget {
 class _CitizenHistoryState extends State<CitizenHistory> {
   List names = ["Shamsa", "Ruhama", "Sameer", "Fizza"];
   List details = [
-    "Address comes here: Garden East, Karachi.i.........Address comes here: Garden East, Karachi.i.........",
+    "Adjejkkdress comes here: Garden East, Karachi.i.........Address comes here: Garden East, Karachi.i.........",
     "Johar",
     "Johar",
     "Outside planet Earth"

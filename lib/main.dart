@@ -35,7 +35,7 @@ void main() {
   sharedPrefInit();
   WidgetsFlutterBinding.ensureInitialized();
   // runApp(const MaterialApp(home:Arrived(args:{"latitude":24.9059, "longitude":67.1383})));
-  runApp( GetMaterialApp(home: ThankYouScreen()));   //Welcome
+  runApp( GetMaterialApp(home: Welcome()));   //Welcome
 }
 
 // void main(){
