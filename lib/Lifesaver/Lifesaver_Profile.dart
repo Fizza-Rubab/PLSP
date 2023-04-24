@@ -61,13 +61,6 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
             backgroundColor: Colors.transparent,
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.pin,
-              // title: Text(AppLocalizations.of(context)!.profile,
-              //     style: GoogleFonts.poppins(
-              //       fontSize: 24,
-              //       fontWeight: FontWeight.w600,
-              //       letterSpacing: 0,
-              //       color: Colors.black45,
-              //     )),
               background: Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
@@ -182,7 +175,7 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
                                     ),
                                   ),
                                   Text(
-                                       AppLocalizations.of(context)!.edit_profile,
+                                    AppLocalizations.of(context)!.edit_profile,
                                     style: GoogleFonts.poppins(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w600,

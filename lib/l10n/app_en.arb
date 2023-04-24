@@ -61,6 +61,11 @@
     "post_emergency_form" : "Post Emergency Form", 
     "patient_name": "Name of patient(s)", 
     "lifesaver_details" : "Attending Lifesaver Details", 
-    "submit" : "Submit" 
+    "submit" : "Submit" , 
+    "well_done" : "Well Done!", 
+    "thanks": "Thank you for saving a life!", 
+    "thanks_desc": "Your appropriate use of this help has made an impact in health care. We appreciate your efforts.", 
+    "go_to_home": "Go to Home", 
+    "token_of_thanks": "A Token of Thanks"
 
 }
