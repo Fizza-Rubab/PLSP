@@ -42,11 +42,25 @@
     "request_sent_disc":  "Your request has been sent successfully. Our team will contact you shortly", 
     "disclaimer" : "By signing up to this application, you are agreeing to our ", 
     "disclaimer_url": "Terms and privacy policy.", 
-   "reset_pass": "Reset Password", 
+    "reset_pass": "Reset Password", 
     "reset_pass_disc" : "Enter Email Address", 
     "no_account": "Do not have an account?", 
     "send_code_via_email": "Send Code via Email", 
-    "enter_pass": "Enter new password"
-
+    "enter_pass": "Enter new password", 
+    "emergency_details" : "Emergency details", 
+    "emergency_location": "Location of Emergency",
+    "patients_information" : "Patient's information",  
+    "patient_quantity": "Number of Patients", 
+    "other_details": "Other details", 
+    "caller_information" : "Caller's Information", 
+    "name" : "Name", 
+    "launch_alert" : "Launch Alert", 
+    "stay_calm" : "Stay Calm" , 
+    "stay_calm_desc": "We are finding you help", 
+    "finding_lifesaver_nearby" : "Finding Lifesaver", 
+    "post_emergency_form" : "Post Emergency Form", 
+    "patient_name": "Name of patient(s)", 
+    "lifesaver_details" : "Attending Lifesaver Details", 
+    "submit" : "Submit" 
 
 }

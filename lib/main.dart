@@ -17,7 +17,7 @@ import 'Alert/searching.dart';
 import 'Alert/about_to_reach.dart';
 import 'Lifesaver/Lifesaver_Feedback.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'Welcome/Register.dart'; 
+import 'Alert/Citizen_Feedback.dart'; 
 
 void main() {
   AwesomeNotifications().initialize(
@@ -35,7 +35,7 @@ void main() {
   sharedPrefInit();
   WidgetsFlutterBinding.ensureInitialized();
   // runApp(const MaterialApp(home:Arrived(args:{"latitude":24.9059, "longitude":67.1383})));
-  runApp( GetMaterialApp(home: Welcome()));   //Welcome
+  runApp( GetMaterialApp(home: Citizen_Feedback()));   //Welcome
 }
 
 // void main(){

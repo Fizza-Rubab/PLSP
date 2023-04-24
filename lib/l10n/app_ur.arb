@@ -42,7 +42,20 @@
     "reset_pass_disc" : "ای میل ایڈریس درج کریں", 
     "no_account": "کیا آپ کا کوئی اکاؤنٹ نہیں ہے؟", 
     "send_code_via_email": "کوڈ ای میل کریں", 
-    "enter_pass": "نیا پاسورڈ درج کریں"
-    
-   
+    "enter_pass": "نیا پاسورڈ درج کریں", 
+    "emergency_details" : "تفصیلات", 
+    "emergency_location": "ہنگامی صورتحال کی جگہ", 
+    "patients_information" : "مریض کی معلومات", 
+    "patient_quantity": "مریضوں کی تعداد",  
+    "other_details": "دیگر تفصیلات", 
+    "caller_information" : "کالر کی معلومات", 
+    "name" : "نام", 
+    "launch_alert" : "الرٹ جاری کریں" , 
+    "stay_calm" : "پرسکون رہیں" , 
+    "stay_calm_desc": "ہم آپ کے لیے مدد تلاش کر رہے ہیں", 
+    "finding_lifesaver_nearby" : "لائف سیونگر کی تلاش", 
+    "post_emergency_form" : "ایمرجنسی فارم دائر کریں", 
+    "patient_name": "مریضوں کے نام", 
+    "lifesaver_details" : "لاف سیونگر کی تفصیلات", 
+    "submit" : "فارم جمع کرائیں" 
 }

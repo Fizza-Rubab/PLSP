@@ -28,6 +28,7 @@ var header_disc = GoogleFonts.lato(
     fontWeight: FontWeight.w400,
     letterSpacing: 0.2,
     color: Colors.black45);
+    
 var boldheader = GoogleFonts.poppins(
     fontSize: 36,
     fontWeight: FontWeight.w700,

@@ -3,10 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps/Alert/Thankyou.dart';
+import 'package:google_maps/Lifesaver/appbar.dart';
 import '../Home/Citizen.dart';
 import '../input_design.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import '../constants.dart'; 
 
 class Citizen_Feedback extends StatefulWidget {
   const Citizen_Feedback({super.key});
@@ -31,31 +33,13 @@ class _MyWidgetState extends State<Citizen_Feedback> {
       _entries.removeAt(index);
     });
   }
-
-  // void dispose() {
-  //   _textController.dispose();
-  //   super.dispose();
-  // }
   double _rating = 0.0;
   @override
   Widget build(BuildContext context) {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        // iconTheme: IconThemeData(color: appbar_icon_color),
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        title:  Text("Post Emergency Form", style: GoogleFonts.poppins(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0,
-                color: Colors.redAccent,
-              ),),
-        centerTitle: true,
-
-        
-      ),
+      appBar: SimpleAppBar(localizations.post_emergency_form), 
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
         child: Column(
@@ -63,12 +47,7 @@ class _MyWidgetState extends State<Citizen_Feedback> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Name of patient(s):", style: GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0,
-                  color: Colors.redAccent,
-                ),
+              localizations.patient_name, style: generalfontStyle
             ),
             SizedBox(
               height: 150,
@@ -84,21 +63,13 @@ class _MyWidgetState extends State<Citizen_Feedback> {
                         filled: true,
                         fillColor: Colors.grey.shade200,
                         focusColor: Colors.red.shade50,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50.0),
-                          borderSide: const BorderSide(
-                              style: BorderStyle.none, width: 0),
-                        ),
+                        
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50.0),
                           borderSide: const BorderSide(
                               style: BorderStyle.none, width: 0),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50.0),
-                          borderSide: const BorderSide(
-                              style: BorderStyle.none, width: 0),
-                        ),
+                        
                         suffixIcon: IconButton(
                           icon: const Icon(Icons.add),
                           onPressed: _addEntry,
@@ -122,12 +93,7 @@ class _MyWidgetState extends State<Citizen_Feedback> {
             ),
             Text(
               "Details:",
-              style:GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0,
-                  color: Colors.redAccent,
-                ),
+              style: generalfontStyle,
             ),
             TextField(
               maxLines: 3,
@@ -137,40 +103,20 @@ class _MyWidgetState extends State<Citizen_Feedback> {
               color: Colors.redAccent,
             ),
             Text(
-              "Attending Lifesaver Details:",
-              style: GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0,
-                  color: Colors.redAccent,
-                ),
+             localizations.lifesaver_details,
+              style: titleFontStyle
             ),
             Text(
-              "Lifesaver Name: Sara Khan",
-              style: GoogleFonts.lato(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 0,
-                color: Colors.grey.shade800,
-              ),
+              "Name: Sara Khan",
+              style: generalfontStyle,
             ),
             Text(
-              "Lifesaver Contact: 03332428145",
-              style: GoogleFonts.lato(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 0,
-                color: Colors.grey.shade800,
-              ),
+              "Contact: 03332428145",
+               style: generalfontStyle,
             ),
             Text(
               "Rate the Life saver",
-              style: GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0,
-                  color: Colors.redAccent,
-                ),
+               style: generalfontStyle,
             ),
             Center(
               child: RatingBar.builder(
@@ -211,7 +157,7 @@ class _MyWidgetState extends State<Citizen_Feedback> {
                               builder: (context) => ThankYouScreen()));
                         },
                         child: Text(
-                          'Submit',
+                         localizations.submit,
                           style: GoogleFonts.poppins(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
@@ -220,22 +166,6 @@ class _MyWidgetState extends State<Citizen_Feedback> {
                         ),
                       ),
             ),
-            // SizedBox(
-            //   height: 48,
-            //   child: ElevatedButton(
-            //     style: ElevatedButton.styleFrom(
-            //       backgroundColor: Colors.redAccent,
-            //       fixedSize: Size(MediaQuery.of(context).size.width, 30),
-            //       textStyle: const TextStyle(
-            //           fontSize: 18, fontFamily: 'Poppins', color: Colors.white),
-            //     ),
-            //     onPressed: () {
-            //       Navigator.of(context).push(
-            //           MaterialPageRoute(builder: (context) => Citizen()));
-            //     },
-            //     child: const Text('Submit'),
-            //   ),
-            // ),
           ],
         ),
       ),
