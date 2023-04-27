@@ -1,8 +1,12 @@
 // ignore_for_file: avoid_print, non_constant_identifier_names
 
+import 'dart:io';
+
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps/Welcome/ForgotPassword.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Lifesaver/Lifesaver.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -22,6 +26,8 @@ class Login extends StatefulWidget {
   State<Login> createState() => _LoginState();
 }
 
+
+
 class _LoginState extends State<Login> {
   bool rememberFlag = true;
   bool is_lifesaver = false;
@@ -33,6 +39,17 @@ class _LoginState extends State<Login> {
   TextEditingController password = TextEditingController();
   TextEditingController confirmpassword = TextEditingController();
   final _formkey = GlobalKey<FormState>();
+
+
+
+  Future<File> _saveImageToFile(String url, String fileName) async {
+  var response = await http.get(Uri.parse(url));
+  var bytes = response.bodyBytes;
+  var directory = await getApplicationDocumentsDirectory();
+  var file = File('${directory.path}/$fileName');
+  await file.writeAsBytes(bytes.buffer.asUint8List(0, bytes.length));
+  return file;
+  }
 
   Future userLogin() async {
     final http.Response result = await http.post(
@@ -56,6 +73,13 @@ class _LoginState extends State<Login> {
         putString('date_of_birth', ls_body['date_of_birth']);
         putString('address', ls_body['address']);
         putString('contact_no', ls_body['contact_no']);
+        if (ls_body['profile_picture'] != null) {
+            var fileName = Uri.parse(ls_body['profile_picture']).pathSegments.last;
+            var file = await _saveImageToFile(ls_body['profile_picture'], fileName);
+            var prefs = await SharedPreferences.getInstance();
+            await prefs.setString('profile_image', file.path);
+            print("setting prefs image");
+        }
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => Lifesaver()));
       } else {
