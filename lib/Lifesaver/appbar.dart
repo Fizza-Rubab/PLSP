@@ -72,7 +72,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         title: RichText(
             text: TextSpan(
                 text: name, 
-                style: generalfontStyle,
+                style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0, color: Colors.black38, height: 1.1),
                 children: [
               TextSpan(
                   text: name1, 

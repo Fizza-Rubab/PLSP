@@ -28,7 +28,7 @@ class _CitizenProfileState extends State<CitizenProfile> {
   String address = '';
   String contact_no = '';
 
-    @override
+  @override
   void initState() {
     super.initState();
     SharedPreferences.getInstance().then((prefs) {
@@ -41,13 +41,13 @@ class _CitizenProfileState extends State<CitizenProfile> {
         contact_no = _prefs.getString('contact_no') ?? '';
       });
     });
-    
   }
 
   @override
   Widget build(BuildContext context) {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
+        backgroundColor: greyWhite,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(expandedHeight),
           child: AppBar(
@@ -209,9 +209,9 @@ Container infoCard(double width, String title, String text) {
       alignment: Alignment.centerLeft,
       width: width,
       padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
-        color: Colors.grey.shade100,
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        color: Colors.white,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

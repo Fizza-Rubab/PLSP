@@ -51,43 +51,68 @@ class _CitizenHomeState extends State<CitizenHome> {
   Widget build(BuildContext context) {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
-        appBar: MyAppBar(name:localizations.hello, name1:'$first_name $last_name', imageProvider:FileImage(pickedImage!)),
-        body: Container(
-            height: double.infinity,
-            width: double.infinity,
-            padding: const EdgeInsets.fromLTRB(14, 48, 14, 14),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Spacer(
-                  flex: 2,
+      backgroundColor: greyWhite,
+      appBar: AppBar(
+          titleSpacing: 14,
+          backgroundColor: Colors.transparent,
+          automaticallyImplyLeading: false,
+          elevation: 0,
+          systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness: Brightness.dark,
+          ),
+          title: RichText(
+              text: TextSpan(
+                  text: localizations.hello,
+                  style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0, color: Colors.black38, height: 1.1),
+                  children: [
+                TextSpan(
+                    text: '$first_name $last_name',
+                    style: GoogleFonts.poppins(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0,
+                      color: Colors.black45,
+                    ))
+              ])),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Profile()));
+                },
+                child: const CircleAvatar(
+                  radius: 22,
+                  foregroundImage: AssetImage('assets/images/profileicon.png'),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).size.height * (1 / 32)),
-                  child: Text(
-                    localizations.help,
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.lato(
-                        fontSize: 28,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 1.5,
-                        color: PrimaryColor),
-                  ),
-                ),
-                Padding(
-                    padding: const EdgeInsets.only(bottom: 14),
-                    child: Text(
-                      localizations.instruct,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.lato(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 0.4,
-                          color: Colors.black45,
-                          height:
-                              MediaQuery.of(context).size.height * (1 / 512)),
-                    )),
+              ),
+            )
+          ],
+          ),
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        padding: const EdgeInsets.fromLTRB(14, 48, 14, 14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Spacer(flex: 2,),
+            Padding(
+              padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * (1/32)),
+              child: Text(
+                localizations.help,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.lato(fontSize: 28, fontWeight: FontWeight.w900, letterSpacing: 1.5, color: PrimaryColor),
+              ),
+            ),
+            Padding(
+                padding: const EdgeInsets.only(bottom: 14),
+                child: Text(
+                  localizations.instruct,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w700, letterSpacing: 0.4, color: Colors.black45, height: MediaQuery.of(context).size.height * (1/512)),
+                )),
                 const Spacer(),
                 Container(
                   height: MediaQuery.of(context).size.width / 2 + 14,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const PrimaryColor = Colors.redAccent;
+const greyWhite = Color(0xffEFF2F4);
 
 const peachColor = Color.fromARGB(255, 253, 129, 107);
 
