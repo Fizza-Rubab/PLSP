@@ -1,7 +1,7 @@
 {% load static %}
 
 {% block html %}
-<!DOCTYPE html>
+<html>
 <html dir="ltr" lang="en">
 {% block head %}
    <head>
@@ -132,6 +132,8 @@
         <script src="{% static 'js/cal-init.js' %}"></script>
         <script src="{% static 'constant/strings.js' %}"></script>
         <script src="{% static 'constant/validator.js' %}"></script>
+        <script src="{% static 'js/map-google.init.js' %}"></script>
+
 
         <script>
             $(document).ready(function () {
