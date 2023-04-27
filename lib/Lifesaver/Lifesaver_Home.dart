@@ -1,18 +1,11 @@
-<<<<<<< HEAD
 import 'dart:io';
-
 import 'package:flutter/src/widgets/container.dart';
-=======
->>>>>>> 9245f9ca44177a9506febb3c2eb04d62864e5e08
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-<<<<<<< HEAD
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../texttheme.dart';
-=======
->>>>>>> 9245f9ca44177a9506febb3c2eb04d62864e5e08
 import '../constants.dart';
 import 'appbar.dart';
 
