@@ -38,7 +38,7 @@
                 <div class="box bg-danger text-center">
                     <h1 class="font-light text-white"><i class="mdi mdi-view-dashboard"></i></h1>
                     <h5 class="text-white">47</h6>
-                    <h6 class="text-white">Total Calls Made</h6>
+                        <h6 class="text-white">Total Calls Made</h6>
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
                 <div class="box bg-warning text-center">
                     <h1 class="font-light text-white"><i class="mdi mdi-chart-areaspline"></i></h1>
                     <h5 class="text-white">23</h6>
-                    <h6 class="text-white">Total Lifesavers</h6>
+                        <h6 class="text-white">Total Lifesavers</h6>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
                 <div class="box bg-info text-center">
                     <h1 class="font-light text-white"><i class="mdi mdi-collage"></i></h1>
                     <h5 class="text-white">39</h6>
-                    <h6 class="text-white">Total Cases Addressed</h6>
+                        <h6 class="text-white">Total Cases Addressed</h6>
                 </div>
             </div>
         </div>
@@ -72,59 +72,14 @@
             <div class="card">
                 <div class="card-body">
                     <div id="map"> </div>
-            
-                        <h5 class="card-title">Active Lifesavers</h5>
 
-    <!-- prettier-ignore -->
-                            <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
-                            ({key: "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg", v: "beta"});</script>
-                            <!-- <script>
-                                function initMap() {
-                        
-                                // A couple of places
-                                var brunchPos = {lat: 41.3882793, lng: 2.1615454};
-                                var faboritPos = {lat: 41.3915233, lng: 2.1650537};
-                        
-                                // Create map, draw it in the targetElem and sets the cameraPosition
-                                var targetElem = document.getElementById('map');
-                                var cameraPosition = { zoom: 13, center: faboritPos };
-                                var map = new google.maps.Map(targetElem, cameraPosition);
-                        
-                                // We have already displayed the map, let's add markers
-                        
-                                // Create markers in the map
-                                var marker1 = new google.maps.Marker({ map: map, position: faboritPos });
-                                var marker2 = new google.maps.Marker({ map: map, position: brunchPos });
-                        
-                                // Now let's setup the autocomplete input, with which we can add more markers
-                        
-                                // Autocomplete input
-                                var input = document.getElementById('searchTextField');
-                                var autocomplete = new google.maps.places.Autocomplete(input);
-                                autocomplete.bindTo('bounds', map);
-                        
-                                // Listen to autocomplete input
-                                autocomplete.addListener('place_changed', function() {
-                        
-                                    var place = autocomplete.getPlace();
-                                    if (!place.geometry) {
-                                    // User entered the name of a place that was not suggested and
-                                    // pressed the Enter key, or the Place Details request failed.
-                                    window.alert("No details available for input: '" + place.name + "'. Select one of the results.");
-                                    return;
-                                    }
-                        
-                                    // Add marker in map
-                                    var marker = new google.maps.Marker({ map: map, position: place.geometry.location });
-                                });
-                        
-                                }
-                            </script> -->
-                        
-                        
-    </div>
-    </div>
-    </div>
+                    <h5 class="card-title">Active Lifesavers</h5>
+                    <div id="submap" style="height: 500px"></div>
+
+
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -133,57 +88,12 @@
             <div class="card">
                 <div class="card-body">
                     <div id="map"> </div>
-            
-                        <h5 class="card-title">Active Citizens</h5>
-                            <script>
-                                function initMap() {
-                        
-                                // A couple of places
-                                var brunchPos = {lat: 41.3882793, lng: 2.1615454};
-                                var faboritPos = {lat: 41.3915233, lng: 2.1650537};
-                        
-                                // Create map, draw it in the targetElem and sets the cameraPosition
-                                var targetElem = document.getElementById('map');
-                                var cameraPosition = { zoom: 13, center: faboritPos };
-                                var map = new google.maps.Map(targetElem, cameraPosition);
-                        
-                                // We have already displayed the map, let's add markers
-                        
-                                // Create markers in the map
-                                var marker1 = new google.maps.Marker({ map: map, position: faboritPos });
-                                var marker2 = new google.maps.Marker({ map: map, position: brunchPos });
-                        
-                                // Now let's setup the autocomplete input, with which we can add more markers
-                        
-                                // Autocomplete input
-                                var input = document.getElementById('searchTextField');
-                                var autocomplete = new google.maps.places.Autocomplete(input);
-                                autocomplete.bindTo('bounds', map);
-                        
-                                // Listen to autocomplete input
-                                autocomplete.addListener('place_changed', function() {
-                        
-                                    var place = autocomplete.getPlace();
-                                    if (!place.geometry) {
-                                    // User entered the name of a place that was not suggested and
-                                    // pressed the Enter key, or the Place Details request failed.
-                                    window.alert("No details available for input: '" + place.name + "'. Select one of the results.");
-                                    return;
-                                    }
-                        
-                                    // Add marker in map
-                                    var marker = new google.maps.Marker({ map: map, position: place.geometry.location });
-                                });
-                        
-                                }
-                            </script>
-                        
-                            <!-- <script async defer
-                        src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap&key=AIzaSyAgRiS_G_6SBuYCKEgWi2E989lIfDF9Dco">
-                        </script> -->
-    </div>
-    </div>
-    </div>
+
+                    <h5 class="card-title">Active Citizens</h5>
+
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="row">
@@ -200,12 +110,12 @@
             </div>
         </div>
     </div>
-   
+
     <div class="row">
         <!-- column -->
         <div class="col-md-12">
             <!-- Card -->
-            
+
             <!-- card -->
             <div class="card">
                 <div class="card-body">
@@ -261,12 +171,12 @@
                 </div>
             </div>
         </div>
-        </div>
-            <!-- card new -->
-        <!-- column -->
-        
-        
-        
+    </div>
+    <!-- card new -->
+    <!-- column -->
+
+
+
     <!-- ============================================================== -->
     <!-- Recent comment and chats -->
     <!-- ============================================================== -->
@@ -275,4 +185,3 @@
 src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap&key=AIzaSyAgRiS_G_6SBuYCKEgWi2E989lIfDF9Dco">
 </script> -->
 {% endblock content %}
-

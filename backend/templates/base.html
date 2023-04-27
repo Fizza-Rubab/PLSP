@@ -13,10 +13,34 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    
 
-    <!-- <script async defer
-    src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap&key=AIzaSyAgRiS_G_6SBuYCKEgWi2E989lIfDF9Dco">
-    </script> -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgRiS_G_6SBuYCKEgWi2E989lIfDF9Dco"></script>
+    <script>
+      async function initMap() {
+  // The location of Uluru
+  const position = { lat: -25.344, lng: 131.031 };
+  // Request needed libraries.
+  //@ts-ignore
+  const { Map } = await google.maps.importLibrary("maps");
+  const { AdvancedMarkerView } = await google.maps.importLibrary("marker");
+
+  // The map, centered at Uluru
+  map = new Map(document.getElementById("map"), {
+    zoom: 4,
+    center: position,
+    mapId: "DEMO_MAP_ID",
+  });
+
+  // The marker, positioned at Uluru
+  const marker = new AdvancedMarkerView({
+    map: map,
+    position: position,
+    title: "Uluru",
+  });
+}
+    </script>
+
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -62,7 +86,7 @@
    
    {% block body %}
    
-       <body>
+       <body onload="initMap()">
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css' %} -->
     <!-- ============================================================== -->
@@ -132,7 +156,7 @@
         <script src="{% static 'js/cal-init.js' %}"></script>
         <script src="{% static 'constant/strings.js' %}"></script>
         <script src="{% static 'constant/validator.js' %}"></script>
-        <script src="{% static 'js/map-google.init.js' %}"></script>
+        <!-- <script src="{% static 'js/map-google.init.js' %}"></script> -->
 
 
         <script>
