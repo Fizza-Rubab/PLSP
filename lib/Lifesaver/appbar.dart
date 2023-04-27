@@ -46,11 +46,15 @@ import '../constants.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
-  MyAppBar(this.name, this.name1);
-  
+  MyAppBar({
+    ImageProvider<Object>? imageProvider,
+    this.name = 'Default Title',
+    this.name1 = 'he',
+  }) : this.imageProvider = imageProvider ?? AssetImage('assets/images/profileicon.png');
 
   final String name; 
   final String name1; 
+  final ImageProvider<Object> imageProvider;
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
@@ -86,9 +90,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               onTap: () {
                
               },
-              child: const CircleAvatar(
+              child: CircleAvatar(
                 radius: 22,
-                foregroundImage: AssetImage('assets/images/profileicon.png'),
+                foregroundImage: imageProvider,
               ),
             ),
           )

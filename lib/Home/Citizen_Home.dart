@@ -38,7 +38,7 @@ class _CitizenHomeState extends State<CitizenHome> {
   Widget build(BuildContext context) {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
-        appBar: MyAppBar(localizations.hello, '$first_name $last_name'),
+        appBar: MyAppBar(name:localizations.hello, name1:'$first_name $last_name'),
         body: Container(
             height: double.infinity,
             width: double.infinity,

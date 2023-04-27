@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/src/widgets/container.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../texttheme.dart';
 import '../constants.dart';
 import 'appbar.dart';
@@ -46,10 +49,26 @@ List<String> urls = [
 ];
 
 class _LifesaverHomeState extends State<LifesaverHome> {
+  File? pickedImage;
+  @override
+  initState(){
+    super.initState();
+    _loadImageFromLocal();
+  }
+  void _loadImageFromLocal() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? imagePath = prefs.getString('profile_image');
+    if (imagePath != null) {
+      setState(() {
+        pickedImage = File(imagePath);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar("Hello\n", "Shamsa Hafeez"),
+      appBar: MyAppBar(name:"Hello\n", name1: "Shamsa Hafeez", imageProvider:FileImage(pickedImage!)),
       body: SingleChildScrollView(
         child: Column(
           children: [

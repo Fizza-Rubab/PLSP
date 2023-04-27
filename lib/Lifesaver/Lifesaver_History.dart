@@ -90,7 +90,7 @@ class _LifesaverHistoryState extends State<LifesaverHistory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(" ", "History"),
+      appBar: MyAppBar(name: " ", name1: "History",),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0),
         child: Center(

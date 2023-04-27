@@ -1,5 +1,6 @@
 import 'dart:io';
-
+import 'dart:typed_data';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps/Lifesaver/Lifesaver_Profile.dart';
 import 'package:google_maps/Welcome/NewPassword.dart';
@@ -34,6 +35,40 @@ class ProfileEditing extends StatefulWidget {
 
 class _ProfileEditingState extends State<ProfileEditing> {
   File? pickedImage;
+  String imageUrl = '';
+
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfileData();
+    _loadImageFromLocal();
+  }
+
+  void _loadImageFromLocal() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? imagePath = prefs.getString('profile_image');
+    if (imagePath != null) {
+      setState(() {
+        pickedImage = File(imagePath);
+      });
+    }
+  }
+
+  Future<void> _uploadImage() async {
+    final url = 'http://kaavish2023.pythonanywhere.com/lifesaver/upload_photo/2';
+    final request = http.MultipartRequest('POST', Uri.parse(url));
+    print("path" + pickedImage!.path);
+    request.files.add(await http.MultipartFile.fromPath('image', pickedImage!.path));
+    final response = await request.send();
+    if (response.statusCode == 200) {
+      print("response.statusCode");
+      // Image uploaded successfully, update profile screen
+    } else {
+      print("error uploading image");
+      // Error uploading image
+    }
+  }
   void imagePickerOption() {
     Get.bottomSheet(
       SingleChildScrollView(
@@ -109,6 +144,11 @@ class _ProfileEditingState extends State<ProfileEditing> {
     );
   }
 
+  void _saveImageToLocal(File image) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('profile_image', image.path);
+  }
+
   pickImage(ImageSource imageType) async {
     try {
       final photo = await ImagePicker().pickImage(source: imageType);
@@ -117,7 +157,9 @@ class _ProfileEditingState extends State<ProfileEditing> {
       setState(() {
         pickedImage = tempImage;
       });
-
+      _uploadImage();
+      if (pickedImage != null){
+        _saveImageToLocal(pickedImage!);}
       Get.back();
     } catch (error) {
       debugPrint(error.toString());
@@ -152,11 +194,6 @@ class _ProfileEditingState extends State<ProfileEditing> {
   }
 
   TextEditingController dateInput = TextEditingController();
-  @override
-  void initState() {
-    super.initState();
-    _loadProfileData();
-  }
 
   Future _updateProfileData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -245,19 +282,12 @@ class _ProfileEditingState extends State<ProfileEditing> {
                           shape: CircleBorder(),
                         ),
                         child: ClipOval(
-                          child: pickedImage != null
-                              ? Image.file(
+                          child:pickedImage!=null? Image.file(
                                   pickedImage!,
                                   width: 120,
                                   height: 120,
                                   fit: BoxFit.cover,
-                                )
-                              : Image.network(
-                                  'https://upload.wikimedia.org/wikipedia/commons/5/5f/Alberto_conversi_profile_pic.jpg',
-                                  width: 120,
-                                  height: 120,
-                                  fit: BoxFit.cover,
-                                ),
+                                ): Image.asset("assets/images/profileicon.png",width: 120, height: 120,),
                         ),
                       ),
                       Positioned(

@@ -1,5 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'Profile_Editing.dart';
@@ -26,6 +28,8 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
   String last_name = '';
   String address = '';
   String contact_no = '';
+  File? pickedImage;
+  String imageUrl = '';
 
   @override
   void initState() {
@@ -40,7 +44,18 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
         contact_no = _prefs.getString('contact_no') ?? '';
       });
     });
+    _loadImageFromLocal();
   }
+  void _loadImageFromLocal() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? imagePath = prefs.getString('profile_image');
+    if (imagePath != null) {
+      setState(() {
+        pickedImage = File(imagePath);
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -91,9 +106,9 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
                         color: Colors.white,
                         shape: CircleBorder(),
                       ),
-                      child: const CircleAvatar(
+                      child: pickedImage==null? CircularProgressIndicator():CircleAvatar(
                         backgroundImage:
-                            AssetImage("assets/images/profileicon.png"),
+                            FileImage(pickedImage!),
                         radius: 55,
                       ),
                     ),
