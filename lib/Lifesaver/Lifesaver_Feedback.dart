@@ -68,12 +68,7 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                 ),
                 Text(
                   'Yes',
-                  style: GoogleFonts.poppins(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0,
-                    color: Colors.grey.shade800,
-                  ),
+                  style: option_style
                 ),
                 Radio(
                   value: false,
@@ -85,13 +80,6 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                   },
                   activeColor: Colors.redAccent,
                 ),
-                Text('No',
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0,
-                    color: Colors.grey.shade800,
-                  ),),
                 Text(
                   'No',
                   style:option_style
@@ -116,13 +104,6 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                   },
                   activeColor: Colors.redAccent,
                 ),
-                Text('CPR',
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0,
-                    color: Colors.grey.shade800,
-                  ),),
                 Text(
                   'CPR',
                   style: option_style
@@ -137,14 +118,6 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                   },
                   activeColor: Colors.redAccent,
                 ),
-                Text('Bleeding Control',
-                
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0,
-                    color: Colors.grey.shade800,
-                  ),),
                 Text(
                   'Bleeding Control',
                   style: option_style
@@ -159,13 +132,6 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                   },
                   activeColor: Colors.redAccent,
                 ),
-                Text('Both',
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0,
-                    color: Colors.grey.shade800,
-                  ),),
                 Text(
                   'Both',
                   style: option_style
@@ -193,13 +159,6 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                   'Yes',
                   style: option_style
                 ),
-                Text('Yes',
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0,
-                    color: Colors.grey.shade800,
-                  ),),
                 Radio(
                   value: false,
                   groupValue: _didMedicalHelpArrive,
@@ -214,13 +173,6 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                   'No',
                   style: option_style
                 ),
-                Text('No',
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 0,
-                    color: Colors.grey.shade800,
-                  ),),
               ],
             ),
             SizedBox(height: 20.0),

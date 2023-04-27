@@ -52,7 +52,13 @@ dependencies:
   lite_rolling_switch: ^0.1.1
   awesome_dialog: ^3.0.2
   google_maps_webservice: ^0.0.19
-  expansion_card: ^0.1.0
+  awesome_notifications: ^0.7.4+1
+  image_picker: ^0.8.7+3
+  get: ^4.6.5
+  flutter_pdfview: ^1.2.7
+  
+ 
+
   
  
 dev_dependencies:

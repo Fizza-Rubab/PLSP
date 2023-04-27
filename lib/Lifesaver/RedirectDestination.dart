@@ -6,7 +6,7 @@ import '../input_design.dart';
 import 'NavigateScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
-
+import '../Lifesaver/appbar.dart'; 
 
 class RedirectDestination extends StatefulWidget {
   const RedirectDestination({Key? key}) : super(key: key);
@@ -37,7 +37,6 @@ class _RedirectDestinationState extends State<RedirectDestination> {
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations localizations = AppLocalizations.of(context)!;
     final Set<Marker> markers = new Set();
   markers.add(Marker( //add first marker
     markerId: MarkerId(LatLng(24.8918, 67.0731).toString()),
@@ -50,18 +49,7 @@ class _RedirectDestinationState extends State<RedirectDestination> {
     ));
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        foregroundColor: Colors.black54,
-        title: Text("Emergency Details",
-            style: GoogleFonts.poppins(
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 0,
-              color: Colors.black45,
-            )),
-      ),
+      appBar: SimpleAppBar("Emergency Details") , 
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14.0),
         child: Column(

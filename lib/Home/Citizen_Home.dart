@@ -4,12 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps/Alert/alert_details.dart';
+import 'package:google_maps/Lifesaver/appbar.dart';
 import '../constants.dart';
 import '../profile.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'package:shared_preferences/shared_preferences.dart';
-
-
 
 class CitizenHome extends StatefulWidget {
   const CitizenHome({super.key});
@@ -33,8 +32,8 @@ class _CitizenHomeState extends State<CitizenHome> {
         last_name = _prefs.getString('last_name') ?? '';
       });
     });
-    
   }
+
   @override
   Widget build(BuildContext context) {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
@@ -102,44 +101,44 @@ class _CitizenHomeState extends State<CitizenHome> {
                   style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w700, letterSpacing: 0.4, color: Colors.black45, height: MediaQuery.of(context).size.height * (1/512)),
                 )),
                 const Spacer(),
-            Container(
-              height: MediaQuery.of(context).size.width / 2 + 14,
-              width: MediaQuery.of(context).size.width / 2 + 14,
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: const BorderRadius.all(Radius.circular(100)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.redAccent.withOpacity(0.3),
-                    spreadRadius: 3,
-                    blurRadius: 20,
-                    offset: const Offset(0, 0),
+                Container(
+                  height: MediaQuery.of(context).size.width / 2 + 14,
+                  width: MediaQuery.of(context).size.width / 2 + 14,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: const BorderRadius.all(Radius.circular(100)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.redAccent.withOpacity(0.3),
+                        spreadRadius: 3,
+                        blurRadius: 20,
+                        offset: const Offset(0, 0),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              padding: const EdgeInsets.all(14),
-              child: SizedBox(
-                height: MediaQuery.of(context).size.width / 2,
-                width: MediaQuery.of(context).size.width / 2,
-                child: FloatingActionButton(
-                  elevation: 0,
-                  backgroundColor: Colors.redAccent,
-                  foregroundColor: Colors.white,
-                  splashColor: Colors.orange.shade400,
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Alert_Details()));
-                  },
-                  child: Icon(
-                    Icons.call_outlined,
-                    size: MediaQuery.of(context).size.width / 4,
+                  padding: const EdgeInsets.all(14),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.width / 2,
+                    width: MediaQuery.of(context).size.width / 2,
+                    child: FloatingActionButton(
+                      elevation: 0,
+                      backgroundColor: Colors.redAccent,
+                      foregroundColor: Colors.white,
+                      splashColor: Colors.orange.shade400,
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const Alert_Details()));
+                      },
+                      child: Icon(
+                        Icons.call_outlined,
+                        size: MediaQuery.of(context).size.width / 4,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            const Spacer(),
-          ],
-        ))
-    );
+                const Spacer(),
+              ],
+            )));
   }
   // @override
   // void debugFillProperties(DiagnosticPropertiesBuilder properties) {
