@@ -1,5 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,7 @@ class _CitizenHomeState extends State<CitizenHome> {
   late SharedPreferences _prefs;
   String first_name = '';
   String last_name = '';
+  File? pickedImage;
 
   @override
   void initState() {
@@ -32,13 +35,23 @@ class _CitizenHomeState extends State<CitizenHome> {
         last_name = _prefs.getString('last_name') ?? '';
       });
     });
+    _loadImageFromLocal();
+  }
+  void _loadImageFromLocal() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? imagePath = prefs.getString('profile_image');
+    if (imagePath != null) {
+      setState(() {
+        pickedImage = File(imagePath);
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
-        appBar: MyAppBar(name:localizations.hello, name1:'$first_name $last_name'),
+        appBar: MyAppBar(name:localizations.hello, name1:'$first_name $last_name', imageProvider:FileImage(pickedImage!)),
         body: Container(
             height: double.infinity,
             width: double.infinity,
