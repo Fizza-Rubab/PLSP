@@ -39,6 +39,7 @@ class _CitizenHomeState extends State<CitizenHome> {
   Widget build(BuildContext context) {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
+      backgroundColor: greyWhite,
       appBar: AppBar(
           titleSpacing: 14,
           backgroundColor: Colors.transparent,

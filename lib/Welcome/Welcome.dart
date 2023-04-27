@@ -42,14 +42,14 @@ class _Welcome extends State<Welcome> {
           scaffoldBackgroundColor: Colors.white,
           textTheme: customTextTheme,
           navigationBarTheme: NavigationBarThemeData(
-              backgroundColor: Colors.red.shade50,
+              backgroundColor: Colors.white,
               elevation: 0,
               height: 72,
               labelTextStyle: MaterialStateProperty.all(
                 GoogleFonts.lato(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
-                    color: Colors.red.shade900),
+                    color: Colors.black54),
               )),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(

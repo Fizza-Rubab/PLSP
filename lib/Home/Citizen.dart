@@ -32,7 +32,7 @@ class _CitizenState extends State<Citizen> {
         ),
       ),
       bottomNavigationBar: NavigationBar(
-        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         selectedIndex: index,
         onDestinationSelected: (index) {
           _pageController.animateToPage(index, duration: const Duration(milliseconds: 200), curve: Curves.ease);
