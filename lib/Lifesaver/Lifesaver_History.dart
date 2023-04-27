@@ -10,24 +10,23 @@ import '../constants.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 const space_between_rows = 8.0;
-
 Row DetailsAdded(String title, String content) {
   return Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(
         title,
-        style: GoogleFonts.poppins(
-            fontSize: 15, letterSpacing: 0, color: Colors.black),
+        style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0.4, color: Colors.black87),
       ),
-      SizedBox(
+      const SizedBox(
         width: 10,
       ),
       Flexible(
         child: Text(
           content,
           maxLines: 2,
-          overflow: TextOverflow.fade,
-          style: generalfontStyle,
+          overflow: TextOverflow.ellipsis,
+          style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0.8, color: Colors.black54),
         ),
       ),
     ],
@@ -90,117 +89,95 @@ class _LifesaverHistoryState extends State<LifesaverHistory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: greyWhite,
       appBar: MyAppBar(" ", "History"),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: ListView.builder(
-                    itemCount: 6,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        elevation: 2.0,
-                        color: Colors.red.shade50,
-                        shadowColor: Colors.redAccent.withOpacity(0.3),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Container(
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView.builder(
+            itemCount: 6,
+            itemBuilder: (context, index) {
+              return Card(
+                elevation: 0.0,
+                color: Colors.white,
+                shadowColor: Colors.black26,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  side: BorderSide(color: Colors.grey.shade300),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Theme(
+                        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                        child: ExpansionTile(
+                          trailing: Icon(
+                            _customTileExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                            color: PrimaryColor,
+                          ),
+                          title: Text(
+                            names[index],
+                            style: GoogleFonts.lato(fontWeight: FontWeight.w800, letterSpacing: 0, fontSize: 18.0, color: Colors.black87),
+                          ),
+                          children: [
+                            Column(
                               children: [
-                                ExpansionTile(
-                                   trailing: Icon(
-                                    _customTileExpanded
-                                        ? Icons.keyboard_arrow_up
-                                        : Icons.keyboard_arrow_down, color: PrimaryColor,
-                                  ),
-                               
-                                  title: Text(
-                                    names[index],
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w600,
-                                        letterSpacing: -0.5,
-                                        fontSize: 18.0,
-                                        color: Colors.black87),
-                                  ),
-                                  children: [
-                                    Container(
-                                      height: 120,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(left: 16.0),
-                                        child: Column(
-                                          children: [
-                                            DetailsAdded(
-                                                "Condition:", condition[index]),
-                                            SizedBox(
-                                              height: space_between_rows,
-                                            ),
-                                            DetailsAdded("Intervention:",
-                                                intervention[index]),
-                                            SizedBox(
-                                              height: space_between_rows,
-                                            ),
-                                            DetailsAdded(
-                                                "From:", source_address[index]),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                  onExpansionChanged: (bool expanded) {
-                                    setState(
-                                        () => _customTileExpanded = expanded);
-                                  },
-                                ),
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 16),
-                                  child: DetailsAdded(
-                                      "Location:", dest_address[index]),
+                                  padding: const EdgeInsets.fromLTRB(16, 0, 16, space_between_rows),
+                                  child: DetailsAdded("Condition:", condition[index]),
                                 ),
+
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 16.0,
-                                      top: space_between_rows,
-                                      bottom: space_between_rows),
-                                  child:
-                                      DetailsAdded("Date:", date_time[index]),
+                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical:space_between_rows),
+                                  child: DetailsAdded("Intervention:", intervention[index]),
                                 ),
+
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 16.0),
-                                  child: RatingBar.builder(
-                                    ignoreGestures: true,
-                                    initialRating: rating[index],
-                                    minRating: 1,
-                                    glow: false,
-                                    direction: Axis.horizontal,
-                                    allowHalfRating: true,
-                                    itemCount: 5,
-                                    itemSize: 28,
-                                    itemBuilder: (context, _) => const Icon(
-                                      Icons.health_and_safety,
-                                      color: Colors.redAccent,
-                                    ),
-                                    onRatingUpdate: (rating) {
-                                      // print(rating);
-                                    },
-                                  ),
+                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical:space_between_rows),
+                                  child: DetailsAdded("From:", source_address[index]),
                                 ),
                               ],
                             ),
-                          ),
+                          ],
+                          onExpansionChanged: (bool expanded) {
+                            setState(() => _customTileExpanded = expanded);
+                          },
                         ),
-                      );
-                    }),
-              ),
-            ],
-          ),
-        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical:space_between_rows),
+                        child: DetailsAdded("Location:", dest_address[index]),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical:space_between_rows),
+                        child: DetailsAdded("Date:", date_time[index]),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical:space_between_rows),
+                        child: RatingBar.builder(
+                          ignoreGestures: true,
+                          initialRating: rating[index],
+                          minRating: 1,
+                          glow: false,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemSize: 28,
+                          itemBuilder: (context, _) => const Icon(
+                            Icons.health_and_safety,
+                            color: Colors.redAccent,
+                          ),
+                          onRatingUpdate: (rating) {
+                            // print(rating);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }),
       ),
     );
   }

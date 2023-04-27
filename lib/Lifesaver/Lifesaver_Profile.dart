@@ -45,6 +45,7 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: greyWhite,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(expandedHeight),
           child: AppBar(
@@ -198,10 +199,10 @@ Container infoCard(double width, String title, String text) {
   return Container(
       alignment: Alignment.centerLeft,
       width: width,
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
-        color: Colors.grey.shade100,
+      padding: const EdgeInsets.all(8),
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        color: Colors.transparent
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,10 +221,10 @@ Container infoCard(double width, String title, String text) {
           Text(
             text,
             style: GoogleFonts.lato(
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: FontWeight.w500,
                 letterSpacing: 0.8,
-                color: Colors.black45),
+                color: Colors.black54),
           )
         ],
       ));

@@ -9,8 +9,6 @@ import '../Lifesaver/appbar.dart';
 import '../constants.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
-import 'package:expansion_card/expansion_card.dart';
-
 const space_between_rows = 4.0;
 
 Row DetailsAdded(String title, String content) {

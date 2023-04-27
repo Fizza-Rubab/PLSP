@@ -5,7 +5,6 @@ const PrimaryColor = Colors.redAccent;
 const greyWhite = Color(0xffEFF2F4);
 
 const peachColor = Color.fromARGB(255, 253, 129, 107);
-var titleFontStyle = GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold, letterSpacing: 0, color: Colors.black);
 
 var titleFontStyle = GoogleFonts.poppins(
     fontSize: 20,
