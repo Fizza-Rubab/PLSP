@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'Arrival.dart';
+import 'arrived.dart';
 import '../config.dart';
-import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 
 class AboutToReach extends StatefulWidget {
@@ -19,8 +17,8 @@ class AboutToReach extends StatefulWidget {
 
 class _AboutToReachState extends State<AboutToReach> {
   final Completer<GoogleMapController> _controller = Completer();
-  static const LatLng sourceLocation = LatLng(24.8918, 67.0731);
-  static const LatLng destinationLocation = LatLng(24.9061, 67.1384);
+  static const LatLng sourceLocation = LatLng(24.9059, 67.1383);
+  static const LatLng destinationLocation = LatLng(24.8920, 67.0735);
   BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor currentIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor destinationIcon = BitmapDescriptor.defaultMarker;
@@ -29,12 +27,12 @@ class _AboutToReachState extends State<AboutToReach> {
   LocationData? currentLocation;
 
   startTime() async {
-    var duration = const Duration(minutes: 2);
+    var duration = const Duration(minutes: 1);
     return Timer(duration, endRoute);
   }
 
   endRoute() {
-    Navigator.push(
+    Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             builder: (context) => const Arrived(args: {"latitude":24.9059, "longitude":67.1383})));
@@ -59,9 +57,7 @@ class _AboutToReachState extends State<AboutToReach> {
           ),
         ),
       );
-      if (this.mounted) {
       setState(() {});
-      }
     });
   }
 
@@ -79,9 +75,7 @@ class _AboutToReachState extends State<AboutToReach> {
           LatLng(point.latitude, point.longitude),
         );
       }
-      if (this.mounted) {
       setState(() {});
-      }
     }
   }
 
@@ -108,7 +102,6 @@ class _AboutToReachState extends State<AboutToReach> {
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations localizations = AppLocalizations.of(context)!;
     return MaterialApp(
       home: Scaffold(
         bottomNavigationBar: BottomAppBar(
@@ -129,14 +122,11 @@ class _AboutToReachState extends State<AboutToReach> {
               const IconThemeData(color: Color.fromRGBO(255, 160, 161, 1)),
           elevation: 0,
           backgroundColor: Colors.transparent,
-          title: Text(
-            "Lifesaver is on his Way",
-            style: GoogleFonts.poppins(
-              fontSize: 21,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 0,
-              color: Colors.redAccent,
-            )
+          title: const Center(
+            child: Text(
+              "Going towards Citizen",
+              style: TextStyle(color: Colors.redAccent),
+            ),
           ),
           leading: IconButton(
               icon: const Icon(
@@ -148,16 +138,10 @@ class _AboutToReachState extends State<AboutToReach> {
           children: [
             SizedBox(
               width: double.infinity,
-              height: (MediaQuery.of(context).size.height) / 1.6,
+              height: (MediaQuery.of(context).size.height) / 1.5,
               child: currentLocation == null
-                  ?  Center(
-                      child: Text("Loading",
-                      style: GoogleFonts.poppins(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0,
-                      color: Colors.black45,
-                    )),
+                  ? const Center(
+                      child: Text("Loading"),
                     )
                   : GoogleMap(
                       zoomGesturesEnabled: true, //enable Zoom in, out on map
@@ -173,7 +157,7 @@ class _AboutToReachState extends State<AboutToReach> {
                         Polyline(
                           polylineId: const PolylineId("route"),
                           points: polylineCoordinates,
-                          color: Colors.redAccent,
+                          color: Colors.pink,
                           width: 6,
                         )
                       },
@@ -217,25 +201,23 @@ class _AboutToReachState extends State<AboutToReach> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         // ignore: prefer_const_literals_to_create_immutables
                         children: [
-                          Text(
-                            "Sameer Pervez",
-                            style: GoogleFonts.poppins(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 0,
-                            color: Colors.white,
+                          const Text(
+                            "Harry Potter",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: "Poppins",
+                              fontSize: 20,
+                            ),
                           ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 1.0),
+                          const Padding(
+                            padding: EdgeInsets.only(top: 5.0),
                             child: Text(
-                              "+923352395720",
-                              style: GoogleFonts.lato(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0,
-                            color: Colors.white,
-                          ),
+                              "+923331234567",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: "Poppins",
+                                fontSize: 15,
+                              ),
                             ),
                           ),
                         ],
@@ -250,11 +232,12 @@ class _AboutToReachState extends State<AboutToReach> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: const Color.fromRGBO(173, 78, 40, 1.0),
+                          color: const Color.fromRGBO(255, 241, 236, 1),
                           width: 2,
                         ),
                         image: const DecorationImage(
-                          image: AssetImage('assets/images/profileicon.png'),
+                          image: NetworkImage(
+                              'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGh1bWFufGVufDB8fDB8fA%3D%3D&w=1000&q=80'),
                         ),
                       ),
                     ),

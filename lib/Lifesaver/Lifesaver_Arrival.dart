@@ -2,30 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'Citizen_Feedback.dart';
 import '../input_design.dart';
 import '../config.dart';
 import '../constants.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
+import 'Lifesaver_Feedback.dart';
 
-class Arrived extends StatefulWidget {
+class LifesaverArrived extends StatefulWidget {
   final Map<String, dynamic> args;
-  const Arrived({Key? key, required this.args}) : super(key: key);
+  const LifesaverArrived({Key? key, required this.args}) : super(key: key);
 
   @override
-  State<Arrived> createState() => _ArrivedState();
+  State<LifesaverArrived> createState() => _LifesaverArrivedState();
 }
 
-class _ArrivedState extends State<Arrived> {
+class _LifesaverArrivedState extends State<LifesaverArrived> {
   @override
   Widget build(BuildContext context) {
     final Set<Marker> markers = new Set();
     final AppLocalizations localizations = AppLocalizations.of(context)!;
     markers.add(Marker(
       //add first marker
-      markerId: MarkerId(LatLng(widget.args['latitude'], widget.args['longitude']).toString()),
-      position: LatLng(widget.args['latitude'], widget.args['longitude']), //position of markerconst
+      markerId: MarkerId(
+          LatLng(widget.args['latitude'], widget.args['longitude']).toString()),
+      position: LatLng(widget.args['latitude'],
+          widget.args['longitude']), //position of markerconst
       infoWindow: const InfoWindow(
         //popup info
         title: 'My Location',
@@ -33,58 +35,62 @@ class _ArrivedState extends State<Arrived> {
       icon: BitmapDescriptor.defaultMarker, //Icon for Marker
     ));
     markers.add(Marker(
-    //add first marker
+      //add first marker
       //37.42681245606211, -122.08065576215935
-    markerId: MarkerId(LatLng(widget.args['latitude']+0.000003052, widget.args['longitude']-0.0000040210).toString()),
-    position: LatLng(widget.args['latitude']+0.000070052, widget.args['longitude']-0.0000050210), //position of markerconst
-    infoWindow: const InfoWindow(
-    //popup info
-    title: 'Lifesavers Location',
-    snippet: 'Lifesaver is here',
-    ),
-    icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue), //Icon for Marker
+      markerId: MarkerId(LatLng(widget.args['latitude'] + 0.000003052,
+              widget.args['longitude'] - 0.0000040210)
+          .toString()),
+      position: LatLng(widget.args['latitude'] + 0.000070052,
+          widget.args['longitude'] - 0.0000050210), //position of markerconst
+      infoWindow: const InfoWindow(
+        //popup info
+        title: 'Lifesavers Location',
+        snippet: 'Lifesaver is here',
+      ),
+      icon: BitmapDescriptor.defaultMarkerWithHue(
+          BitmapDescriptor.hueBlue), //Icon for Marker
     ));
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        foregroundColor: Colors.black54,
-        title: Center(
-          child: Text("Lifesaver has Arrived",
-              style: GoogleFonts.poppins(
-                fontSize: 21,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0,
-                color: Colors.black45,
-              )),
-        ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          foregroundColor: Colors.black54,
+          title: Center(
+            child: Text("You have Arrived",
+                style: GoogleFonts.poppins(
+                  fontSize: 21,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0,
+                  color: Colors.black45,
+                )),
+          ),
           automaticallyImplyLeading: false,
-      ),
+        ),
         body: Column(
           children: [
             SizedBox(
               width: double.infinity,
               height: (MediaQuery.of(context).size.height) / 13,
               child: Container(
-                margin: EdgeInsets.fromLTRB(0,5,0,0),
+                margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
                 color: Colors.blue.shade50,
                 child: Center(
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Citizen_Feedback()));
+                          builder: (context) => Lifesaver_Feedback()));
                     },
-                    style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.blue.shade100),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue.shade100),
                     child: Text(
                       "Verify arrival",
                       style: GoogleFonts.lato(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: 0,
-                      color: Colors.grey.shade800,
-                    ),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: 0,
+                        color: Colors.grey.shade800,
+                      ),
                     ),
                   ),
                 ),
@@ -95,12 +101,26 @@ class _ArrivedState extends State<Arrived> {
               height: (MediaQuery.of(context).size.height) * (9.6 / 19.6),
               child: GoogleMap(
                 initialCameraPosition: CameraPosition(
-                  target: LatLng(widget.args['latitude'], widget.args['longitude']),
+                  target:
+                      LatLng(widget.args['latitude'], widget.args['longitude']),
                   zoom: 15.0,
                 ),
                 mapType: MapType.normal,
                 compassEnabled: true,
                 markers: markers,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+              child: Text(
+                "Help requested by",
+                textAlign: TextAlign.left,
+                style: GoogleFonts.poppins(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0,
+                  color: Colors.redAccent,
+                ),
               ),
             ),
             Padding(
@@ -115,30 +135,30 @@ class _ArrivedState extends State<Arrived> {
                       borderRadius: BorderRadius.all(Radius.circular(40.0)),
                     ),
                     child: Padding(
-                      padding:
-                          const EdgeInsets.only(right: 30.0, top: 10.0, bottom: 10.0),
+                      padding: const EdgeInsets.only(
+                          right: 30.0, top: 10.0, bottom: 10.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
                             "Sameer Pervez",
                             style: GoogleFonts.poppins(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 0,
-                            color: Colors.white,
-                          ),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 0,
+                              color: Colors.white,
+                            ),
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 0.0),
                             child: Text(
                               "+923352395720",
                               style: GoogleFonts.lato(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0,
-                            color: Colors.white,
-                          ),
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 0,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ],
@@ -165,6 +185,18 @@ class _ArrivedState extends State<Arrived> {
                 ],
               ),
             ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
+              child: Text(
+                'Please locate and contact the citizen immediately. ',
+                style: GoogleFonts.lato(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0,
+                  color: Colors.grey.shade800,
+                ),
+              ),
+            )
           ],
         ),
         bottomNavigationBar: BottomAppBar(
@@ -231,9 +263,8 @@ class _ArrivedState extends State<Arrived> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
       child: ElevatedButton(
-       
-        onPressed: ()async{
-          if (icon==Icons.call)
+        onPressed: () async {
+          if (icon == Icons.call)
             launch("tel://03222336019");
           else {
             Uri sms = Uri.parse('sms:03222336019?body=Hello there');
@@ -245,7 +276,6 @@ class _ArrivedState extends State<Arrived> {
           }
         },
         style: ElevatedButton.styleFrom(
-          
           backgroundColor: Colors.redAccent,
           padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
         ),

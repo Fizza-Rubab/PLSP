@@ -7,6 +7,8 @@ import '../Home/Citizen.dart';
 import 'About_To_Reach.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "../Lifesaver/appbar.dart";
 
 class Searching extends StatefulWidget {
   final Map<String, dynamic> args;
@@ -16,7 +18,8 @@ class Searching extends StatefulWidget {
   State<Searching> createState() => _SearchingState();
 }
 
-class _SearchingState extends State<Searching> with SingleTickerProviderStateMixin {
+class _SearchingState extends State<Searching>
+    with SingleTickerProviderStateMixin {
   late AnimationController controller;
 
   @override
@@ -30,16 +33,18 @@ class _SearchingState extends State<Searching> with SingleTickerProviderStateMix
   }
 
   startTime() async {
-    var duration = const Duration(seconds: 5);
+    var duration = const Duration(seconds: 20);
     return Timer(duration, route);
   }
 
   route() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AboutToReach(args: widget.args)));
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => AboutToReach(args: {})));
   }
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
     final Set<Marker> markers = {};
     markers.add(Marker(
       //add first marker
@@ -56,19 +61,8 @@ class _SearchingState extends State<Searching> with SingleTickerProviderStateMix
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          foregroundColor: Colors.black54,
-          title: Text("Finding Lifesaver",
-              style: GoogleFonts.poppins(
-                fontSize: 24,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0,
-                color: Colors.black45,
-              )),
-        ),
+        appBar: SimpleAppBar(
+            localizations.finding_lifesaver_nearby),
         body: Stack(
           children: [
             SizedBox(
@@ -89,8 +83,11 @@ class _SearchingState extends State<Searching> with SingleTickerProviderStateMix
               child: Container(
                 height: 120,
                 padding: const EdgeInsets.all(20),
-                decoration: const BoxDecoration(color: Colors.white,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25))),
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25))),
                 child: Stack(
                   children: [
                     Align(
@@ -98,23 +95,23 @@ class _SearchingState extends State<Searching> with SingleTickerProviderStateMix
                       child: Column(
                         children: [
                           Text(
-                                "Stay Calm",
-                                style: GoogleFonts.poppins(
-                                  color: Colors.blue.shade500,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22,
-                                ),
-                              ),
-                              const Spacer(),
+                            localizations.stay_calm,
+                            style: GoogleFonts.poppins(
+                              color: Colors.blue.shade500,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                            ),
+                          ),
+                          const Spacer(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Text(
-                                "We are finding you help",
+                                localizations.stay_calm_desc,
                                 style: GoogleFonts.lato(
                                   color: Colors.black45,
                                   fontWeight: FontWeight.w600,
-                                  fontSize:20,
+                                  fontSize: 20,
                                 ),
                               ),
                               Center(
@@ -140,7 +137,7 @@ class _SearchingState extends State<Searching> with SingleTickerProviderStateMix
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              BottomButton_2(),
+              BottomButton_2(localizations),
             ],
           ),
         ),
@@ -216,7 +213,7 @@ class _SearchingState extends State<Searching> with SingleTickerProviderStateMix
 //     );
 //   }
 
-  Widget BottomButton_2() {
+  Widget BottomButton_2(localizations) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(5, 0, 5, 10),
       child: ElevatedButton(
@@ -230,7 +227,7 @@ class _SearchingState extends State<Searching> with SingleTickerProviderStateMix
           padding: const EdgeInsets.fromLTRB(60, 12, 60, 12),
         ),
         child: Text(
-          "Cancel",
+          localizations.cancel,
           style: GoogleFonts.poppins(
             color: Colors.white,
             fontWeight: FontWeight.w600,

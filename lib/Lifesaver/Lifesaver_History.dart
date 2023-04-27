@@ -5,19 +5,18 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import '../Lifesaver/appbar.dart';
+import 'appbar.dart';
 import '../constants.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
-const space_between_rows = 4.0;
-
+const space_between_rows = 8.0;
 Row DetailsAdded(String title, String content) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(
         title,
-        style: GoogleFonts.poppins(fontSize: 15, letterSpacing: 0, color: Colors.black54),
+        style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0.4, color: Colors.black87),
       ),
       const SizedBox(
         width: 10,
@@ -27,22 +26,29 @@ Row DetailsAdded(String title, String content) {
           content,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: generalfontStyle,
+          style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0.8, color: Colors.black54),
         ),
       ),
     ],
   );
 }
 
-class CitizenHistory extends StatefulWidget {
-  const CitizenHistory({Key? key}) : super(key: key);
+class LifesaverHistory extends StatefulWidget {
+  const LifesaverHistory({Key? key}) : super(key: key);
 
   @override
-  _CitizenHistoryState createState() => _CitizenHistoryState();
+  _LifesaverHistoryState createState() => _LifesaverHistoryState();
 }
 
-class _CitizenHistoryState extends State<CitizenHistory> {
-  List names = ["Shamsa Hafeez", "Ruhama Naeem", "Sameer", "Fizza", "Iqra", "Haania"];
+class _LifesaverHistoryState extends State<LifesaverHistory> {
+  List names = [
+    "Shamsa Hafeez",
+    "Ruhama Naeem",
+    "Sameer",
+    "Fizza",
+    "Iqra",
+    "Haania"
+  ];
   List dest_address = [
     "C-27, Blue Moon Apartment, Plot 160, Sopariwala street, Garden East, Karachi",
     "Johar",
@@ -60,7 +66,14 @@ class _CitizenHistoryState extends State<CitizenHistory> {
     "ABC........",
     "EFG",
   ];
-  List condition = ["Heart Attack", "Burns", "Trauma", "Heart Attack", "Burns", "Trauma"];
+  List condition = [
+    "Heart Attack",
+    "Burns",
+    "Trauma",
+    "Heart Attack",
+    "Burns",
+    "Trauma"
+  ];
   List intervention = ["CPR", "CPR", "CPR", "CPR", "CPR", "CPR"];
   List date_time = [
     DateFormat.yMMMMd().format(DateTime.now()),
@@ -79,16 +92,17 @@ class _CitizenHistoryState extends State<CitizenHistory> {
       backgroundColor: greyWhite,
       appBar: MyAppBar(" ", "History"),
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 14.0),
+        padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0),
         child: ListView.builder(
             itemCount: 6,
             itemBuilder: (context, index) {
               return Card(
-                elevation: 4.0,
+                elevation: 0.0,
                 color: Colors.white,
-                shadowColor: Colors.black12,
+                shadowColor: Colors.black26,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(20.0),
+                  side: BorderSide(color: Colors.grey.shade300),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -104,13 +118,13 @@ class _CitizenHistoryState extends State<CitizenHistory> {
                           ),
                           title: Text(
                             names[index],
-                            style: GoogleFonts.poppins(fontWeight: FontWeight.w600, letterSpacing: -0.5, fontSize: 18.0, color: Colors.black87),
+                            style: GoogleFonts.lato(fontWeight: FontWeight.w800, letterSpacing: 0, fontSize: 18.0, color: Colors.black87),
                           ),
                           children: [
                             Column(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical:space_between_rows),
+                                  padding: const EdgeInsets.fromLTRB(16, 0, 16, space_between_rows),
                                   child: DetailsAdded("Condition:", condition[index]),
                                 ),
 

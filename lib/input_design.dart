@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import './constants.dart';
 
 InputDecoration buildInputDecoration(IconData icons, String hinttext, {BorderRadius border = const BorderRadius.all(Radius.circular(50))}) {
   return InputDecoration(

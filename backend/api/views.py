@@ -56,7 +56,7 @@ class IncidentGetCreate(generics.ListCreateAPIView):
     # permission_classes = (permissions.IsAuthenticated,)
     queryset = Incident.objects.all()
     serializer_class = IncidentSerializer
-    permission_classes = [IsAuthenticated]
+
     def post(self, request, *args, **kwargs):
         serializer = IncidentSerializer(data=request.data)
         if serializer.is_valid():
@@ -73,12 +73,12 @@ class IncidentUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     queryset = Incident.objects.all()
     serializer_class = IncidentSerializer
-    permission_classes = [IsAuthenticated]
+
 
 class IncidentGetCitizen(generics.RetrieveUpdateDestroyAPIView):
     queryset = Incident.objects.all()
     serializer_class = IncidentSerializer
-    permission_classes = [IsAuthenticated]
+
     def get_queryset(self):
         return super().get_queryset().filter(
             citizen=self.kwargs['pk']
@@ -92,22 +92,22 @@ class RequestCreate(generics.CreateAPIView):
 class RequestUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
     queryset = Request.objects.all()
     serializer_class = RequestSerializer
-    permission_classes = [IsAuthenticated]
+
 
 class PostInfoGetCreate(generics.ListCreateAPIView):
     queryset = PostInfo.objects.all()
     serializer_class = PostInfoSerializer
-    permission_classes = [IsAuthenticated]
+
 
 class PostInfoUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
     queryset = PostInfo.objects.all()
     serializer_class = PostInfoSerializer
-    permission_classes = [IsAuthenticated]
+
 
 class RetrieveNearby(generics.ListAPIView):
     queryset = Lifesaver.objects.all()
     serializer_class = LifesaverSerializer
-    permission_classes = [IsAuthenticated]
+
     def get_queryset(self):
         lat=float(self.kwargs['lat'])
         long=float(self.kwargs['long'])
