@@ -52,44 +52,13 @@ class _CitizenHomeState extends State<CitizenHome> {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: greyWhite,
-      appBar: AppBar(
-          titleSpacing: 14,
-          backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          systemOverlayStyle: const SystemUiOverlayStyle(
-            statusBarColor: Colors.transparent,
-            statusBarIconBrightness: Brightness.dark,
-          ),
-          title: RichText(
-              text: TextSpan(
-                  text: localizations.hello,
-                  style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0, color: Colors.black38, height: 1.1),
-                  children: [
-                TextSpan(
-                    text: '$first_name $last_name',
-                    style: GoogleFonts.poppins(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0,
-                      color: Colors.black45,
-                    ))
-              ])),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CitizenProfile()));
-                },
-                child: const CircleAvatar(
-                  radius: 22,
-                  foregroundImage: AssetImage('assets/images/profileicon.png'),
-                ),
-              ),
-            )
-          ],
-          ),
+      appBar: pickedImage == null
+          ? MyAppBar(name: "Hello\n", name1: '$first_name $last_name')
+          : MyAppBar(
+              name: "Hello\n",
+              name1: '$first_name $last_name',
+              imageProvider: FileImage(pickedImage!),
+            ),    
       body: Container(
         height: double.infinity,
         width: double.infinity,

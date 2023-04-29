@@ -1,5 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps/Home/Profile_Editing.dart';
@@ -27,6 +29,8 @@ class _CitizenProfileState extends State<CitizenProfile> {
   String last_name = '';
   String address = '';
   String contact_no = '';
+  File? pickedImage;
+  String imageUrl = '';
 
   @override
   void initState() {
@@ -41,7 +45,19 @@ class _CitizenProfileState extends State<CitizenProfile> {
         contact_no = _prefs.getString('contact_no') ?? '';
       });
     });
+    _loadImageFromLocal();
   }
+
+  void _loadImageFromLocal() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? imagePath = prefs.getString('profile_image');
+    if (imagePath != null) {
+      setState(() {
+        pickedImage = File(imagePath);
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -81,9 +97,7 @@ class _CitizenProfileState extends State<CitizenProfile> {
                       padding: const EdgeInsets.only(bottom: 60),
                       child: Container(
                         decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(25),
-                              bottomRight: Radius.circular(25)),
+                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25), bottomRight: Radius.circular(25)),
                           image: DecorationImage(
                             image: AssetImage("assets/images/welcome-bg.png"),
                             fit: BoxFit.cover,
@@ -101,11 +115,12 @@ class _CitizenProfileState extends State<CitizenProfile> {
                         color: Colors.white,
                         shape: CircleBorder(),
                       ),
-                      child: const CircleAvatar(
-                        backgroundImage:
-                            AssetImage("assets/images/profileicon.png"),
-                        radius: 55,
-                      ),
+                      child: pickedImage == null
+                          ? CircularProgressIndicator()
+                          : CircleAvatar(
+                              backgroundImage: FileImage(pickedImage!),
+                              radius: 55,
+                            ),
                     ),
                   ),
                 ],

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../appbar.dart';
 import '../constants.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
@@ -41,6 +44,7 @@ class LifesaverHistory extends StatefulWidget {
 }
 
 class _LifesaverHistoryState extends State<LifesaverHistory> {
+  File? pickedImage;
   List names = [
     "Shamsa Hafeez",
     "Ruhama Naeem",
@@ -86,11 +90,32 @@ class _LifesaverHistoryState extends State<LifesaverHistory> {
 
   List rating = [1.0, 2.0, 3.0, 4.0, 1.0, 2.0];
   bool _customTileExpanded = false;
+
+  @override initState(){
+      super.initState();
+      _loadImageFromLocal();
+  }
+  void _loadImageFromLocal() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? imagePath = prefs.getString('profile_image');
+    if (imagePath != null) {
+      setState(() {
+        pickedImage = File(imagePath);
+      });
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: greyWhite,
-      appBar: MyAppBar(name: " ", name1: "History",),
+      appBar: pickedImage == null
+          ? MyAppBar(name: " ", name1: 'History')
+          : MyAppBar(
+              name: " ",
+              name1: 'History',
+              imageProvider: FileImage(pickedImage!),
+            ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0),
         child: ListView.builder(
