@@ -2,9 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps/Lifesaver/Lifesaver_Arrival.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import '../Alert/Arrival.dart';
 import '../config.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
@@ -29,7 +29,7 @@ class _MapScreenState extends State<MapScreen> {
   LocationData? currentLocation;
 
   startTime() async {
-    var duration = const Duration(minutes: 2);
+    var duration = const Duration(seconds: 20);
     return Timer(duration, endRoute);
   }
 
@@ -37,7 +37,7 @@ class _MapScreenState extends State<MapScreen> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => const Arrived(args: {"latitude":24.9059, "longitude":67.1383})));
+            builder: (context) => const LifesaverArrived(args: {"latitude":24.9059, "longitude":67.1383})));
   }
 
   void getCurrentLocation() async {
@@ -129,7 +129,7 @@ class _MapScreenState extends State<MapScreen> {
           elevation: 0,
           backgroundColor: Colors.transparent,
           title: Text(
-            "Lifesaver is on his Way",
+            "Taking you to the accident",
             style: GoogleFonts.poppins(
               fontSize: 21,
               fontWeight: FontWeight.w600,
@@ -145,9 +145,15 @@ class _MapScreenState extends State<MapScreen> {
         ),
         body: Column(
           children: [
+            Text('Please follow these directions', style: GoogleFonts.lato(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              letterSpacing: 0,
+              color: Colors.grey,
+            )),
             SizedBox(
               width: double.infinity,
-              height: (MediaQuery.of(context).size.height) / 1.6,
+              height: (MediaQuery.of(context).size.height) / 1.8,
               child: currentLocation == null
                   ?  Center(
                       child: Text("Loading",
@@ -199,7 +205,19 @@ class _MapScreenState extends State<MapScreen> {
                     ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+              child: Text(
+                "Help requested by",
+                textAlign: TextAlign.left,
+                style: GoogleFonts.poppins(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 0,
+                color: Colors.redAccent,
+              ),),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
               child: Stack(
                 children: [
                   Container(
@@ -217,7 +235,7 @@ class _MapScreenState extends State<MapScreen> {
                         // ignore: prefer_const_literals_to_create_immutables
                         children: [
                           Text(
-                            "Sameer Pervez",
+                            "Aiman Naqvi",
                             style: GoogleFonts.poppins(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,

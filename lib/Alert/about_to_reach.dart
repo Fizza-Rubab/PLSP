@@ -29,7 +29,7 @@ class _AboutToReachState extends State<AboutToReach> {
   LocationData? currentLocation;
 
   startTime() async {
-    var duration = const Duration(minutes: 2);
+    var duration = const Duration(seconds: 20);
     return Timer(duration, endRoute);
   }
 

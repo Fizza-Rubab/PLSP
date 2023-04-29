@@ -96,7 +96,7 @@ class _LifesaverState extends State<Lifesaver> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(const Duration(seconds: 30), () {
+    Future.delayed(const Duration(seconds: 15), () {
       // showDialog(
       //   context: context,
       //   builder: (BuildContext context) => CustomAlertDialog(),

@@ -59,10 +59,10 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
               print(value); // or do whatever you want with the retrieved value
               if (value)
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => Lifesaver()));
+                    .pushAndRemoveUntil(MaterialPageRoute(builder: (context) => Lifesaver()), (Route<dynamic> route) => false);
               else
                 Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => Citizen()));
+                    .pushAndRemoveUntil(MaterialPageRoute(builder: (context) => Citizen()), (Route<dynamic> route) => false);
             },
             child: Text(
               localizations.go_to_home,
