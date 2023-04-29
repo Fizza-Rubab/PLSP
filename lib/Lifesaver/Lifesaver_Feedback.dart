@@ -7,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps/Alert/Thankyou.dart';
 import 'package:google_maps/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../Home/Citizen.dart';
 import '../input_design.dart';
 import '../appbar.dart';
 import 'package:http/http.dart' as http;
@@ -77,165 +76,167 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: SimpleAppBar("Post Emergency form"),
-      body: Container(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(height: 20.0),
-            Text('Did you perform any life-saving intervention?',
-                style: question_style),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Radio(
-                  value: true,
-                  groupValue: _didPerformLifeSavingIntervention,
-                  onChanged: (value) {
-                    setState(() {
-                      _didPerformLifeSavingIntervention = value!;
-                    });
-                  },
-                  activeColor: Colors.redAccent,
-                ),
-                Text('Yes', style: option_style),
-                Radio(
-                  value: false,
-                  groupValue: _didPerformLifeSavingIntervention,
-                  onChanged: (value) {
-                    setState(() {
-                      _didPerformLifeSavingIntervention = value!;
-                    });
-                  },
-                  activeColor: Colors.redAccent,
-                ),
-                Text('No', style: option_style),
-              ],
-            ),
-
-            SizedBox(height: 20.0),
-            Text('What was the life-saving intervention you performed?',
-                style: question_style),
-            Row(
-              children: <Widget>[
-                Radio(
-                  value: 'CPR',
-                  groupValue: _lifeSavingIntervention,
-                  onChanged: (value) {
-                    setState(() {
-                      _lifeSavingIntervention = value!;
-                    });
-                  },
-                  activeColor: Colors.redAccent,
-                ),
-                Text('CPR', style: option_style),
-                Radio(
-                  value: 'Bleeding Control',
-                  groupValue: _lifeSavingIntervention,
-                  onChanged: (value) {
-                    setState(() {
-                      _lifeSavingIntervention = value!;
-                    });
-                  },
-                  activeColor: Colors.redAccent,
-                ),
-                Text('Bleeding Control', style: option_style),
-                Radio(
-                  value: 'Both',
-                  groupValue: _lifeSavingIntervention,
-                  onChanged: (value) {
-                    setState(() {
-                      _lifeSavingIntervention = value!;
-                    });
-                  },
-                  activeColor: Colors.redAccent,
-                ),
-                Text('Both', style: option_style),
-              ],
-            ),
-            SizedBox(height: 20.0),
-            Text(
-                'Did the medical help arrive at the location or was the patient taken to the hospital?',
-                style: question_style),
-            Row(
-              children: <Widget>[
-                Radio(
-                  value: true,
-                  groupValue: _didMedicalHelpArrive,
-                  onChanged: (value) {
-                    setState(() {
-                      _didMedicalHelpArrive = value!;
-                    });
-                  },
-                  activeColor: Colors.redAccent,
-                ),
-                Text('Yes', style: option_style),
-                Radio(
-                  value: false,
-                  groupValue: _didMedicalHelpArrive,
-                  onChanged: (value) {
-                    setState(() {
-                      _didMedicalHelpArrive = value!;
-                    });
-                  },
-                  activeColor: Colors.redAccent,
-                ),
-                Text('No', style: option_style),
-              ],
-            ),
-            SizedBox(height: 20.0),
-            Text('Any other feedback?', style: question_style),
-            TextField(
-              controller: _feedbackController,
-              maxLines: 2,
-              decoration: buildInputDecoration(
-                Icons.edit,
-                "",
-                border: BorderRadius.all(Radius.circular(20)),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(defaultPadding),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(height: 20.0),
+              Text('Did you perform any life-saving intervention?',
+                  style: question_style),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Radio(
+                    value: true,
+                    groupValue: _didPerformLifeSavingIntervention,
+                    onChanged: (value) {
+                      setState(() {
+                        _didPerformLifeSavingIntervention = value!;
+                      });
+                    },
+                    activeColor: Colors.redAccent,
+                  ),
+                  Text('Yes', style: option_style),
+                  Radio(
+                    value: false,
+                    groupValue: _didPerformLifeSavingIntervention,
+                    onChanged: (value) {
+                      setState(() {
+                        _didPerformLifeSavingIntervention = value!;
+                      });
+                    },
+                    activeColor: Colors.redAccent,
+                  ),
+                  Text('No', style: option_style),
+                ],
               ),
-            ),
-            // TextField(controller: _feedbackController, maxLines: 2),
-            SizedBox(
-              height: 20,
-            ),
-            Center(
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+      
+              SizedBox(height: 20.0),
+              Text('What was the life-saving intervention you performed?',
+                  style: question_style),
+              Row(
+                children: <Widget>[
+                  Radio(
+                    value: 'CPR',
+                    groupValue: _lifeSavingIntervention,
+                    onChanged: (value) {
+                      setState(() {
+                        _lifeSavingIntervention = value!;
+                      });
+                    },
+                    activeColor: Colors.redAccent,
+                  ),
+                  Text('CPR', style: option_style),
+                  Radio(
+                    value: 'Bleeding Control',
+                    groupValue: _lifeSavingIntervention,
+                    onChanged: (value) {
+                      setState(() {
+                        _lifeSavingIntervention = value!;
+                      });
+                    },
+                    activeColor: Colors.redAccent,
+                  ),
+                  Text('Bleeding Control', style: option_style),
+                  Radio(
+                    value: 'Both',
+                    groupValue: _lifeSavingIntervention,
+                    onChanged: (value) {
+                      setState(() {
+                        _lifeSavingIntervention = value!;
+                      });
+                    },
+                    activeColor: Colors.redAccent,
+                  ),
+                  Text('Both', style: option_style),
+                ],
+              ),
+              SizedBox(height: 20.0),
+              Text(
+                  'Did the medical help arrive at the location or was the patient taken to the hospital?',
+                  style: question_style),
+              Row(
+                children: <Widget>[
+                  Radio(
+                    value: true,
+                    groupValue: _didMedicalHelpArrive,
+                    onChanged: (value) {
+                      setState(() {
+                        _didMedicalHelpArrive = value!;
+                      });
+                    },
+                    activeColor: Colors.redAccent,
+                  ),
+                  Text('Yes', style: option_style),
+                  Radio(
+                    value: false,
+                    groupValue: _didMedicalHelpArrive,
+                    onChanged: (value) {
+                      setState(() {
+                        _didMedicalHelpArrive = value!;
+                      });
+                    },
+                    activeColor: Colors.redAccent,
+                  ),
+                  Text('No', style: option_style),
+                ],
+              ),
+              SizedBox(height: 20.0),
+              Text('Any other feedback?', style: question_style),
+              TextFormField(
+                controller: _feedbackController,
+                maxLines: 2,
+                decoration: buildInputDecoration(
+                  Icons.edit,
+                  "",
+                  border: BorderRadius.all(Radius.circular(20)),
+                ),
+              ),
+              // TextField(controller: _feedbackController, maxLines: 2),
+              SizedBox(
+                height: 20,
+              ),
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      backgroundColor: Colors.redAccent,
+                      fixedSize:
+                          Size(MediaQuery.of(context).size.width / 2.4, 30),
+                      textStyle: const TextStyle(
+                          fontSize: 18,
+                          fontFamily: 'Poppins',
+                          color: Colors.white),
                     ),
-                    backgroundColor: Colors.redAccent,
-                    fixedSize:
-                        Size(MediaQuery.of(context).size.width / 2.4, 30),
-                    textStyle: const TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'Poppins',
-                        color: Colors.white),
-                  ),
-                  onPressed: () {
-                    FeedbackSave();
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ThankYouScreen()
-
-                        ));
-                  },
-                  child: Text(
-                    'Submit',
-                    style: GoogleFonts.poppins(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 1.0,
-                        color: Colors.grey.shade100),
+                    onPressed: () {
+                      FeedbackSave();
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ThankYouScreen()
+      
+                          ));
+                    },
+                    child: Text(
+                      'Submit',
+                      style: GoogleFonts.poppins(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1.0,
+                          color: Colors.grey.shade100),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
