@@ -4,7 +4,7 @@ import 'package:google_maps/Home/Citizen.dart';
 import 'package:google_maps/Lifesaver/Lifesaver.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
-import "../Lifesaver/appbar.dart";
+import "../appbar.dart";
 import '../constants.dart';
 
 class ThankYouScreen extends StatefulWidget {

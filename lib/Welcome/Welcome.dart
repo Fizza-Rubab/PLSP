@@ -1,17 +1,13 @@
-// ignore_for_file: library_private_types_in_public_api, non_constant_identifier_names
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Welcome/register.dart';
-// import 'package:plsp/RegisterLogin/Login.dart';
 import '../constants.dart';
 import 'Login.dart';
 import '../texttheme.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
-import 'package:flutter/services.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
-enum LocaleMenu { en, ur, pa, ps }
+enum LocaleMenu { en, ur, ar}
 
 TextDirection td = TextDirection.ltr;
 
@@ -128,7 +124,7 @@ class _WelcomeContentState extends State<WelcomeContent> {
                               onSelected: (LocaleMenu item) {
                                 setState(() {
                                   selected_lang = item.name;
-                                  if (selected_lang == 'ur') {
+                                  if (selected_lang != 'en') {
                                     td = TextDirection.rtl;
                                   } else {
                                     td = TextDirection.ltr;
@@ -147,6 +143,10 @@ class _WelcomeContentState extends State<WelcomeContent> {
                                 const PopupMenuItem<LocaleMenu>(
                                   value: LocaleMenu.ur,
                                   child: Text('Urdu - ur'),
+                                ),
+                                const PopupMenuItem<LocaleMenu>(
+                                  value: LocaleMenu.ar,
+                                  child: Text('Sindhi - sd'),
                                 ),
                                 // const PopupMenuItem<LocaleMenu>(
                                 //   value: LocaleMenu.ps,

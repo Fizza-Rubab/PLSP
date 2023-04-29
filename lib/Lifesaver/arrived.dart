@@ -3,7 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 // import 'Citizen_Feedback.dart';
 import '../config.dart';
-import '../lifesaver_feedback.dart'; 
+import './lifesaver_feedback.dart'; 
 
 
 class Arrived extends StatefulWidget {
@@ -72,7 +72,7 @@ class _ArrivedState extends State<Arrived> {
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => LifeSavers_Feedback()));
+                          builder: (context) => Lifesaver_Feedback()));
                     },
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.green),
@@ -173,7 +173,6 @@ class _ArrivedState extends State<Arrived> {
               BottomButton(Icons.call),
               BottomButton_2(context),
               BottomButton(Icons.message),
-              BottomButton(Icons.share),
             ],
           ),
         ),

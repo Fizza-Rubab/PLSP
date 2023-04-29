@@ -120,7 +120,6 @@ class _AboutToReachState extends State<AboutToReach> {
               BottomButton(Icons.call),
               BottomButton_2(),
               BottomButton(Icons.message),
-              BottomButton(Icons.share),
             ],
           ),
         ),

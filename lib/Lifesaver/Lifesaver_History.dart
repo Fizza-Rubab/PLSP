@@ -5,7 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'appbar.dart';
+import '../appbar.dart';
 import '../constants.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 

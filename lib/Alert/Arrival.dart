@@ -176,7 +176,6 @@ class _ArrivedState extends State<Arrived> {
               BottomButton(Icons.call),
               BottomButton_2(context),
               BottomButton(Icons.message),
-              BottomButton(Icons.share),
             ],
           ),
         ),

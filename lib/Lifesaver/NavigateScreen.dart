@@ -120,7 +120,6 @@ class _MapScreenState extends State<MapScreen> {
               BottomButton(Icons.call),
               BottomButton_2(),
               BottomButton(Icons.message),
-              BottomButton(Icons.share),
             ],
           ),
         ),
