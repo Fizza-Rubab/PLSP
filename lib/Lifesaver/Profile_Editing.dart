@@ -146,17 +146,21 @@ class _ProfileEditingState extends State<ProfileEditing> {
     await prefs.setString('profile_image', image.path);
   }
 
-  pickImage(ImageSource imageType) async {
+  Future<void> pickImage(ImageSource imageType) async {
     try {
+      print("trying to pick image");
       final photo = await ImagePicker().pickImage(source: imageType);
       if (photo == null) return;
       final tempImage = File(photo.path);
       setState(() {
         pickedImage = tempImage;
       });
+      // Upload the image
       _uploadImage();
-      if (pickedImage != null){
-        _saveImageToLocal(pickedImage!);}
+      // Save the image to local storage
+      if (pickedImage != null) {
+        _saveImageToLocal(pickedImage!);
+      }
       Get.back();
     } catch (error) {
       debugPrint(error.toString());

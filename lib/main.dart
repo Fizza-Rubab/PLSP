@@ -12,7 +12,6 @@ import 'shared.dart';
 import 'Welcome/Welcome.dart';
 import 'Home/Citizen.dart';
 import 'Lifesaver/Lifesaver_Home.dart';
-import 'Lifesaver/Lifesaver_History.dart';
 import 'Alert/searching.dart';
 import 'Alert/about_to_reach.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -77,6 +76,7 @@ Future<void> main() async {
   Isolate.spawn(runBackgroundTask, rootIsolateToken);
   bool x =  await SharedPreferences.getInstance().then((prefs) => prefs.getBool('logged_in') ?? false);
   print("checking status " + x.toString());
+  x = false;
   runApp( MaterialApp(
     home: Welcome(
     who: x?'logged_in':'logged_out',

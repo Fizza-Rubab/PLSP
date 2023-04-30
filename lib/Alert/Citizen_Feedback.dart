@@ -15,7 +15,9 @@ import '../constants.dart';
 import 'package:http/http.dart' as http;
 
 class Citizen_Feedback extends StatefulWidget {
-  const Citizen_Feedback({super.key});
+  final int incident;
+
+  Citizen_Feedback({required this.incident});
 
   @override
   _MyWidgetState createState() => _MyWidgetState();
@@ -29,17 +31,17 @@ class _MyWidgetState extends State<Citizen_Feedback> {
           "name_of_patients":  _entries.join(", "),
           "details": _detailsController.text,
           "lifesaver_rating": _rating,
-          "incident": 6,
+          "incident": widget.incident,
           "citizen": await SharedPreferences.getInstance().then((prefs) => prefs.getString('id') ?? "") 
         }); 
     final http.Response result = await http.post(
         Uri.parse(ApiConstants.baseUrl + ApiConstants.citizenFeedback),
         body: jsonEncode({
           "intervention": "CPR",
-          "name_of_patients":  _entries.join(", "),
+          "name_of_patients":  _entries.isEmpty?"":_entries.join(", "),
           "details": _detailsController.text,
           "lifesaver_rating": _rating,
-          "incident": 6,
+          "incident": widget.incident,
           "citizen": await SharedPreferences.getInstance().then((prefs) => prefs.getString('id') ?? "")
         }),
         headers: {

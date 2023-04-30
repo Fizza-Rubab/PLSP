@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/src/widgets/container.dart';
@@ -6,6 +7,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -61,6 +64,8 @@ class _MyWidgetState extends State<LifesaverHistory> {
   List<String> _date_time = [];
   List<dynamic> _rating = [];
   List<dynamic> _number_of_patients = [];
+  File? pickedImage;
+  String imageUrl = '';
 
   Future<void> _fetchData() async {
     final response = await http.get(Uri.parse(
@@ -94,18 +99,34 @@ class _MyWidgetState extends State<LifesaverHistory> {
   void initState() {
     super.initState();
     _fetchData();
+   _loadImageFromLocal();
+  }
+
+  void _loadImageFromLocal() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("trying to load the image");
+    String? imagePath = prefs.getString('profile_image');
+    print(imagePath);
+    if (imagePath != null) {
+      setState(() {
+        pickedImage = File(imagePath);
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: greyWhite,
-      appBar: MyAppBar(
+      appBar: pickedImage==null? MyAppBar(
+        name: " ",
+        name1: "History",):MyAppBar(
         name: " ",
         name1: "History",
+        imageProvider: FileImage(pickedImage!),
       ),
       body: Center(
-        child: _destinations.isEmpty
+        child: _destinations==null
             ? const CircularProgressIndicator()
             : ListView.builder(
                 itemCount: _destinations.length,

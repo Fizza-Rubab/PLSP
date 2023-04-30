@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_maps/Lifesaver/Lifesaver.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../Home/Citizen.dart';
 import 'About_To_Reach.dart';
@@ -13,8 +14,9 @@ import '../appbar.dart';
 class Searching extends StatefulWidget {
   final double latitude;
   final double longitude;
+  final int incident;
 
-  Searching({required this.latitude, required this.longitude});
+  Searching({required this.latitude, required this.longitude, required this.incident});
   @override
   State<Searching> createState() => _SearchingState();
 }
@@ -22,6 +24,7 @@ class Searching extends StatefulWidget {
 class _SearchingState extends State<Searching>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
+  int lifesaver_id = 2;
 
   @override
   void initState() {
@@ -40,7 +43,7 @@ class _SearchingState extends State<Searching>
 
   route() {
     Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => AboutToReach(destinationLocation: LatLng(widget.latitude, widget.longitude),)));
+        MaterialPageRoute(builder: (context) => AboutToReach(destinationLocation: LatLng(widget.latitude, widget.longitude), incident: widget.incident, lifesaver: lifesaver_id)));
   }
 
   @override

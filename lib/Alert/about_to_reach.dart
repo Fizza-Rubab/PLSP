@@ -16,8 +16,10 @@ import 'package:http/http.dart' as http;
 
 class AboutToReach extends StatefulWidget {
   final LatLng destinationLocation;
+  final int incident;
+  final int lifesaver;
 
-  AboutToReach({required this.destinationLocation});
+  AboutToReach({required this.destinationLocation, required this.incident, required this.lifesaver});
 
   @override
   State<AboutToReach> createState() => _AboutToReachState();
@@ -34,6 +36,9 @@ class _AboutToReachState extends State<AboutToReach> {
   List<LatLng> polylineCoordinates = [];
   LatLng? currentLocation;
   late Timer _timer;
+  late SharedPreferences _prefs;
+  String name = '';
+  String contact_no = '';
 
   startTime() async {
     var duration = const Duration(seconds: 20);
@@ -45,7 +50,7 @@ class _AboutToReachState extends State<AboutToReach> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => const Arrived(args: {"latitude":24.9059, "longitude":67.1383})));
+            builder: (context) => Arrived(destinationLocation:currentLocation!, incident: widget.incident, lifesaver:widget.lifesaver )));
   }
   LocationData convertLatLngToLocationData(double latitude, double longitude) {
   return LocationData.fromMap({
@@ -89,7 +94,7 @@ class _AboutToReachState extends State<AboutToReach> {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => Arrived(args: {"latitude":currentLocation!.latitude, "longitude":currentLocation!.longitude})));
+            builder: (context) => Arrived(destinationLocation:currentLocation!, incident: widget.incident, lifesaver: widget.lifesaver,)));
     }
     GoogleMapController googleMapController = await _controller.future;
     print(currentLocation!.latitude.toString() + ' ' + currentLocation!.longitude.toString());
@@ -124,9 +129,20 @@ class _AboutToReachState extends State<AboutToReach> {
     }
   }
 
+  void getLifesaverData()async{
+    final http.Response ls_result = await http.get(Uri.parse(
+            '${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${widget.lifesaver}'));
+        Map<String, dynamic> ls_body = json.decode(ls_result.body);
+        setState(() {
+          name = ls_body['first_name'] + ' ' + ls_body['last_name'];
+          contact_no = ls_body['contact_no'];
+        });
+  }
+
   @override
   void initState() {
     getCurrentLocation();
+    getLifesaverData();
     // setCustomMarker();
     //getPolyPoints();
     _timer = Timer.periodic(Duration(seconds: 5), (timer) {
@@ -259,7 +275,7 @@ class _AboutToReachState extends State<AboutToReach> {
                         // ignore: prefer_const_literals_to_create_immutables
                         children: [
                           Text(
-                            "Sameer Pervez",
+                            name,
                             style: GoogleFonts.poppins(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -270,7 +286,7 @@ class _AboutToReachState extends State<AboutToReach> {
                           Padding(
                             padding: EdgeInsets.only(top: 1.0),
                             child: Text(
-                              "+923352395720",
+                              contact_no,
                               style: GoogleFonts.lato(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,

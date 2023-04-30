@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_maps/Alert/Searching.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import '../input_design.dart';
@@ -280,7 +279,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: SimpleAppBar(localizations.emergency_details),
-      body: Padding(
+      body: _currentLocation==null?Center(child: CircularProgressIndicator()):Padding(
         padding: EdgeInsets.symmetric(vertical: 8, horizontal: 14.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -453,9 +452,9 @@ class _Alert_DetailsState extends State<Alert_Details> {
                         });
 
                     Map<String, dynamic> body = json.decode(result.body);
-
+                    // print("Output: " + body);
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => Searching(latitude: _currentLocation!.latitude, longitude: _currentLocation!.longitude)));
+                        builder: (context) => Searching(latitude: _currentLocation!.latitude, longitude: _currentLocation!.longitude, incident:body["id"])));
                   },
                   child: Text(localizations.launch_alert),
                 ),
