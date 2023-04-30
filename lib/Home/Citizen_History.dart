@@ -192,7 +192,7 @@ class _MyWidgetState extends State<CitizenHistory> {
                                 horizontal: 16, vertical: space_between_rows),
                             child: RatingBar.builder(
                               ignoreGestures: true,
-                              initialRating: 1.0, 
+                              initialRating: _rating[index],  
                               minRating: 1,
                               glow: false,
                               direction: Axis.horizontal,
