@@ -96,7 +96,7 @@ class _LifesaverHomeState extends State<LifesaverHome> {
                         textOn: "Available",
                         textOff: "Unavailable",
                         colorOn: Colors.green,
-                        colorOff: Colors.grey,
+                        colorOff: Colors.blueGrey.shade300,
                         iconOn: Icons.check,
                         iconOff: Icons.close,
                         textSize: 10.0,
