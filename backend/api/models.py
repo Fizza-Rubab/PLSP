@@ -114,6 +114,7 @@ class Incident(models.Model):
     updated = models.DateTimeField(auto_now=True)
     no_of_patients = models.IntegerField()
     patient_name = models.TextField()
+    status = models.TextField(default='launched')
 
 class PostInfo(models.Model):
     incident = models.ForeignKey(Incident, on_delete=models.CASCADE, related_name= "post_incident")
