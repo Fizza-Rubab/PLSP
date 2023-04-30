@@ -1,23 +1,9 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:google_maps/Alert/Arrival.dart';
-// import 'package:google_maps/Home/Citizen_History.dart';
-// import 'package:google_maps/Lifesaver/Lifesaver.dart';
 import 'shared.dart';
-import 'Welcome/OTP.dart'; 
-
-import 'Welcome/ForgotPassword.dart';
 import 'Welcome/Welcome.dart';
-import 'Home/Citizen.dart';
-import 'Lifesaver/Lifesaver_Home.dart';
-import 'Lifesaver/Lifesaver_History.dart';
-import 'Alert/searching.dart';
-
-import 'Alert/about_to_reach.dart';
-import 'Lifesaver/Lifesaver_Feedback.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'Alert/Thankyou.dart'; 
 
 void main() {
   AwesomeNotifications().initialize(

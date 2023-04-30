@@ -1,5 +1,5 @@
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_maps/register.dart';
+import './register.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ import '../shared.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/gestures.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import '../Lifesaver/appbar.dart';
+import '../appbar.dart';
 import 'NewPassword.dart';
 
 class ForgotPassword extends StatefulWidget {

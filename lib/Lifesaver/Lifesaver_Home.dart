@@ -1,13 +1,10 @@
 import 'dart:io';
-import 'package:flutter/src/widgets/container.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../texttheme.dart';
 import '../constants.dart';
-import 'appbar.dart';
+import '../appbar.dart';
 
 const double padding_val = 30;
 
@@ -38,9 +35,20 @@ List<String> urls = [
 
 class _LifesaverHomeState extends State<LifesaverHome> {
   File? pickedImage;
+  late SharedPreferences _prefs;
+  String first_name = '';
+  String last_name = '';
+
   @override
   initState() {
     super.initState();
+    SharedPreferences.getInstance().then((prefs) {
+      setState(() {
+        _prefs = prefs;
+        first_name = _prefs.getString('first_name') ?? '';
+        last_name = _prefs.getString('last_name') ?? '';
+      });
+    });
     _loadImageFromLocal();
   }
 
@@ -60,10 +68,10 @@ class _LifesaverHomeState extends State<LifesaverHome> {
     return Scaffold(
       backgroundColor: greyWhite,
       appBar: pickedImage == null
-          ? MyAppBar(name: "Hello\n", name1: "Shamsa Hafeez")
+          ? MyAppBar(name: "Hello\n", name1: '$first_name $last_name')
           : MyAppBar(
               name: "Hello\n",
-              name1: "Shamsa Hafeez",
+              name1: '$first_name $last_name',
               imageProvider: FileImage(pickedImage!),
             ),
       body: Padding(

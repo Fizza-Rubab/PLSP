@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_maps/Lifesaver/appbar.dart';
+import '../appbar.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../input_design.dart';
 import 'package:shared_preferences/shared_preferences.dart';

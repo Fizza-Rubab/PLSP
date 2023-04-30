@@ -27,7 +27,7 @@ class _AboutToReachState extends State<AboutToReach> {
   LocationData? currentLocation;
 
   startTime() async {
-    var duration = const Duration(minutes: 1);
+    var duration = const Duration(seconds: 10);
     return Timer(duration, endRoute);
   }
 
@@ -113,7 +113,6 @@ class _AboutToReachState extends State<AboutToReach> {
               BottomButton(Icons.call),
               BottomButton_2(),
               BottomButton(Icons.message),
-              BottomButton(Icons.share),
             ],
           ),
         ),
@@ -147,7 +146,6 @@ class _AboutToReachState extends State<AboutToReach> {
                       zoomGesturesEnabled: true, //enable Zoom in, out on map
                       minMaxZoomPreference: const MinMaxZoomPreference(10, 20),
                       onCameraMove: (CameraPosition cameraPosition) {
-                        print(cameraPosition.zoom);
                       },
                       initialCameraPosition: CameraPosition(
                           target: LatLng(currentLocation!.latitude!,

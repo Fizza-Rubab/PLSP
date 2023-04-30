@@ -6,7 +6,7 @@ import '../input_design.dart';
 import 'NavigateScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
-import '../Lifesaver/appbar.dart'; 
+import '../appbar.dart'; 
 
 class RedirectDestination extends StatefulWidget {
   const RedirectDestination({Key? key}) : super(key: key);
