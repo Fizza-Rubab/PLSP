@@ -56,7 +56,8 @@ class ApiConstants {
   static String signupEndpoint = '/register';
   static String incidentEndpoint = '/incident';
   static String lifesaverHistory = '/incident/lifesaver/';
-  static String citizenHistory = '/citzen/lifesaver/';
+  // static String citizenHistory = '/citzen/lifesaver/';
+  static String citizenHistory = '/incident/citizen/';
   static String citizenFeedback = '/postinfo/citizen';
   static String lifesaverFeedback = '/postinfo/lifesaver';
 
