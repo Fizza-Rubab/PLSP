@@ -5,7 +5,6 @@ import 'Lifesaver_Home.dart';
 import 'Lifesaver_History.dart';
 import 'Lifesaver_Profile.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
-import 'package:flutter/material.dart';
 
 class CustomAlertDialog extends StatelessWidget {
   @override
@@ -97,7 +96,7 @@ class _LifesaverState extends State<Lifesaver> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(const Duration(seconds: 30), () {
+    Future.delayed(const Duration(seconds: 15), () {
       // showDialog(
       //   context: context,
       //   builder: (BuildContext context) => CustomAlertDialog(),

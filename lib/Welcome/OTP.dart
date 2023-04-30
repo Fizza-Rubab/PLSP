@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps/Lifesaver/Lifesaver_Home.dart';
 import '../constants.dart';
-import '../Lifesaver/appbar.dart';
+import '../appbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Otp extends StatefulWidget {

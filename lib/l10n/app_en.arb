@@ -66,6 +66,18 @@
     "thanks": "Thank you for saving a life!", 
     "thanks_desc": "Your appropriate use of this help has made an impact in health care. We appreciate your efforts.", 
     "go_to_home": "Go to Home", 
-    "token_of_thanks": "A Token of Thanks"
+    "token_of_thanks": "A Token of Thanks", 
+    "tnc1": "1. By signing up for our application, you agree to enable the tracking of your location to allow nearby lifesavers to accept or reject an alert in case of an emergency.",
+     "tnc2": "2. Our application provides the feature to call for a lifesaver in case of a medical emergency. The lifesaver is proficient in CPR and bleeding control techniques.",
+      "tnc3": "3. The lifesaver who accepts the alert will come to your location and provide medical assistance to the best of their ability.",
+       "tnc4": "4. Our application does not guarantee the availability of a lifesaver nearby at all times. Therefore, we recommend that you seek professional medical help in case of an emergency.",
+        "tnc5": "5. You agree to use the application responsibly and only in case of a genuine emergency.",
+         "tnc6": "6. Our application collects and processes your personal information to provide you with the service. We take the privacy and security of your data seriously, and we will only use it for the purpose it was collected.",
+          "tnc7": "7. You are responsible for keeping your login credentials secure and confidential.",
+           "tnc8": "8. We reserve the right to suspend or terminate your account if you violate our terms and conditions or if we suspect fraudulent activity.",
+            "tnc9": "9. By using our application, you agree to indemnify and hold harmless our company, its affiliates, employees, and agents, from any claims, damages, or losses arising out of your use of the application.",
+              "tnc10": "10. These terms and conditions may be updated from time to time, and you will be notified of any changes.", 
+"terms_and_conditions": "Terms and conditions", 
+"back_to_register": "Back to Register"
 
 }

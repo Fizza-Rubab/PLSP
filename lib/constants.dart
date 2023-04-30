@@ -8,7 +8,7 @@ const peachColor = Color.fromARGB(255, 253, 129, 107);
 
 var titleFontStyle = GoogleFonts.poppins(
     fontSize: 20,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w300,
     letterSpacing: 0,
     color: Colors.black);
 
@@ -55,4 +55,9 @@ class ApiConstants {
   static String loginEndpoint = '/login/';
   static String signupEndpoint = '/register';
   static String incidentEndpoint = '/incident';
+  static String lifesaverHistory = '/incident/lifesaver/';
+  static String citizenHistory = '/citzen/lifesaver/';
+  static String citizenFeedback = '/postinfo/citizen';
+  static String lifesaverFeedback = '/postinfo/lifesaver';
+
 }

@@ -29,7 +29,7 @@ class _AboutToReachState extends State<AboutToReach> {
   LocationData? currentLocation;
 
   startTime() async {
-    var duration = const Duration(minutes: 2);
+    var duration = const Duration(seconds: 20);
     return Timer(duration, endRoute);
   }
 
@@ -120,7 +120,6 @@ class _AboutToReachState extends State<AboutToReach> {
               BottomButton(Icons.call),
               BottomButton_2(),
               BottomButton(Icons.message),
-              BottomButton(Icons.share),
             ],
           ),
         ),
