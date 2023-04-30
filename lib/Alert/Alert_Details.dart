@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps/Alert/Searching.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import '../input_design.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'searching.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 
@@ -19,7 +20,25 @@ class _Alert_DetailsState extends State<Alert_Details> {
   String first_name = '';
   String last_name = '';
   String contact_no = '';
+  String info = '';
+  LatLng? _currentLocation;
 
+  
+
+  Future<void> _getCurrentLocation() async {
+    final location = Location();
+    try {
+      final currentPosition = await location.getLocation();
+      setState(() {
+        _currentLocation = LatLng(
+          currentPosition.latitude!,
+          currentPosition.longitude!,
+        );
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
   @override
   void initState() {
     super.initState();
@@ -31,16 +50,18 @@ class _Alert_DetailsState extends State<Alert_Details> {
         contact_no = _prefs.getString('contact_no') ?? '';
       });
     });
-    
+      _getCurrentLocation();
   }
 
   @override
   Widget build(BuildContext context) {
-  final Set<Marker> markers = new Set();
   final AppLocalizations localizations = AppLocalizations.of(context)!;
+  
+  final Set<Marker> markers = new Set();
+  
   markers.add(Marker( //add first marker
-    markerId: MarkerId(LatLng(24.8918, 67.0731).toString()),
-    position: LatLng(24.90587, 67.3827), //position of marker
+    markerId: MarkerId(_currentLocation.toString()),
+    position: _currentLocation==null?LatLng(0.0,0.0):_currentLocation!, //position of marker
     infoWindow: InfoWindow( //popup info
       title: 'My current location',
       snippet: 'Lifesaver to come here',
@@ -61,7 +82,10 @@ class _Alert_DetailsState extends State<Alert_Details> {
               color: Colors.black45,
             )),
       ),
-      body: Container(
+      body: _currentLocation==null? Center(
+              child: CircularProgressIndicator(),
+            ):
+      Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,7 +110,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
                                 height:  (MediaQuery.of(context).size.height) / 2.5,
                                 child: GoogleMap(
                                   initialCameraPosition: CameraPosition(
-                                    target: LatLng(24.90587, 67.3827),
+                                    target: _currentLocation!,
                                     zoom: 15.0,
                                   ),
                                   mapType: MapType.normal,
@@ -165,7 +189,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
                     textStyle: Theme.of(context).textTheme.bodyText2,
                   ),
                   onPressed: () {Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Searching(args: {"latitude":24.9059, "longitude":24.9059},)));
+                      .push(MaterialPageRoute(builder: (context) => Searching(latitude: _currentLocation!.latitude, longitude: _currentLocation!.longitude)));
                       },
                   child: const Text('Launch Alert'),
                 ),

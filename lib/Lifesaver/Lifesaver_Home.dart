@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'appbar.dart';
 import 'ButtonOption.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "../Welcome/Welcome.dart";
 
 const double padding_val = 30;
 
@@ -67,6 +69,8 @@ class _LifesaverHomeState extends State<LifesaverHome> {
                     textSize: 12.0,
                     onChanged: (bool position) {
                       print("The button is $position");
+                      if (!position)
+                      NotificationController.createNewNotification();
                     },
                   ),
                 ],

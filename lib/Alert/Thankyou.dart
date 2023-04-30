@@ -94,11 +94,9 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                           bool value = prefs.getBool("is_lifesaver")??false;
                           print(value); // or do whatever you want with the retrieved value 
                           if (value)
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Lifesaver()));
+                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => Lifesaver()), (Route<dynamic> route) => false);
                           else
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Citizen()));
+                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => Citizen()), (Route<dynamic> route) => false);
                           },
                         child: Text(
                           'Goto Home',

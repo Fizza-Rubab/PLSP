@@ -66,6 +66,7 @@ class _LoginState extends State<Login> {
         putString('contact_no', ct_body['contact_no']);
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => Citizen()));
       }
+      putBool('logged_in', true);
       // ignore: use_build_context_synchronously
 
     } else {

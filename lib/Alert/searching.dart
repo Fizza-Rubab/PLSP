@@ -10,14 +10,16 @@ import 'package:google_fonts/google_fonts.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class Searching extends StatefulWidget {
-  final Map<String, dynamic> args;
-  const Searching({Key? key, required this.args}) : super(key: key);
+  final double latitude;
+  final double longitude;
 
+  Searching({required this.latitude, required this.longitude});
   @override
   State<Searching> createState() => _SearchingState();
 }
 
-class _SearchingState extends State<Searching> with SingleTickerProviderStateMixin {
+class _SearchingState extends State<Searching>
+    with SingleTickerProviderStateMixin {
   late AnimationController controller;
 
   @override
@@ -36,7 +38,8 @@ class _SearchingState extends State<Searching> with SingleTickerProviderStateMix
   }
 
   route() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => AboutToReach(args: {})));
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => AboutToReach(destinationLocation: LatLng(widget.latitude, widget.longitude),)));
   }
 
   @override
@@ -45,8 +48,8 @@ class _SearchingState extends State<Searching> with SingleTickerProviderStateMix
     final Set<Marker> markers = {};
     markers.add(Marker(
       //add first marker
-      markerId: MarkerId(const LatLng(24.9059, 67.1383).toString()),
-      position: const LatLng(24.9059, 67.1383), //position of marker
+      markerId: MarkerId(LatLng(widget.latitude, widget.longitude).toString()),
+      position: LatLng(widget.latitude, widget.longitude), //position of marker
       infoWindow: const InfoWindow(
         //popup info
         title: 'Aga Khan University Hospital',
@@ -77,8 +80,8 @@ class _SearchingState extends State<Searching> with SingleTickerProviderStateMix
               width: double.infinity,
               height: double.infinity,
               child: GoogleMap(
-                initialCameraPosition: const CameraPosition(
-                  target: LatLng(24.9059, 67.1383),
+                initialCameraPosition: CameraPosition(
+                  target: LatLng(widget.latitude, widget.longitude),
                   zoom: 15.0,
                 ),
                 mapType: MapType.normal,
@@ -91,8 +94,11 @@ class _SearchingState extends State<Searching> with SingleTickerProviderStateMix
               child: Container(
                 height: 120,
                 padding: const EdgeInsets.all(20),
-                decoration: const BoxDecoration(color: Colors.white,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25))),
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25))),
                 child: Stack(
                   children: [
                     Align(
@@ -100,14 +106,14 @@ class _SearchingState extends State<Searching> with SingleTickerProviderStateMix
                       child: Column(
                         children: [
                           Text(
-                                "Stay Calm",
-                                style: GoogleFonts.poppins(
-                                  color: Colors.blue.shade500,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22,
-                                ),
-                              ),
-                              const Spacer(),
+                            "Stay Calm",
+                            style: GoogleFonts.poppins(
+                              color: Colors.blue.shade500,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                            ),
+                          ),
+                          const Spacer(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -116,7 +122,7 @@ class _SearchingState extends State<Searching> with SingleTickerProviderStateMix
                                 style: GoogleFonts.lato(
                                   color: Colors.black45,
                                   fontWeight: FontWeight.w600,
-                                  fontSize:20,
+                                  fontSize: 20,
                                 ),
                               ),
                               Center(

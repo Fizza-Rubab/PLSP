@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps/Alert/alert_details.dart';
 import '../constants.dart';
-import '../profile.dart';
+import 'Citizen_Profile.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -67,7 +67,7 @@ class _CitizenHomeState extends State<CitizenHome> {
               padding: const EdgeInsets.symmetric(horizontal: 14),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const Profile()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  const CitizenProfile()));
                 },
                 child: const CircleAvatar(
                   radius: 22,

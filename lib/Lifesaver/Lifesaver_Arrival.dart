@@ -141,7 +141,7 @@ class _LifesaverArrivedState extends State<LifesaverArrived> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            "Sameer Pervez",
+                            "Aiman Naqvi",
                             style: GoogleFonts.poppins(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
@@ -152,7 +152,7 @@ class _LifesaverArrivedState extends State<LifesaverArrived> {
                           Padding(
                             padding: EdgeInsets.only(top: 0.0),
                             child: Text(
-                              "+923352395720",
+                              "+923454181960",
                               style: GoogleFonts.lato(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
