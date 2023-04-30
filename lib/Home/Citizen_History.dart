@@ -1,26 +1,33 @@
-import 'dart:io';
+import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../appbar.dart';
 import '../constants.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
-const space_between_rows = 4.0;
-
+const space_between_rows = 8.0;
 Row DetailsAdded(String title, String content) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(
         title,
-        style: GoogleFonts.poppins(fontSize: 15, letterSpacing: 0, color: Colors.black54),
+        style: GoogleFonts.lato(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            letterSpacing: 0.4,
+            color: Colors.black87),
       ),
       const SizedBox(
         width: 10,
@@ -30,7 +37,11 @@ Row DetailsAdded(String title, String content) {
           content,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: generalfontStyle,
+          style: GoogleFonts.lato(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              letterSpacing: 0.8,
+              color: Colors.black54),
         ),
       ),
     ],
@@ -41,155 +52,168 @@ class CitizenHistory extends StatefulWidget {
   const CitizenHistory({Key? key}) : super(key: key);
 
   @override
-  _CitizenHistoryState createState() => _CitizenHistoryState();
+  _MyWidgetState createState() => _MyWidgetState();
 }
 
-class _CitizenHistoryState extends State<CitizenHistory> {
-  List names = ["Shamsa Hafeez", "Ruhama Naeem", "Sameer", "Fizza", "Iqra", "Haania"];
-  List dest_address = [
-    "C-27, Blue Moon Apartment, Plot 160, Sopariwala street, Garden East, Karachi",
-    "Johar",
-    "Johar",
-    "Outside planet Earth",
-    "This is some new address",
-    "This is also an address"
-  ];
-  File? pickedImage;
-
-  List source_address = [
-    "The source location to be added here ",
-    "ABC........",
-    "EFG",
-    "Lorem Opsem....",
-    "ABC........",
-    "EFG",
-  ];
-  List condition = ["Heart Attack", "Burns", "Trauma", "Heart Attack", "Burns", "Trauma"];
-  List intervention = ["CPR", "CPR", "CPR", "CPR", "CPR", "CPR"];
-  List date_time = [
-    DateFormat.yMMMMd().format(DateTime.now()),
-    DateFormat.yMMMMd().format(DateTime.now()),
-    DateFormat.yMMMMd().format(DateTime.now()),
-    DateFormat.yMMMMd().format(DateTime.now()),
-    DateFormat.yMMMMd().format(DateTime.now()),
-    DateFormat.yMMMMd().format(DateTime.now()),
-  ];
-
-  List rating = [1.0, 2.0, 3.0, 4.0, 1.0, 2.0];
+class _MyWidgetState extends State<CitizenHistory> {
   bool _customTileExpanded = false;
-  
+  List<String> _destinations = [];
+  List<String> _names = [];
+  List<String> _conditions = [];
+  List<String> _date_time = [];
+  List<dynamic> _rating = [];
+  List<dynamic> _number_of_patients = [];
 
-  @override initState(){
-      super.initState();
-      _loadImageFromLocal();
-  }
-  void _loadImageFromLocal() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? imagePath = prefs.getString('profile_image');
-    if (imagePath != null) {
+  Future<void> _fetchData() async {
+    final response = await http.get(Uri.parse(
+        '${ApiConstants.baseUrl}${ApiConstants.citizenHistory}/${await SharedPreferences.getInstance().then((prefs) => prefs.getString('id') ?? "")}'));
+    final history = json.decode(response.body);
+    if (mounted) {
       setState(() {
-        pickedImage = File(imagePath);
+        _destinations = history
+            .map<String>((hist) => (hist['location'] ?? '').toString())
+            .toList();
+        _names = history
+            .map<String>((hist) => (hist['lifesaver_name'] ?? '').toString())
+            .toList();
+        _conditions = history
+            .map<String>((hist) => (hist['info'] ?? '').toString())
+            .toList();
+        _date_time = history
+            .map<String>(
+                (hist) => (hist['created'] ?? '').toString().substring(0, 10))
+            .toList();
+        _rating =
+            history.map<dynamic>((hist) => (hist['rating'] ?? '')).toList();
+        _number_of_patients = history
+            .map<dynamic>((hist) => (hist['no_of_patients'] ?? ''))
+            .toList();
       });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: greyWhite,
-      appBar:  pickedImage == null
-          ? MyAppBar(name: " ", name1: 'History')
-          : MyAppBar(
-              name: " ",
-              name1: 'History',
-              imageProvider: FileImage(pickedImage!),
-            ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 14.0),
-        child: ListView.builder(
-            itemCount: 6,
-            itemBuilder: (context, index) {
-              return Card(
-                elevation: 4.0,
-                color: Colors.white,
-                shadowColor: Colors.black12,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Theme(
-                        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-                        child: ExpansionTile(
-                          trailing: Icon(
-                            _customTileExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-                            color: PrimaryColor,
-                          ),
-                          title: Text(
-                            names[index],
-                            style: GoogleFonts.poppins(fontWeight: FontWeight.w600, letterSpacing: -0.5, fontSize: 18.0, color: Colors.black87),
-                          ),
-                          children: [
-                            Column(
+      appBar: MyAppBar(
+        name: " ",
+        name1: "History",
+      ),
+      body: Center(
+        child: _destinations.isEmpty
+            ? const CircularProgressIndicator()
+            : ListView.builder(
+                itemCount: _destinations.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                    elevation: 0.0,
+                    color: Colors.white,
+                    shadowColor: Colors.black26,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                      side: BorderSide(color: Colors.grey.shade300),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Theme(
+                            data: Theme.of(context)
+                                .copyWith(dividerColor: Colors.transparent),
+                            child: ExpansionTile(
+                              trailing: Icon(
+                                _customTileExpanded
+                                    ? Icons.keyboard_arrow_up
+                                    : Icons.keyboard_arrow_down,
+                                color: PrimaryColor,
+                              ),
+                              title: Text(
+                                _names[index],
+                                style: GoogleFonts.lato(
+                                    fontWeight: FontWeight.w800,
+                                    letterSpacing: 0,
+                                    fontSize: 18.0,
+                                    color: Colors.black87),
+                              ),
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical:space_between_rows),
-                                  child: DetailsAdded("Condition:", condition[index]),
-                                ),
-
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical:space_between_rows),
-                                  child: DetailsAdded("Intervention:", intervention[index]),
-                                ),
-
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical:space_between_rows),
-                                  child: DetailsAdded("From:", source_address[index]),
+                                Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          16, 0, 16, space_between_rows),
+                                      child: DetailsAdded(
+                                          "Condition:", _conditions[index]),
+                                    ),
+                                    // Padding(
+                                    //   padding: const EdgeInsets.symmetric(
+                                    //       horizontal: 16,
+                                    //       vertical: space_between_rows),
+                                    //   child: DetailsAdded(
+                                    //       "Intervention:", "Intervention TBA"),
+                                    // ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16,
+                                          vertical: space_between_rows),
+                                      child: DetailsAdded(
+                                          "Number of Patients:",
+                                          _number_of_patients[index]
+                                              .toString()),
+                                    ),
+                                  ],
                                 ),
                               ],
+                              onExpansionChanged: (bool expanded) {
+                                setState(() => _customTileExpanded = expanded);
+                              },
                             ),
-                          ],
-                          onExpansionChanged: (bool expanded) {
-                            setState(() => _customTileExpanded = expanded);
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical:space_between_rows),
-                        child: DetailsAdded("Location:", dest_address[index]),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical:space_between_rows),
-                        child: DetailsAdded("Date:", date_time[index]),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical:space_between_rows),
-                        child: RatingBar.builder(
-                          ignoreGestures: true,
-                          initialRating: rating[index],
-                          minRating: 1,
-                          glow: false,
-                          direction: Axis.horizontal,
-                          allowHalfRating: true,
-                          itemCount: 5,
-                          itemSize: 28,
-                          itemBuilder: (context, _) => const Icon(
-                            Icons.health_and_safety,
-                            color: Colors.redAccent,
                           ),
-                          onRatingUpdate: (rating) {
-                            // print(rating);
-                          },
-                        ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: space_between_rows),
+                            child:
+                                DetailsAdded("Location:", _destinations[index]),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: space_between_rows),
+                            child: DetailsAdded("Date:", _date_time[index]),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: space_between_rows),
+                            child: RatingBar.builder(
+                              ignoreGestures: true,
+                              initialRating: 1.0, 
+                              minRating: 1,
+                              glow: false,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: 5,
+                              itemSize: 28,
+                              itemBuilder: (context, _) => const Icon(
+                                Icons.health_and_safety,
+                                color: Colors.redAccent,
+                              ),
+                              onRatingUpdate: (rating) {
+                                // print(rating);
+                              },
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              );
-            }),
+                    ),
+                  );
+                },
+              ),
       ),
     );
   }
