@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../appbar.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../constants.dart';
 import '../input_design.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'searching.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import 'package:http/http.dart' as http;
 
 class Alert_Details extends StatefulWidget {
   const Alert_Details({Key? key}) : super(key: key);
@@ -16,19 +20,28 @@ class Alert_Details extends StatefulWidget {
 
 class _Alert_DetailsState extends State<Alert_Details> {
   late SharedPreferences _prefs;
-  String first_name = '';
-  String last_name = '';
-  String contact_no = '';
+  // String first_name = '';
+  // String last_name = '';
+  // String contact_no = '';
+
+  //number of patients
+  final _quantityController = TextEditingController(text: 1.toString());
+  final _addressController = TextEditingController(text: "Address");
+  final _callercontactController = TextEditingController(text: "");
+  final _callernameController = TextEditingController(text: "");
+  final _detailsController = TextEditingController(text: "");
 
   @override
   void initState() {
     super.initState();
+
     SharedPreferences.getInstance().then((prefs) {
       setState(() {
         _prefs = prefs;
-        first_name = _prefs.getString('first_name') ?? '';
-        last_name = _prefs.getString('last_name') ?? '';
-        contact_no = _prefs.getString('contact_no') ?? '';
+        String first_name = _prefs.getString('first_name') ?? '';
+        String last_name = _prefs.getString('last_name') ?? '';
+        _callercontactController.text = _prefs.getString('contact_no') ?? '';
+        _callernameController.text = first_name + ' ' + last_name;
       });
     });
   }
@@ -51,12 +64,13 @@ class _Alert_DetailsState extends State<Alert_Details> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: SimpleAppBar(localizations.emergency_details),
-      body: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14.0),
+      body: Padding(
+        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 14.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
+              controller: TextEditingController(text: _addressController.text),
               decoration: buildInputDecoration(
                   Icons.location_on, localizations.emergency_location,
                   border: const BorderRadius.only(
@@ -98,6 +112,8 @@ class _Alert_DetailsState extends State<Alert_Details> {
               flex: 2,
             ),
             TextField(
+              keyboardType: TextInputType.number,
+              controller: _quantityController,
               decoration: buildInputDecoration(
                   Icons.groups, localizations.patient_quantity,
                   border: const BorderRadius.only(
@@ -109,6 +125,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
               height: 3,
             ),
             TextField(
+              controller: _detailsController,
               maxLines: 2,
               textAlignVertical: TextAlignVertical.top,
               decoration:
@@ -134,10 +151,13 @@ class _Alert_DetailsState extends State<Alert_Details> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 2.2,
                   child: TextField(
-                    controller: TextEditingController(
-                        text: first_name + ' ' + last_name),
-                    decoration: buildInputDecoration(Icons.person, localizations.name,
-                       ),
+                    readOnly: true,
+                    controller:
+                        TextEditingController(text: _callernameController.text),
+                    decoration: buildInputDecoration(
+                      Icons.person,
+                      localizations.name,
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -146,11 +166,11 @@ class _Alert_DetailsState extends State<Alert_Details> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 2.2,
                   child: TextField(
-                    controller: TextEditingController(text: contact_no),
+                    readOnly: true,
+                    controller: _callercontactController,
                     decoration: buildInputDecoration(
                       Icons.call,
                       localizations.contact,
-                     
                     ),
                   ),
                 ),
@@ -167,13 +187,63 @@ class _Alert_DetailsState extends State<Alert_Details> {
                     fixedSize: Size(MediaQuery.of(context).size.width, 30),
                     textStyle: Theme.of(context).textTheme.bodyText2,
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    print('here' +
+                        ApiConstants.baseUrl +
+                        ApiConstants.incidentEndpoint);
+
+                    ///////////////////// checks
+                    int number = 1;
+                    try {
+                      number = int.parse(_quantityController.text);
+                    } catch (e) {
+                      number = 1; //default
+                    }
+
+                    ////////////////////////////
+                    print({
+                      "location": _addressController.text,
+                      "latitude": 24.9077,
+                      "longitude": 67.13913,
+                      "info": "Heart Attack",
+                      "created": DateTime.now().toString(),
+                      "updated": DateTime.now().toString(),
+                      "no_of_patients": number,
+                      "status": "launched",
+                      "lifesaver": null,
+                      "citizen": await SharedPreferences.getInstance()
+                          .then((prefs) => prefs.getString('id') ?? '')
+                    });
+
+                    final http.Response result = await http.post(
+                        Uri.parse(ApiConstants.baseUrl +
+                            ApiConstants.incidentEndpoint),
+                        body: jsonEncode({
+                          "location": _addressController.text,
+                          "latitude": 24.9077,
+                          "longitude": 67.13913,
+                          "info": _detailsController.text,
+                          "created": DateTime.now().toString(),
+                          "updated": DateTime.now().toString(),
+                          "no_of_patients": number,
+                          "status": "launched",
+                          "lifesaver": null,
+                          "citizen": await SharedPreferences.getInstance()
+                              .then((prefs) => prefs.getString('id') ?? '')
+                        }),
+                        headers: {
+                          'Accept': 'application/json',
+                          'Content-Type': 'application/json'
+                        });
+
+                    Map<String, dynamic> body = json.decode(result.body);
+
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => Searching(
                               args: {"latitude": 24.9059, "longitude": 24.9059},
                             )));
                   },
-                  child:  Text(localizations.launch_alert),
+                  child: Text(localizations.launch_alert),
                 ),
               ),
             ),
