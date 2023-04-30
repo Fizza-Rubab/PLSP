@@ -21,6 +21,11 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'dart:isolate';
+import 'package:get/get.dart';
+import 'shared.dart';
+import 'Welcome/Welcome.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
+
 
 sendLocation() async{
     bool is_lifesaver = await SharedPreferences.getInstance().then((prefs) => prefs.getBool('is_lifesaver') ?? false);
@@ -51,6 +56,18 @@ void runBackgroundTask(RootIsolateToken rootIsolateToken) async {
 }
 
 Future<void> main() async {
+  AwesomeNotifications().initialize(
+    'resource://drawable/res_img_test',
+    [
+      NotificationChannel(
+          channelKey: 'basic_channel',
+          channelName: 'basic notifications',
+          defaultColor: Colors.redAccent,
+          importance: NotificationImportance.High,
+          channelShowBadge: true,
+          )
+    ],
+  );
   sharedPrefInit();
   NotificationController.initializeLocalNotifications();
   NotificationController.initializeRemoteNotifications(debug: true);

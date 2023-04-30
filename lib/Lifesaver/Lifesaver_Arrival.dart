@@ -208,7 +208,6 @@ class _LifesaverArrivedState extends State<LifesaverArrived> {
               BottomButton(Icons.call),
               BottomButton_2(context),
               BottomButton(Icons.message),
-              BottomButton(Icons.share),
             ],
           ),
         ),

@@ -8,6 +8,7 @@ import 'About_To_Reach.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import '../appbar.dart';
 
 class Searching extends StatefulWidget {
   final double latitude;
@@ -61,19 +62,8 @@ class _SearchingState extends State<Searching>
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          foregroundColor: Colors.black54,
-          title: Text("Finding Lifesaver",
-              style: GoogleFonts.poppins(
-                fontSize: 24,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0,
-                color: Colors.black45,
-              )),
-        ),
+        appBar: SimpleAppBar(
+            localizations.finding_lifesaver_nearby),
         body: Stack(
           children: [
             SizedBox(
@@ -106,7 +96,7 @@ class _SearchingState extends State<Searching>
                       child: Column(
                         children: [
                           Text(
-                            "Stay Calm",
+                            localizations.stay_calm,
                             style: GoogleFonts.poppins(
                               color: Colors.blue.shade500,
                               fontWeight: FontWeight.bold,
@@ -118,7 +108,7 @@ class _SearchingState extends State<Searching>
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Text(
-                                "We are finding you help",
+                                localizations.stay_calm_desc,
                                 style: GoogleFonts.lato(
                                   color: Colors.black45,
                                   fontWeight: FontWeight.w600,
@@ -148,7 +138,7 @@ class _SearchingState extends State<Searching>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              BottomButton_2(),
+              BottomButton_2(localizations),
             ],
           ),
         ),
@@ -224,7 +214,7 @@ class _SearchingState extends State<Searching>
 //     );
 //   }
 
-  Widget BottomButton_2() {
+  Widget BottomButton_2(localizations) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(5, 0, 5, 10),
       child: ElevatedButton(
@@ -238,7 +228,7 @@ class _SearchingState extends State<Searching>
           padding: const EdgeInsets.fromLTRB(60, 12, 60, 12),
         ),
         child: Text(
-          "Cancel",
+          localizations.cancel,
           style: GoogleFonts.poppins(
             color: Colors.white,
             fontWeight: FontWeight.w600,

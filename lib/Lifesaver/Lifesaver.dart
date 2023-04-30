@@ -5,7 +5,6 @@ import 'Lifesaver_Home.dart';
 import 'Lifesaver_History.dart';
 import 'Lifesaver_Profile.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
-import 'package:flutter/material.dart';
 
 class CustomAlertDialog extends StatelessWidget {
   @override
@@ -14,12 +13,12 @@ class CustomAlertDialog extends StatelessWidget {
       backgroundColor: Colors.red, // Set the background color to red
       title: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.local_hospital,
             color: Colors.white,
           ),
-          SizedBox(width: 9),
-          Text(
+          const SizedBox(width: 9),
+          const Text(
             'EMERGENCY ALERT!',
             style: TextStyle(
               color: Colors.white,
@@ -28,7 +27,7 @@ class CustomAlertDialog extends StatelessWidget {
           ),
         ],
       ),
-      content: Text(
+      content: const Text(
         'There is an emergency in 5km vicinity.\nDo you want to accept the request?',
         style: TextStyle(
           color: Colors.white,
@@ -39,22 +38,22 @@ class CustomAlertDialog extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () => {Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => RedirectDestination()))
+                      .push(MaterialPageRoute(builder: (context) => const RedirectDestination()))
                       },
               style: ElevatedButton.styleFrom(
                 primary: Colors.green, // Set the accept button color to green
               ),
-              child: Text('Accept'),
+              child: const Text('Accept'),
             ),
             TextButton(
               onPressed:  () => {Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Lifesaver_Feedback()))
+                      .push(MaterialPageRoute(builder: (context) => const Lifesaver_Feedback()))
                       },
               style: TextButton.styleFrom(
                 backgroundColor: Colors.orangeAccent.shade700,
                 foregroundColor: Colors.white// Set the reject button color to orange
               ),
-              child: Text('Reject'),
+              child: const Text('Reject'),
             ),
           ],
         ),
@@ -75,11 +74,24 @@ class _LifesaverState extends State<Lifesaver> {
   List<Widget> bodyList = [
     const LifesaverHome(),
     const LifesaverHistory(),
-    LifesaverProfile(),
+    const LifesaverProfile(),
   ];
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   int index = 0;
 
+  @override
+  // void initState() {
+    
+    // TODO: implement initState
+  //   super.initState();
+  //   Future.delayed(Duration(seconds: 20), () {
+  //     showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) => CustomAlertDialog(),
+  //     );
+  // });
+ 
+  // }
   @override
   void initState() {
     // TODO: implement initState
@@ -97,7 +109,6 @@ class _LifesaverState extends State<Lifesaver> {
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
       body: SizedBox.expand(
         child: PageView(
@@ -107,10 +118,10 @@ class _LifesaverState extends State<Lifesaver> {
         ),
       ),
       bottomNavigationBar: NavigationBar(
-        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         selectedIndex: index,
         onDestinationSelected: (index) {
-          _pageController.animateToPage(index, duration: const Duration(milliseconds: 200), curve: Curves.ease);
+          _pageController.jumpToPage(index);
           setState(() {
             this.index = index;
           });

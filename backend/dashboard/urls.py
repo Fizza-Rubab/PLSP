@@ -8,6 +8,7 @@ urlpatterns = [
     path("charts/", views.charts, name="charts"),
     path("widgets/", views.widgets, name="widgets"),
     path("tables/", views.tables, name="tables"),
+    path("terminate_lifesavers/", views.terminate_lifesavers, name="terminate_lifesavers"),
     path("grid/", views.grid, name="grid"),
     path("form-basic/", views.form_basic, name="form-basic"),
     path("form-wizard/", views.form_wizard, name="form-wizard"),

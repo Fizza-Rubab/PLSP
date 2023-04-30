@@ -33,13 +33,12 @@ class _AboutToReachState extends State<AboutToReach> {
 
   List<LatLng> polylineCoordinates = [];
   LatLng? currentLocation;
-
   late Timer _timer;
 
-  // startTime() async {
-  //   var duration = const Duration(minutes: 3);
-  //   return Timer(duration, endRoute);
-  // }
+  startTime() async {
+    var duration = const Duration(seconds: 20);
+    return Timer(duration, endRoute);
+  }
 
   endRoute() {
     _timer.cancel();
@@ -163,7 +162,6 @@ class _AboutToReachState extends State<AboutToReach> {
               BottomButton(Icons.call),
               BottomButton_2(),
               BottomButton(Icons.message),
-              // BottomButton(Icons.share),
             ],
           ),
         ),

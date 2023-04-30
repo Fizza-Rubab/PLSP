@@ -1,5 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'Profile_Editing.dart';
@@ -26,8 +28,10 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
   String last_name = '';
   String address = '';
   String contact_no = '';
+  File? pickedImage;
+  String imageUrl = '';
 
-    @override
+  @override
   void initState() {
     super.initState();
     SharedPreferences.getInstance().then((prefs) {
@@ -40,12 +44,23 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
         contact_no = _prefs.getString('contact_no') ?? '';
       });
     });
-    
+    _loadImageFromLocal();
+  }
+
+  void _loadImageFromLocal() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? imagePath = prefs.getString('profile_image');
+    if (imagePath != null) {
+      setState(() {
+        pickedImage = File(imagePath);
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: greyWhite,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(expandedHeight),
           child: AppBar(
@@ -62,13 +77,6 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
             backgroundColor: Colors.transparent,
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.pin,
-              // title: Text(AppLocalizations.of(context)!.profile,
-              //     style: GoogleFonts.poppins(
-              //       fontSize: 24,
-              //       fontWeight: FontWeight.w600,
-              //       letterSpacing: 0,
-              //       color: Colors.black45,
-              //     )),
               background: Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
@@ -81,7 +89,8 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25), bottomRight: Radius.circular(25)),
                           image: DecorationImage(
-                            image: AssetImage("assets/images/welcome-bg.png"), fit: BoxFit.cover,
+                            image: AssetImage("assets/images/welcome-bg.png"),
+                            fit: BoxFit.cover,
                             // colorFilter: ColorFilter.mode(Colors.white12, BlendMode.overlay)
                           ),
                         ),
@@ -96,10 +105,12 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
                         color: Colors.white,
                         shape: CircleBorder(),
                       ),
-                      child: const CircleAvatar(
-                        backgroundImage: AssetImage("assets/images/profileicon.png"),
-                        radius: 55,
-                      ),
+                      child: pickedImage == null
+                          ? CircularProgressIndicator()
+                          : CircleAvatar(
+                              backgroundImage: FileImage(pickedImage!),
+                              radius: 55,
+                            ),
                     ),
                   ),
                 ],
@@ -107,69 +118,73 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
             ),
           ),
         ),
-        body: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            child: Column(
-              children: [
-                Padding(
-                    padding: const EdgeInsets.only(bottom: 14),
-                    child: Container(
-                        alignment: Alignment.center,
-                        child: Column(
+        body: SingleChildScrollView(
+          child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 14),
+              child: Column(
+                children: [
+                  Padding(
+                      padding: const EdgeInsets.only(bottom: 14),
+                      child: Container(
+                          alignment: Alignment.center,
+                          child: Column(
+                            children: [
+                              Text('$first_name $last_name',
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing: 0,
+                                    color: Colors.black45,
+                                  )),
+                              Text(
+                                AppLocalizations.of(context)!.life_saver,
+                                style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.4, color: Colors.black38, height: 1),
+                              )
+                            ],
+                          ))),
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6), child: infoCard(double.infinity, AppLocalizations.of(context)!.address, address)),
+                        Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            child: infoCard(double.infinity, AppLocalizations.of(context)!.date_of_birth, DateFormat.yMMMMd().format(DOB))),
+                        Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            child: infoCard(double.infinity, AppLocalizations.of(context)!.contact, contact_no)),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Row(
                           children: [
-                            Text('$first_name $last_name',
-                                style: GoogleFonts.poppins(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600,
-                                  letterSpacing: 0,
-                                  color: Colors.black45,
-                                )),
-                            Text(
-                              "Lifesaver",
-                              style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.4, color: Colors.black38, height: 1),
-                            )
+                            const Spacer(),
+                            TextButton(
+                                // icon: Icon(Icons.chevron_right),
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ProfileEditing()));
+                                },
+                                child: Row(children: [
+                                  const Padding(
+                                    padding: EdgeInsets.all(2),
+                                    child: Icon(
+                                      Icons.edit_outlined,
+                                      color: PrimaryColor,
+                                    ),
+                                  ),
+                                  Text(
+                                    AppLocalizations.of(context)!.edit_profile,
+                                    style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: 1.0, color: PrimaryColor),
+                                  ),
+                                ])),
                           ],
-                        ))),
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                  Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6),
-                      child: infoCard(double.infinity, "Address", address)),
-                  Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 6), child: infoCard(double.infinity, "Date of Birth", DateFormat.yMMMMd().format(DOB))),
-                  Padding(padding: const EdgeInsets.symmetric(vertical: 6), child: infoCard(double.infinity, "Contact", contact_no)),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Row(
-                    children: [
-                      const Spacer(),
-                      TextButton(
-                          // icon: Icon(Icons.chevron_right),
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ProfileEditing()));
-                          },
-                          child: Row(children: [
-                            const Padding(
-                              padding: EdgeInsets.all(2),
-                              child: Icon(
-                                Icons.edit_outlined,
-                                color: PrimaryColor,
-                              ),
-                            ),
-                            Text(
-                              'Edit Profile',
-                              style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600, letterSpacing: 1.0, color: PrimaryColor),
-                            ),
-                          ])),
-                    ],
+                        )
+                      ],
+                    ),
                   )
-                    ],
-                  ),
-                )
-              ],
-            )));
+                ],
+              )),
+        ));
   }
 }
 
@@ -177,11 +192,8 @@ Container infoCard(double width, String title, String text) {
   return Container(
       alignment: Alignment.centerLeft,
       width: width,
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
-        color: Colors.grey.shade100,
-      ),
+      padding: const EdgeInsets.all(8),
+      decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(20)), color: Colors.transparent),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -194,7 +206,7 @@ Container infoCard(double width, String title, String text) {
           ),
           Text(
             text,
-            style: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w500, letterSpacing: 0.8, color: Colors.black45),
+            style: GoogleFonts.lato(fontSize: 14, fontWeight: FontWeight.w500, letterSpacing: 0.8, color: Colors.black54),
           )
         ],
       ));

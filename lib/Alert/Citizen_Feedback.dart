@@ -1,12 +1,18 @@
 // ignore_for_file: camel_case_types
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps/Alert/Thankyou.dart';
+import '../appbar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Home/Citizen.dart';
 import '../input_design.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import '../constants.dart';
+import 'package:http/http.dart' as http;
 
 class Citizen_Feedback extends StatefulWidget {
   const Citizen_Feedback({super.key});
@@ -16,7 +22,39 @@ class Citizen_Feedback extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<Citizen_Feedback> {
+  Future FeedbackSave() async {
+    print('here' + ApiConstants.baseUrl + ApiConstants.citizenFeedback);
+    print({
+          "intervention": "CPR",
+          "name_of_patients":  _entries.join(", "),
+          "details": _detailsController.text,
+          "lifesaver_rating": _rating,
+          "incident": 6,
+          "citizen": await SharedPreferences.getInstance().then((prefs) => prefs.getString('id') ?? "") 
+        }); 
+    final http.Response result = await http.post(
+        Uri.parse(ApiConstants.baseUrl + ApiConstants.citizenFeedback),
+        body: jsonEncode({
+          "intervention": "CPR",
+          "name_of_patients":  _entries.join(", "),
+          "details": _detailsController.text,
+          "lifesaver_rating": _rating,
+          "incident": 6,
+          "citizen": await SharedPreferences.getInstance().then((prefs) => prefs.getString('id') ?? "")
+        }),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        });
+    print(result);
+    Map<String, dynamic> body = json.decode(result.body);
+    print(body);
+    print("Done....."); 
+  }
+
   final _textController = TextEditingController();
+  final _detailsController = TextEditingController();
+
   List<String> _entries = [];
 
   void _addEntry() {
@@ -32,44 +70,20 @@ class _MyWidgetState extends State<Citizen_Feedback> {
     });
   }
 
-  // void dispose() {
-  //   _textController.dispose();
-  //   super.dispose();
-  // }
   double _rating = 0.0;
   @override
   Widget build(BuildContext context) {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        // iconTheme: IconThemeData(color: appbar_icon_color),
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        title:  Text("Post Emergency Form", style: GoogleFonts.poppins(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0,
-                color: Colors.redAccent,
-              ),),
-        centerTitle: true,
-
-        
-      ),
+      appBar: SimpleAppBar(localizations.post_emergency_form),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              "Name of patient(s):", style: GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0,
-                  color: Colors.redAccent,
-                ),
-            ),
+            Text(localizations.patient_name, style: generalfontStyle),
             SizedBox(
               height: 150,
               child: ListView.builder(
@@ -84,17 +98,7 @@ class _MyWidgetState extends State<Citizen_Feedback> {
                         filled: true,
                         fillColor: Colors.grey.shade200,
                         focusColor: Colors.red.shade50,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50.0),
-                          borderSide: const BorderSide(
-                              style: BorderStyle.none, width: 0),
-                        ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50.0),
-                          borderSide: const BorderSide(
-                              style: BorderStyle.none, width: 0),
-                        ),
-                        enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50.0),
                           borderSide: const BorderSide(
                               style: BorderStyle.none, width: 0),
@@ -122,55 +126,29 @@ class _MyWidgetState extends State<Citizen_Feedback> {
             ),
             Text(
               "Details:",
-              style:GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0,
-                  color: Colors.redAccent,
-                ),
+              style: generalfontStyle,
             ),
             TextField(
+              controller: _detailsController,
               maxLines: 3,
-              decoration: buildInputDecoration(Icons.person_outline, "", border: BorderRadius.all(Radius.circular(20))),
+              decoration: buildInputDecoration(Icons.person_outline, "",
+                  border: BorderRadius.all(Radius.circular(20))),
             ),
             const Divider(
               color: Colors.redAccent,
             ),
+            Text(localizations.lifesaver_details, style: titleFontStyle),
             Text(
-              "Attending Lifesaver Details:",
-              style: GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0,
-                  color: Colors.redAccent,
-                ),
+              "Name: Sara Khan",
+              style: generalfontStyle,
             ),
             Text(
-              "Lifesaver Name: Sara Khan",
-              style: GoogleFonts.lato(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 0,
-                color: Colors.grey.shade800,
-              ),
-            ),
-            Text(
-              "Lifesaver Contact: 03332428145",
-              style: GoogleFonts.lato(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 0,
-                color: Colors.grey.shade800,
-              ),
+              "Contact: 03332428145",
+              style: generalfontStyle,
             ),
             Text(
               "Rate the Life saver",
-              style: GoogleFonts.poppins(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0,
-                  color: Colors.redAccent,
-                ),
+              style: titleFontStyle,
             ),
             Center(
               child: RatingBar.builder(
@@ -194,48 +172,30 @@ class _MyWidgetState extends State<Citizen_Feedback> {
             ),
             Center(
               child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          backgroundColor: Colors.redAccent,
-                          fixedSize:
-                              Size(MediaQuery.of(context).size.width / 2.4, 30),
-                          textStyle: const TextStyle(
-                              fontSize: 18,
-                              fontFamily: 'Poppins',
-                              color: Colors.white),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ThankYouScreen()));
-                        },
-                        child: Text(
-                          'Submit',
-                          style: GoogleFonts.poppins(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 1.0,
-                              color: Colors.grey.shade100),
-                        ),
-                      ),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  backgroundColor: Colors.redAccent,
+                  fixedSize: Size(MediaQuery.of(context).size.width / 2.4, 30),
+                  textStyle: const TextStyle(
+                      fontSize: 18, fontFamily: 'Poppins', color: Colors.white),
+                ),
+                onPressed: () {
+                  FeedbackSave() ; 
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ThankYouScreen()));
+                },
+                child: Text(
+                  localizations.submit,
+                  style: GoogleFonts.poppins(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 1.0,
+                      color: Colors.grey.shade100),
+                ),
+              ),
             ),
-            // SizedBox(
-            //   height: 48,
-            //   child: ElevatedButton(
-            //     style: ElevatedButton.styleFrom(
-            //       backgroundColor: Colors.redAccent,
-            //       fixedSize: Size(MediaQuery.of(context).size.width, 30),
-            //       textStyle: const TextStyle(
-            //           fontSize: 18, fontFamily: 'Poppins', color: Colors.white),
-            //     ),
-            //     onPressed: () {
-            //       Navigator.of(context).push(
-            //           MaterialPageRoute(builder: (context) => Citizen()));
-            //     },
-            //     child: const Text('Submit'),
-            //   ),
-            // ),
           ],
         ),
       ),

@@ -1,26 +1,24 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:google_maps/Lifesaver/Lifesaver_Arrival.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'arrived.dart';
 import '../config.dart';
-import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 
-class MapScreen extends StatefulWidget {
+class AboutToReach extends StatefulWidget {
   final Map<String, dynamic> args;
-  const MapScreen({Key? key, required this.args}) : super(key: key);
+  const AboutToReach({Key? key, required this.args}) : super(key: key);
 
   @override
-  State<MapScreen> createState() => _MapScreenState();
+  State<AboutToReach> createState() => _AboutToReachState();
 }
 
-class _MapScreenState extends State<MapScreen> {
+class _AboutToReachState extends State<AboutToReach> {
   final Completer<GoogleMapController> _controller = Completer();
-  static const LatLng sourceLocation = LatLng(24.8918, 67.0731);
-  static const LatLng destinationLocation = LatLng(24.9061, 67.1384);
+  static const LatLng sourceLocation = LatLng(24.9059, 67.1383);
+  static const LatLng destinationLocation = LatLng(24.8920, 67.0735);
   BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor currentIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor destinationIcon = BitmapDescriptor.defaultMarker;
@@ -29,15 +27,15 @@ class _MapScreenState extends State<MapScreen> {
   LocationData? currentLocation;
 
   startTime() async {
-    var duration = const Duration(seconds: 20);
+    var duration = const Duration(seconds: 10);
     return Timer(duration, endRoute);
   }
 
   endRoute() {
-    Navigator.push(
+    Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (context) => const LifesaverArrived(args: {"latitude":24.9059, "longitude":67.1383})));
+            builder: (context) => const Arrived(args: {"latitude":24.9059, "longitude":67.1383})));
   }
 
   void getCurrentLocation() async {
@@ -59,9 +57,7 @@ class _MapScreenState extends State<MapScreen> {
           ),
         ),
       );
-      if (this.mounted) {
       setState(() {});
-      }
     });
   }
 
@@ -79,9 +75,7 @@ class _MapScreenState extends State<MapScreen> {
           LatLng(point.latitude, point.longitude),
         );
       }
-      if (this.mounted) {
       setState(() {});
-      }
     }
   }
 
@@ -108,7 +102,6 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations localizations = AppLocalizations.of(context)!;
     return MaterialApp(
       home: Scaffold(
         bottomNavigationBar: BottomAppBar(
@@ -128,14 +121,11 @@ class _MapScreenState extends State<MapScreen> {
               const IconThemeData(color: Color.fromRGBO(255, 160, 161, 1)),
           elevation: 0,
           backgroundColor: Colors.transparent,
-          title: Text(
-            "Taking you to the accident",
-            style: GoogleFonts.poppins(
-              fontSize: 21,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 0,
-              color: Colors.redAccent,
-            )
+          title: const Center(
+            child: Text(
+              "Going towards Citizen",
+              style: TextStyle(color: Colors.redAccent),
+            ),
           ),
           leading: IconButton(
               icon: const Icon(
@@ -145,30 +135,17 @@ class _MapScreenState extends State<MapScreen> {
         ),
         body: Column(
           children: [
-            Text('Please follow these directions', style: GoogleFonts.lato(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              letterSpacing: 0,
-              color: Colors.grey,
-            )),
             SizedBox(
               width: double.infinity,
-              height: (MediaQuery.of(context).size.height) / 1.8,
+              height: (MediaQuery.of(context).size.height) / 1.5,
               child: currentLocation == null
-                  ?  Center(
-                      child: Text("Loading",
-                      style: GoogleFonts.poppins(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0,
-                      color: Colors.black45,
-                    )),
+                  ? const Center(
+                      child: Text("Loading"),
                     )
                   : GoogleMap(
                       zoomGesturesEnabled: true, //enable Zoom in, out on map
                       minMaxZoomPreference: const MinMaxZoomPreference(10, 20),
                       onCameraMove: (CameraPosition cameraPosition) {
-                        print(cameraPosition.zoom);
                       },
                       initialCameraPosition: CameraPosition(
                           target: LatLng(currentLocation!.latitude!,
@@ -178,7 +155,7 @@ class _MapScreenState extends State<MapScreen> {
                         Polyline(
                           polylineId: const PolylineId("route"),
                           points: polylineCoordinates,
-                          color: Colors.redAccent,
+                          color: Colors.pink,
                           width: 6,
                         )
                       },
@@ -205,19 +182,7 @@ class _MapScreenState extends State<MapScreen> {
                     ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-              child: Text(
-                "Help requested by",
-                textAlign: TextAlign.left,
-                style: GoogleFonts.poppins(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0,
-                color: Colors.redAccent,
-              ),),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
+              padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
               child: Stack(
                 children: [
                   Container(
@@ -234,25 +199,23 @@ class _MapScreenState extends State<MapScreen> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         // ignore: prefer_const_literals_to_create_immutables
                         children: [
-                          Text(
-                            "Aiman Naqvi",
-                            style: GoogleFonts.poppins(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 0,
-                            color: Colors.white,
+                          const Text(
+                            "Harry Potter",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: "Poppins",
+                              fontSize: 20,
+                            ),
                           ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 1.0),
+                          const Padding(
+                            padding: EdgeInsets.only(top: 5.0),
                             child: Text(
-                              "+923352395720",
-                              style: GoogleFonts.lato(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 0,
-                            color: Colors.white,
-                          ),
+                              "+923331234567",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: "Poppins",
+                                fontSize: 15,
+                              ),
                             ),
                           ),
                         ],
@@ -267,11 +230,12 @@ class _MapScreenState extends State<MapScreen> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: const Color.fromRGBO(173, 78, 40, 1.0),
+                          color: const Color.fromRGBO(255, 241, 236, 1),
                           width: 2,
                         ),
                         image: const DecorationImage(
-                          image: AssetImage('assets/images/profileicon.png'),
+                          image: NetworkImage(
+                              'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGh1bWFufGVufDB8fDB8fA%3D%3D&w=1000&q=80'),
                         ),
                       ),
                     ),
