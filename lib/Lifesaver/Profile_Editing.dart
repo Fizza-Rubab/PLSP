@@ -53,7 +53,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
   }
 
   Future<void> _uploadImage() async {
-    final url = 'http://kaavish2023.pythonanywhere.com/lifesaver/upload_photo/2';
+    final url = 'http://44.230.76.47:8000/lifesaver/upload_photo/2';
     final request = http.MultipartRequest('POST', Uri.parse(url));
     print("path" + pickedImage!.path);
     request.files.add(await http.MultipartFile.fromPath('image', pickedImage!.path));
@@ -67,100 +67,99 @@ class _ProfileEditingState extends State<ProfileEditing> {
     }
   }
   void imagePickerOption() {
-    Get.bottomSheet(
-      SingleChildScrollView(
-        child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(10.0),
-            topRight: Radius.circular(10.0),
-          ),
-          child: Container(
-            color: Colors.white,
-            height: 250,
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.select_image_from,
-                    style: titleFontStyle,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: peachColor, // Background color
-                    ),
-                    onPressed: () {
-                      pickImage(ImageSource.camera);
-                    },
-                    icon: const Icon(Icons.camera),
-                    label: Text(
-                        AppLocalizations.of(context)!.camera,
-                      style: whitegeneralfontStyle,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: peachColor, // Background color
-                    ),
-                    onPressed: () {
-                      pickImage(ImageSource.gallery);
-                    },
-                    icon: const Icon(Icons.image),
-                    label: Text(
-                       AppLocalizations.of(context)!.gallery,
-                      style: whitegeneralfontStyle,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: peachColor, // Background color
-                    ),
-                    onPressed: () {
-                      Get.back();
-                    },
-                    icon: const Icon(Icons.close),
-                    label: Text(  AppLocalizations.of(context)!.cancel, style: whitegeneralfontStyle),
-                  ),
-                ],
+  showModalBottomSheet(
+    context: context,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(10.0),
+        topRight: Radius.circular(10.0),
+      ),
+    ),
+    builder: (context) {
+      return Container(
+        height: 250,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                AppLocalizations.of(context)!.select_image_from,
+                style: titleFontStyle,
+                textAlign: TextAlign.center,
               ),
-            ),
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: peachColor, // Background color
+                ),
+                onPressed: () {
+                  pickImage(ImageSource.camera);
+                },
+                icon: const Icon(Icons.camera),
+                label: Text(
+                  AppLocalizations.of(context)!.camera,
+                  style: whitegeneralfontStyle,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: peachColor, // Background color
+                ),
+                onPressed: () {
+                  pickImage(ImageSource.gallery);
+                },
+                icon: const Icon(Icons.image),
+                label: Text(
+                  AppLocalizations.of(context)!.gallery,
+                  style: whitegeneralfontStyle,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: peachColor, // Background color
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(Icons.close),
+                label: Text(
+                  AppLocalizations.of(context)!.cancel,
+                  style: whitegeneralfontStyle,
+                ),
+              ),
+            ],
           ),
         ),
-      ),
-    );
-  }
+      );
+    },
+  );
+}
 
   void _saveImageToLocal(File image) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('profile_image', image.path);
   }
 
-  Future<void> pickImage(ImageSource imageType) async {
+  pickImage(ImageSource imageType) async {
     try {
-      print("trying to pick image");
       final photo = await ImagePicker().pickImage(source: imageType);
       if (photo == null) return;
       final tempImage = File(photo.path);
       setState(() {
         pickedImage = tempImage;
       });
-      // Upload the image
       _uploadImage();
-      // Save the image to local storage
-      if (pickedImage != null) {
-        _saveImageToLocal(pickedImage!);
-      }
+      if (pickedImage != null){
+        _saveImageToLocal(pickedImage!);}
       Get.back();
     } catch (error) {
       debugPrint(error.toString());
