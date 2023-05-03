@@ -78,6 +78,7 @@ Future<void> main() async {
   print("checking status " + x.toString());
   x = false;
   runApp( MaterialApp(
+    debugShowCheckedModeBanner: false,
     home: Welcome(
     who: x?'logged_in':'logged_out',
   )));

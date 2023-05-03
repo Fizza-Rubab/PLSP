@@ -37,8 +37,9 @@ class CustomAlertDialog extends StatelessWidget {
         ButtonBar(
           children: [
             ElevatedButton(
-              onPressed: () => {Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => const RedirectDestination()))
+              onPressed: () => {
+                // Navigator.of(context)
+                //       .push(MaterialPageRoute(builder: (context) => const RedirectDestination()))
                       },
               style: ElevatedButton.styleFrom(
                 primary: Colors.green, // Set the accept button color to green

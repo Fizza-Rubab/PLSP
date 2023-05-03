@@ -23,7 +23,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 enum LocaleMenu { en, ur, ar}
 
 TextDirection td = TextDirection.ltr;
-
+int incident_id = -1;
 
 class NotificationController {
   static ReceivedAction? initialAction;
@@ -153,10 +153,12 @@ class NotificationController {
     }
     else {
       print("here in action2");
+      
       if (Welcome.navigatorKey.currentState!=null){
         Welcome.navigatorKey.currentState?.push(MaterialPageRoute(
                                           builder: (context) =>
-                                              RedirectDestination()));
+                                              RedirectDestination(incident:incident_id)));
+        incident_id = -1;                                   
       }
                                             
     }
@@ -170,6 +172,9 @@ class NotificationController {
   /// Use this method to detect every time that a new notification is displayed
   @pragma("vm:entry-point")
   static Future <void> onNotificationDisplayedMethod(ReceivedNotification receivedNotification) async {
+      print(receivedNotification.payload);
+      print(receivedNotification.payload!['incident']);
+      incident_id = int.parse(receivedNotification.payload!['incident']!);
       print("notif displayed");
 
   }

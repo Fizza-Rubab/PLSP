@@ -2,14 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps/Lifesaver/Lifesaver.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../Welcome/Welcome.dart';
+import '../constants.dart';
 import '../input_design.dart';
 import 'NavigateScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import '../appbar.dart'; 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class RedirectDestination extends StatefulWidget {
-  const RedirectDestination({Key? key}) : super(key: key);
+  final int incident;
+
+  RedirectDestination({required this.incident});
 
   @override
   State<RedirectDestination> createState() => _RedirectDestinationState();
@@ -21,9 +27,23 @@ class _RedirectDestinationState extends State<RedirectDestination> {
   String last_name = '';
   String contact_no = '';
 
+  // acceptRequest() async{
+  //   final http.Response token_result = await http.put(Uri.parse(
+  //       '${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${body['id']}'), body: {'registration_token':fcm_token});
+  //   Map<String, dynamic> resbody = json.decode(token_result.body);
+  //   print(resbody);
+    
+  // }
+
+  // getIncidentData() async{
+
+  // }
+
   @override
   void initState() {
     super.initState();
+    print("incident call:");
+    print(widget.incident);
     SharedPreferences.getInstance().then((prefs) {
       setState(() {
         _prefs = prefs;
@@ -39,8 +59,8 @@ class _RedirectDestinationState extends State<RedirectDestination> {
   Widget build(BuildContext context) {
     final Set<Marker> markers = new Set();
   markers.add(Marker( //add first marker
-    markerId: MarkerId(LatLng(24.8918, 67.0731).toString()),
-    position: LatLng(24.90587, 67.3827), //position of marker
+    markerId: MarkerId(LatLng(24.8191916, 67.0667176).toString()),
+    position: LatLng(24.8191916, 67.0667176), //position of marker
     infoWindow: InfoWindow( //popup info
       title: 'My current location',
       snippet: 'Lifesaver to come here',
@@ -168,6 +188,7 @@ class _RedirectDestinationState extends State<RedirectDestination> {
                               color: Colors.white),
                         ),
                         onPressed: () {
+                          // acceptRequest();
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => MapScreen(args: {})));
                         },

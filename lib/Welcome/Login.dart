@@ -17,6 +17,7 @@ import '../constants.dart';
 import '../shared.dart';
 import 'ForgotPassword.dart';
 import '../appbar.dart';
+import '../Welcome/Welcome.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -74,12 +75,17 @@ class _LoginState extends State<Login> {
         putString('address', ls_body['address']);
         putString('contact_no', ls_body['contact_no']);
         if (ls_body['profile_picture'] != null) {
-            var fileName = Uri.parse(ApiConstants.baseUrl + ls_body['profile_picture']).pathSegments.last;
-            var file = await _saveImageToFile(ApiConstants.baseUrl + ls_body['profile_picture'], fileName);
+            var fileName = Uri.parse(ls_body['profile_picture']).pathSegments.last;
+            var file = await _saveImageToFile(ls_body['profile_picture'], fileName);
             var prefs = await SharedPreferences.getInstance();
             await prefs.setString('profile_image', file.path);
             print("setting prefs image");
         }
+        String fcm_token = await NotificationController.getFirebaseMessagingToken();
+        final http.Response token_result = await http.put(Uri.parse(
+            '${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${body['id']}'), body: {'registration_token':fcm_token});
+        Map<String, dynamic> resbody = json.decode(token_result.body);
+        print(resbody);
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => Lifesaver()));
       } else {
