@@ -20,7 +20,8 @@ void main() {
   );
   sharedPrefInit();
   WidgetsFlutterBinding.ensureInitialized();
-  // runApp(const MaterialApp(home:Arrived(args:{"latitude":24.9059, "longitude":67.1383})));
+  // runApp(const MaterialApp(home:Arrived(args:{"latitude":24.90
+  //59, "longitude":67.1383})));
   runApp( GetMaterialApp(home: Welcome()));   //Welcome
 }
 
@@ -55,6 +56,7 @@ void main() {
 //             shape: const StadiumBorder(),
 //           ),
 //         ),
+
 //         outlinedButtonTheme: OutlinedButtonThemeData(
 //           style: OutlinedButton.styleFrom(
 //             shape: const StadiumBorder(),
@@ -70,3 +72,4 @@ void main() {
 //     );
 //   }
 // }
+

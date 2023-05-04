@@ -57,6 +57,9 @@ dependencies:
   get: ^4.6.5
   flutter_pdfview: ^1.2.7
   cached_network_image: ^3.2.3
+  flutter_cached_pdfview: ^0.4.1
+  mailer: ^6.0.1
+  
   
  
 
@@ -91,6 +94,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/.
+    - assets/pdf/.
     - lang/en_US.json
     - lang/pt_BR.json
     - lang/ur_PK.json

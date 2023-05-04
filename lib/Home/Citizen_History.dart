@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -192,7 +191,7 @@ class _MyWidgetState extends State<CitizenHistory> {
                                 horizontal: 16, vertical: space_between_rows),
                             child: RatingBar.builder(
                               ignoreGestures: true,
-                              initialRating: _rating[index],  
+                              initialRating: _rating[index],
                               minRating: 1,
                               glow: false,
                               direction: Axis.horizontal,
