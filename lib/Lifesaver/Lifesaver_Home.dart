@@ -35,12 +35,20 @@ List<IconData> icons = [
 
 class _LifesaverHomeState extends State<LifesaverHome> {
   File? pickedImage;
-   var first_name;
-   var last_name; 
- 
+  late SharedPreferences _prefs;
+  String first_name = '';
+  String last_name = '';
+
   @override
   initState() {
     super.initState();
+    SharedPreferences.getInstance().then((prefs) {
+      setState(() {
+        _prefs = prefs;
+        first_name = _prefs.getString('first_name') ?? '';
+        last_name = _prefs.getString('last_name') ?? '';
+      });
+    });
     _loadImageFromLocal();
     _fetchName(); 
   }
@@ -120,7 +128,7 @@ class _LifesaverHomeState extends State<LifesaverHome> {
                         textOn:localizations.available,
                         textOff: localizations.unavailable,
                         colorOn: Colors.green,
-                        colorOff: Colors.red,
+                        colorOff: Colors.blueGrey.shade300,
                         iconOn: Icons.check,
                         iconOff: Icons.close,
                         textSize: 10.0,

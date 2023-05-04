@@ -16,30 +16,114 @@
     
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgRiS_G_6SBuYCKEgWi2E989lIfDF9Dco"></script>
+
     <script>
-      async function initMap() {
-  // The location of Uluru
-  const position = { lat: -25.344, lng: 131.031 };
-  // Request needed libraries.
-  //@ts-ignore
-  const { Map } = await google.maps.importLibrary("maps");
-  const { AdvancedMarkerView } = await google.maps.importLibrary("marker");
+        function initMap(tdict) {
+            var mapl = new google.maps.Map(document.getElementById('submap'), {
+                zoom: 6,
+                center: {lat: 30.3753, lng: 69.3451}
+            });
+        
+            var mapc = new google.maps.Map(document.getElementById('submap2'), {
+                zoom: 6,
+                center: {lat: 30.3753, lng: 69.3451}
+            });
 
-  // The map, centered at Uluru
-  map = new Map(document.getElementById("map"), {
-    zoom: 4,
-    center: position,
-    mapId: "DEMO_MAP_ID",
-  });
+            for (var key in tdict['lifesavers']) {
+                var identifier = tdict['lifesavers'][key][0];
+                var lati = tdict['lifesavers'][key][1];
+                var longi = tdict['lifesavers'][key][2];
 
-  // The marker, positioned at Uluru
-  const marker = new AdvancedMarkerView({
-    map: map,
-    position: position,
-    title: "Uluru",
-  });
-}
+                var checkMarker = new google.maps.Marker({
+                    position: {lat: lati, lng: longi},
+                    map: mapl,
+                    title: identifier
+                });
+            }
+
+            for (var key in tdict['citizens']) {
+                var identifier = tdict['citizens'][key][0];
+                var lati = tdict['citizens'][key][1];
+                var longi = tdict['citizens'][key][2];
+
+                var checkMarker = new google.maps.Marker({
+                    position: {lat: lati, lng: longi},
+                    map: mapc,
+                    title: identifier
+                });
+            }
+
+
+        }   
+        
+        var tdict = JSON.parse('{{ my_dict_json|escapejs }}');
+        console.log(tdict); // print the dictionary to the console for debugging
+        </script>
+    <!-- <script>
+      function initMap(tdict) {
+        // var myLatLng = {lat: -25.363, lng: 131.044};
+        var mapl = new google.maps.Map(document.getElementById('submap'), {
+          zoom: 6,
+          center: {lat: 30.3753, lng: 69.3451}
+        });
+
+        var mapc = new google.maps.Map(document.getElementById('submap2'), {
+          zoom: 6,
+          center: {lat: 30.3753, lng: 69.3451}
+        });
+
+        console.log("IM HERE");
+        console.log(tdict);
+        // for (var key in tdict) {
+        //   console.log(key + ': ' + tdict[key]);
+        // }
+    
+    
+    var islamabadMarker = new google.maps.Marker({
+    position: {lat: 33.6844, lng: 73.0479},
+    map: mapl,
+    title: 'Islamabad'
+    });
+
+    // Create a marker for Karachi
+    var karachiMarker = new google.maps.Marker({
+        position: {lat: 24.8607, lng: 67.0011},
+        map: mapl,
+        title: 'Karachi'
+    });
+
+    var karachiMarker2 = new google.maps.Marker({
+        position: {lat: 24.8615, lng: 67.001435},
+        map: mapl,
+        title: 'Karachi 2'
+    });
+
+    var karachiMarker2 = new google.maps.Marker({
+        position: {lat: 24.8615, lng: 67.001435},
+        map: mapl,
+        title: 'Karachi 3'
+    });
+    
+
+    var lahoreMarker = new google.maps.Marker({
+        position: {lat: 31.5820, lng: 74.3294},
+        map: mapl,
+        title: 'Lahore'
+    });
+
+    // Create a marker for Peshawar
+    var peshawarMarker = new google.maps.Marker({
+        position: {lat: 34.0151, lng: 71.5249},
+        map: mapl,
+        title: 'Peshawar'
+    }); }
+
+    var my_dict = JSON.parse('{{ my_dict_json|escapejs }}');
+    //   console.log("IM HERE 2");
+    //   console.log(tdict);
+    //   initMap(my_dict);
     </script>
+     -->
 
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,7 +131,7 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png' %}">
-    <title>Matrix Template - The Ultimate Multipurpose admin template</title>
+    <title>PLSP - Dashboard</title>
                 <!-- <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"/> -->
             <link href="{% static 'css/animation.css' %}" rel="stylesheet"/>
             <link href="{% static 'css/asColorPicker.min.css' %}" rel="stylesheet"/>
@@ -86,7 +170,7 @@
    
    {% block body %}
    
-       <body onload="initMap()">
+   <body onload="initMap(tdict)">
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css' %} -->
     <!-- ============================================================== -->

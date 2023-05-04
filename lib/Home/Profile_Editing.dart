@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import '../input_design.dart';
 import 'Citizen.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
@@ -28,7 +32,8 @@ class _ProfileEditingState extends State<ProfileEditing> {
   TextEditingController last_name = TextEditingController();
   TextEditingController address = TextEditingController();
   TextEditingController contact_no = TextEditingController();
-
+  File? pickedImage;
+  String imageUrl = '';
 
   Future<void> _loadProfileData() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -46,11 +51,136 @@ class _ProfileEditingState extends State<ProfileEditing> {
   });
   }
 
+
+
+
   @override
   void initState() {
     super.initState();
     _loadProfileData();
+    _loadImageFromLocal();
   }
+  void _loadImageFromLocal() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? imagePath = prefs.getString('profile_image');
+    if (imagePath != null) {
+      setState(() {
+        pickedImage = File(imagePath);
+      });
+    }
+  }
+  Future<void> _uploadImage() async {
+    final url = 'http://kaavish2023.pythonanywhere.com/lifesaver/upload_photo/2';
+    final request = http.MultipartRequest('POST', Uri.parse(url));
+    print("path" + pickedImage!.path);
+    request.files.add(await http.MultipartFile.fromPath('image', pickedImage!.path));
+    final response = await request.send();
+    if (response.statusCode == 200) {
+      print("response.statusCode");
+      // Image uploaded successfully, update profile screen
+    } else {
+      print("error uploading image");
+      // Error uploading image
+    }
+  }
+
+  void imagePickerOption() {
+    Get.bottomSheet(
+      SingleChildScrollView(
+        child: ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(10.0),
+            topRight: Radius.circular(10.0),
+          ),
+          child: Container(
+            color: Colors.white,
+            height: 250,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.select_image_from,
+                    style: titleFontStyle,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: peachColor, // Background color
+                    ),
+                    onPressed: () {
+                      pickImage(ImageSource.camera);
+                    },
+                    icon: const Icon(Icons.camera),
+                    label: Text(
+                        AppLocalizations.of(context)!.camera,
+                      style: whitegeneralfontStyle,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: peachColor, // Background color
+                    ),
+                    onPressed: () {
+                      pickImage(ImageSource.gallery);
+                    },
+                    icon: const Icon(Icons.image),
+                    label: Text(
+                       AppLocalizations.of(context)!.gallery,
+                      style: whitegeneralfontStyle,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: peachColor, // Background color
+                    ),
+                    onPressed: () {
+                      Get.back();
+                    },
+                    icon: const Icon(Icons.close),
+                    label: Text(  AppLocalizations.of(context)!.cancel, style: whitegeneralfontStyle),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _saveImageToLocal(File image) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('profile_image', image.path);
+  }
+
+  pickImage(ImageSource imageType) async {
+    try {
+      final photo = await ImagePicker().pickImage(source: imageType);
+      if (photo == null) return;
+      final tempImage = File(photo.path);
+      setState(() {
+        pickedImage = tempImage;
+      });
+      _uploadImage();
+      if (pickedImage != null){
+        _saveImageToLocal(pickedImage!);}
+      Get.back();
+    } catch (error) {
+      debugPrint(error.toString());
+    }
+  }
+
 
 
   Future _updateProfileData() async {
@@ -134,29 +264,44 @@ class _ProfileEditingState extends State<ProfileEditing> {
                 ),
                 Positioned(
                   bottom: 0,
-                  child: Container(
-                    padding: const EdgeInsets.all(5),
-                    decoration: const ShapeDecoration(
-                      color: Colors.white,
-                      shape: CircleBorder(),
-                    ),
-                    child: const CircleAvatar(
-                      backgroundImage:
-                          AssetImage("assets/images/profileicon.png"),
-                      radius: 60,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(width: 4, color: Colors.white),
-                      color: Colors.redAccent),
-                  child: const Icon(
-                    Icons.edit,
-                    color: Colors.white,
+                  child: Stack(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: const ShapeDecoration(
+                          color: Colors.white,
+                          shape: CircleBorder(),
+                        ),
+                        child: ClipOval(
+                          child:pickedImage!=null? Image.file(
+                                  pickedImage!,
+                                  width: 120,
+                                  height: 120,
+                                  fit: BoxFit.cover,
+                                ): Image.asset("assets/images/profileicon.png",width: 120, height: 120,),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 4,
+                        child: Container(
+                          height: 35,
+                          width: 35,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              // border: Border.all(width: 3, color: Colors.white),
+                              color: peachColor),
+                          child: IconButton(
+                            onPressed: imagePickerOption,
+                            icon: Icon(
+                              Icons.add_a_photo_outlined,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
