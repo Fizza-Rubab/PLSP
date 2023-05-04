@@ -185,7 +185,7 @@ class _RegisterState extends State<Register> {
                         TextFormField(
                           style: Theme.of(context).textTheme.caption,
                           obscureText: true,
-                          controller: password,
+                          controller: confirmpassword,
                           keyboardType: TextInputType.text,
                           decoration: buildInputDecoration(Icons.key_rounded,
                               AppLocalizations.of(context)!.confirm_password),
@@ -210,7 +210,7 @@ class _RegisterState extends State<Register> {
                           height: space_between_val,
                         ),
                         TextFormField(
-                          controller: email,
+                          controller: last_name,
                           autofocus: true,
                           keyboardType: TextInputType.text,
                           decoration: buildInputDecoration(Icons.person,
@@ -220,7 +220,7 @@ class _RegisterState extends State<Register> {
                           height: space_between_val,
                         ),
                         TextFormField(
-                          controller: email,
+                          controller: address,
                           autofocus: true,
                           keyboardType: TextInputType.text,
                           decoration: buildInputDecoration(Icons.location_city,
@@ -230,7 +230,7 @@ class _RegisterState extends State<Register> {
                           height: space_between_val,
                         ),
                         TextFormField(
-                          controller: email,
+                          controller: contact_no,
                           autofocus: true,
                           keyboardType: TextInputType.number,
                           decoration: buildInputDecoration(Icons.call,
