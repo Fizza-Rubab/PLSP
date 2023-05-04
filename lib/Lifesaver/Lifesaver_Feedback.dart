@@ -14,7 +14,8 @@ import 'package:http/http.dart' as http;
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 class Lifesaver_Feedback extends StatefulWidget {
-  const Lifesaver_Feedback({super.key});
+  final Map<String, dynamic> incident_obj;
+  const Lifesaver_Feedback({Key? key, required this.incident_obj}) : super(key: key);
 
   @override
   _Lifesaver_FeedbackState createState() => _Lifesaver_FeedbackState();
@@ -28,7 +29,7 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
       "intervention": _lifeSavingIntervention,
       "taken_to_hospital": _didMedicalHelpArrive,
       "details": _feedbackController.text,
-      "incident": 25,
+      "incident": widget.incident_obj['incident'],
       "lifesaver": await SharedPreferences.getInstance()
           .then((prefs) => prefs.getString('id') ?? '')
     });
@@ -39,7 +40,7 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
           "intervention": _lifeSavingIntervention,
           "taken_to_hospital": _didMedicalHelpArrive,
           "details": _feedbackController.text,
-          "incident": 25,
+          "incident": widget.incident_obj['incident'],
           "lifesaver": await SharedPreferences.getInstance()
               .then((prefs) => prefs.getString('id') ?? "")
         }),

@@ -16,10 +16,9 @@ import 'package:http/http.dart' as http;
 
 class AboutToReach extends StatefulWidget {
   final LatLng destinationLocation;
-  final int incident;
-  final int lifesaver;
+  final Map<String, dynamic> incident_obj;
 
-  AboutToReach({required this.destinationLocation, required this.incident, required this.lifesaver});
+  AboutToReach({required this.destinationLocation, required this.incident_obj});
 
   @override
   State<AboutToReach> createState() => _AboutToReachState();
@@ -36,9 +35,6 @@ class _AboutToReachState extends State<AboutToReach> {
   List<LatLng> polylineCoordinates = [];
   LatLng? currentLocation;
   late Timer _timer;
-  late SharedPreferences _prefs;
-  String name = '';
-  String contact_no = '';
 
   startTime() async {
     var duration = const Duration(seconds: 20);
@@ -50,7 +46,7 @@ class _AboutToReachState extends State<AboutToReach> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => Arrived(destinationLocation:currentLocation!, incident: widget.incident, lifesaver:widget.lifesaver )));
+            builder: (context) => Arrived(destinationLocation:currentLocation!, incident_obj: widget.incident_obj)));
   }
   LocationData convertLatLngToLocationData(double latitude, double longitude) {
   return LocationData.fromMap({
@@ -68,9 +64,8 @@ class _AboutToReachState extends State<AboutToReach> {
   }
 
   void getCurrentLocation() async {
-    print("fetching location from "+ "${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${await SharedPreferences.getInstance()
-          .then((prefs) => prefs.getString('id') ?? '')}");
-    final http.Response ls_result = await http.get(Uri.parse("${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/2"));
+    print("fetching location from "+ "${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${widget.incident_obj['lifesaver']}");
+    final http.Response ls_result = await http.get(Uri.parse("${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${widget.incident_obj['lifesaver']}"));
     if (ls_result.statusCode == 200) {
       print(ls_result);
       final data = json.decode(ls_result.body);
@@ -89,12 +84,12 @@ class _AboutToReachState extends State<AboutToReach> {
     );
     print(widget.destinationLocation.toString());
     print("distance "+ distanceInMeters.toString());
-    if (distanceInMeters<50){
+    if (distanceInMeters<40){
       _timer.cancel();
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => Arrived(destinationLocation:currentLocation!, incident: widget.incident, lifesaver: widget.lifesaver,)));
+            builder: (context) => Arrived(destinationLocation:currentLocation!, incident_obj: widget.incident_obj)));
     }
     GoogleMapController googleMapController = await _controller.future;
     print(currentLocation!.latitude.toString() + ' ' + currentLocation!.longitude.toString());
@@ -129,20 +124,10 @@ class _AboutToReachState extends State<AboutToReach> {
     }
   }
 
-  void getLifesaverData()async{
-    final http.Response ls_result = await http.get(Uri.parse(
-            '${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${widget.lifesaver}'));
-        Map<String, dynamic> ls_body = json.decode(ls_result.body);
-        setState(() {
-          name = ls_body['first_name'] + ' ' + ls_body['last_name'];
-          contact_no = ls_body['contact_no'];
-        });
-  }
 
   @override
   void initState() {
     getCurrentLocation();
-    getLifesaverData();
     // setCustomMarker();
     //getPolyPoints();
     _timer = Timer.periodic(Duration(seconds: 5), (timer) {
@@ -275,7 +260,7 @@ class _AboutToReachState extends State<AboutToReach> {
                         // ignore: prefer_const_literals_to_create_immutables
                         children: [
                           Text(
-                            name,
+                            widget.incident_obj['lifesaver_name'],
                             style: GoogleFonts.poppins(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -286,7 +271,7 @@ class _AboutToReachState extends State<AboutToReach> {
                           Padding(
                             padding: EdgeInsets.only(top: 1.0),
                             child: Text(
-                              contact_no,
+                              widget.incident_obj['lifesaver_contact'],
                               style: GoogleFonts.lato(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,

@@ -32,9 +32,6 @@ sendLocation() async{
     if (is_lifesaver){
     print("Attempting to send location");
     print(is_lifesaver);
-    final channel = WebSocketChannel.connect(
-      Uri.parse('ws://44.230.76.47:8000/ws/socket-server/'),
-    );
     final location = Location();
     final currentLocation = await location.getLocation();
     print(currentLocation.latitude);
@@ -43,6 +40,18 @@ sendLocation() async{
       'latitude': currentLocation.latitude,
       'longitude': currentLocation.longitude,
     });
+    WebSocketChannel channel;
+    while (true) {
+      try {
+        channel = WebSocketChannel.connect(
+          Uri.parse('ws://44.230.76.47:8000/ws/socket-server/'),
+        );
+        break;
+      } catch (e) {
+        print('Connection failed: $e');
+        await Future.delayed(Duration(seconds: 5));
+      }
+    }
     channel.sink.add(locationJson);
     print("Location for ls " + user_id + "updated by "+ currentLocation.latitude.toString() + "," +currentLocation.longitude.toString());
   }

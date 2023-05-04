@@ -15,9 +15,9 @@ import '../constants.dart';
 import 'package:http/http.dart' as http;
 
 class Citizen_Feedback extends StatefulWidget {
-  final int incident;
+  final Map<String, dynamic> incident_obj;
 
-  Citizen_Feedback({required this.incident});
+  Citizen_Feedback({required this.incident_obj});
 
   @override
   _MyWidgetState createState() => _MyWidgetState();
@@ -25,13 +25,14 @@ class Citizen_Feedback extends StatefulWidget {
 
 class _MyWidgetState extends State<Citizen_Feedback> {
   Future FeedbackSave() async {
+    print(widget.incident_obj);
     print('here' + ApiConstants.baseUrl + ApiConstants.citizenFeedback);
     print({
           "intervention": "CPR",
           "name_of_patients":  _entries.join(", "),
           "details": _detailsController.text,
           "lifesaver_rating": _rating,
-          "incident": widget.incident,
+          "incident": widget.incident_obj['incident'],
           "citizen": await SharedPreferences.getInstance().then((prefs) => prefs.getString('id') ?? "") 
         }); 
     final http.Response result = await http.post(
@@ -41,7 +42,7 @@ class _MyWidgetState extends State<Citizen_Feedback> {
           "name_of_patients":  _entries.isEmpty?"":_entries.join(", "),
           "details": _detailsController.text,
           "lifesaver_rating": _rating,
-          "incident": widget.incident,
+          "incident": widget.incident_obj['incident'],
           "citizen": await SharedPreferences.getInstance().then((prefs) => prefs.getString('id') ?? "")
         }),
         headers: {
@@ -141,11 +142,11 @@ class _MyWidgetState extends State<Citizen_Feedback> {
             ),
             Text(localizations.lifesaver_details, style: titleFontStyle),
             Text(
-              "Name: Sara Khan",
+              "Name: " + widget.incident_obj['lifesaver_name'],
               style: generalfontStyle,
             ),
             Text(
-              "Contact: 03332428145",
+              "Contact: " + widget.incident_obj['lifesaver_contact'],
               style: generalfontStyle,
             ),
             Text(

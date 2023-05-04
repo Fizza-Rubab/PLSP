@@ -53,7 +53,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
   }
 
   Future<void> _uploadImage() async {
-    final url = 'http://44.230.76.47:8000/lifesaver/upload_photo/2';
+    final url = 'http://44.230.76.47:8000/lifesaver/upload_photo/'+await SharedPreferences.getInstance().then((prefs) => prefs.getString('id') ?? "0");
     final request = http.MultipartRequest('POST', Uri.parse(url));
     print("path" + pickedImage!.path);
     request.files.add(await http.MultipartFile.fromPath('image', pickedImage!.path));

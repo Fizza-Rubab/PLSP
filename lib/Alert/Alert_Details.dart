@@ -417,26 +417,26 @@ class _Alert_DetailsState extends State<Alert_Details> {
 
                     ////////////////////////////
                     print({
-                      "location": _addressController.text,
-                      "latitude": 24.9077,
-                      "longitude": 67.13913,
-                      "info": "Heart Attack",
-                      "created": DateTime.now().toString(),
-                      "updated": DateTime.now().toString(),
-                      "no_of_patients": number,
-                      "status": "launched",
-                      "lifesaver": null,
-                      "citizen": await SharedPreferences.getInstance()
-                          .then((prefs) => prefs.getString('id') ?? '')
-                    });
+                          "location": _addressController.text,
+                          "latitude": _currentLocation!.latitude,
+                          "longitude": _currentLocation!.longitude,
+                          "info": _detailsController.text,
+                          "created": DateTime.now().toString(),
+                          "updated": DateTime.now().toString(),
+                          "no_of_patients": number,
+                          "status": "launched",
+                          "lifesaver": null,
+                          "citizen": await SharedPreferences.getInstance()
+                              .then((prefs) => prefs.getString('id') ?? '')
+                        });
 
                     final http.Response result = await http.post(
                         Uri.parse(ApiConstants.baseUrl +
                             ApiConstants.incidentEndpoint),
                         body: jsonEncode({
                           "location": _addressController.text,
-                          "latitude": 24.9077,
-                          "longitude": 67.13913,
+                          "latitude": _currentLocation!.latitude,
+                          "longitude": _currentLocation!.longitude,
                           "info": _detailsController.text,
                           "created": DateTime.now().toString(),
                           "updated": DateTime.now().toString(),
@@ -452,9 +452,9 @@ class _Alert_DetailsState extends State<Alert_Details> {
                         });
 
                     Map<String, dynamic> body = json.decode(result.body);
-                    // print("Output: " + body);
+                    print("Output: " + body.toString());
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => Searching(latitude: _currentLocation!.latitude, longitude: _currentLocation!.longitude, incident:body["id"])));
+                        builder: (context) => Searching(latitude: _currentLocation!.latitude, longitude: _currentLocation!.longitude, incident_obj:body)));
                   },
                   child: Text(localizations.launch_alert),
                 ),

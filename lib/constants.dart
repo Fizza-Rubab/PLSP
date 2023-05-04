@@ -58,4 +58,5 @@ class ApiConstants {
   static String citizenHistory = '/incident/citizen';
   static String citizenFeedback = '/postinfo/citizen';
   static String lifesaverFeedback = '/postinfo/lifesaver';
+
 }

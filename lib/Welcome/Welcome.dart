@@ -1,6 +1,8 @@
 
 // ignore_for_file: library_private_types_in_public_api, non_constant_identifier_names
 
+import 'dart:convert';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:awesome_notifications_fcm/awesome_notifications_fcm.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps/Home/Citizen.dart';
 import 'package:google_maps/Lifesaver/Lifesaver.dart';
 import 'package:google_maps/Lifesaver/RedirectDestination.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../Welcome/register.dart';
 import '../constants.dart';
 import 'Login.dart';
@@ -137,28 +140,64 @@ class NotificationController {
   ///
   @pragma('vm:entry-point')
   static Future<void> onActionReceivedMethod(
-      ReceivedAction receivedAction) async {
+    ReceivedAction receivedAction) async {
     print("some action received");
+    var payload = receivedAction.payload;
+    var body = payload;
+    print("payload " + body.toString());
+    int incident = int.parse(body!['incident']!);
+    print("incident");
+    print(incident);
+    int request = int.parse(body!['request_id']!);
+    print("request");
+    print(request);
+    int no_of_patients = int.parse(body!['no_of_patients']!);
+    print(no_of_patients);
+    String citizen_name = body!['citizen_name']!;
+    print(citizen_name);
+    String citizen_contact = body!['citizen_contact']!;
+    print(citizen_contact);
+    String info = body!['info']!;
+    print(info);
+    double longitude = double.parse(body!['longitude']!);
+    print(longitude);
+    double latitude = double.parse(body!['latitude']!);
+    print(latitude);
 
 
+    var incident_obj = {
+      "incident": incident,
+      "request": request,
+      "info": info,
+      "latitude": latitude,
+      "longitude": longitude,
+      "no_of_patients": no_of_patients,
+      "citizen_name": citizen_name,
+      "citizen_contact": citizen_contact,
+    };
+    print("incident obj notif " + incident_obj.toString());
     if(
       receivedAction.actionType == ActionType.SilentAction ||
       receivedAction.actionType == ActionType.SilentBackgroundAction
     ){
-      // For background actions
       print("here in action1");
-      //, you must hold the execution until the end
       print('Message sent via notification input: "${receivedAction.buttonKeyInput}"');
       await executeLongTaskInBackground();
     }
     else {
       print("here in action2");
-      
       if (Welcome.navigatorKey.currentState!=null){
+        print(ApiConstants.baseUrl + '/incident/${request}/accept/${await SharedPreferences.getInstance().then((prefs) => prefs.getString('id') ?? "0")}');
+        final http.Response result = await http.post(
+        Uri.parse(ApiConstants.baseUrl + '/incident/${request}/accept/${await SharedPreferences.getInstance().then((prefs) => prefs.getString('id') ?? "0")}'));
+        Map<String, dynamic> response = json.decode(result.body);
+        print(response);
+        if (response['status']=='accepted')
         Welcome.navigatorKey.currentState?.push(MaterialPageRoute(
                                           builder: (context) =>
-                                              RedirectDestination(incident:incident_id)));
-        incident_id = -1;                                   
+                                              RedirectDestination(incident_obj:incident_obj)));
+        
+        // incident_id = -1;                                   
       }
                                             
     }
@@ -172,9 +211,11 @@ class NotificationController {
   /// Use this method to detect every time that a new notification is displayed
   @pragma("vm:entry-point")
   static Future <void> onNotificationDisplayedMethod(ReceivedNotification receivedNotification) async {
-      print(receivedNotification.payload);
-      print(receivedNotification.payload!['incident']);
-      incident_id = int.parse(receivedNotification.payload!['incident']!);
+      // print("printing payload " + receivedNotification.payload.toString());
+      // print("printing body " + receivedNotification.body!);
+      // print("whole notification "+ receivedNotification.toString());
+      // print(receivedNotification.payload!['incident']);
+      // incident_id = int.parse(receivedNotification.payload!['incident']!);
       print("notif displayed");
 
   }

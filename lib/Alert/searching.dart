@@ -1,8 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_maps/Lifesaver/Lifesaver.dart';
+import 'package:google_maps/constants.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../Home/Citizen.dart';
 import 'About_To_Reach.dart';
@@ -11,41 +13,69 @@ import 'package:google_fonts/google_fonts.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import '../appbar.dart';
 
+import 'package:http/http.dart' as http;
+
 class Searching extends StatefulWidget {
   final double latitude;
   final double longitude;
-  final int incident;
+  final Map<String, dynamic> incident_obj;
 
-  Searching({required this.latitude, required this.longitude, required this.incident});
+  Searching({required this.latitude, required this.longitude, required this.incident_obj});
   @override
   State<Searching> createState() => _SearchingState();
 }
 
 class _SearchingState extends State<Searching>
-    with SingleTickerProviderStateMixin {
+  with SingleTickerProviderStateMixin {
   late AnimationController controller;
   int lifesaver_id = 2;
+  late Timer timer;
 
   @override
   void initState() {
     super.initState();
-    startTime();
+    // startTime();
+    startTimer();
     controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
     );
   }
 
-  startTime() async {
-    var duration = const Duration(seconds: 20);
-    return Timer(duration, route);
+  // startTime() async {
+  //   var duration = const Duration(seconds: 20);
+  //   return Timer(duration, route);
+  // }
+
+  // route() {
+  //   Navigator.pushReplacement(context,
+  //       MaterialPageRoute(builder: (context) => AboutToReach(destinationLocation: LatLng(widget.latitude, widget.longitude), incident: widget.incident, lifesaver: lifesaver_id)));
+  // }
+
+    void startTimer() {
+    timer = Timer.periodic(Duration(seconds: 3), (Timer t) async {
+      // hit the API to check if any lifesaver has accepted the request
+      print('url ' + '${ApiConstants.baseUrl}/incident/${widget.incident_obj['id']}/accept');
+      var response = await http.get(Uri.parse('${ApiConstants.baseUrl}/incident/${widget.incident_obj['id']}/status'));
+      if (response.statusCode == 200) {
+        print('response ' + response.body.toString());
+        var data = jsonDecode(response.body);
+        if (data["status"]=='accepted') {
+          t.cancel(); // stop the timer
+          Map<String, dynamic> incident_obj_updated = data;
+          Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => AboutToReach(destinationLocation: LatLng(widget.latitude, widget.longitude), incident_obj: incident_obj_updated)));
+        }
+      }
+    });
   }
 
-  route() {
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => AboutToReach(destinationLocation: LatLng(widget.latitude, widget.longitude), incident: widget.incident, lifesaver: lifesaver_id)));
+  // stop the timer when the widget is disposed
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
