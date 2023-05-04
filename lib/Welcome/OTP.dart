@@ -23,14 +23,14 @@ bool verifyOtp(String enteredOtp, String expectedOtp) {
 }
 
 void sendOtpEmail(
-    String recipientEmail, String recipientName, String generatedOTP) async {
+    String recipientEmail, String recipientName, String generatedOTP, SmtpServer smtpServer) async {
   final String username = 'teamplsp2023@gmail.com';
   final String password = 'qtzhoqtegpyvyfik';
   print(recipientEmail);
   // Create the email message
 
   try {
-    final smtpServer = gmail(username, password);
+    // final smtpServer = gmail(username, password);
     final message = Message()
       ..from = Address(username)
       ..recipients.add(recipientEmail.toString())
@@ -51,11 +51,13 @@ class Otp extends StatefulWidget {
   final String generatedOTP;
   final String email;
   final String firstName;
+  final SmtpServer smtpServer;
   const Otp(
       {Key? key,
       required this.generatedOTP,
       required this.email,
-      required this.firstName})
+      required this.firstName, 
+      required this.smtpServer})
       : super(key: key);
 
   @override
@@ -68,11 +70,7 @@ class _OtpState extends State<Otp> {
   void initState() {
     super.initState();
 
-    // widget.myFuture.then((value) {
-    //   setState(() {
-    //     _myString = value;
-    //   });
-    // });
+   
   }
 
   @override
@@ -137,7 +135,9 @@ class _OtpState extends State<Otp> {
                           sendOtpEmail(
                               Text(widget.email).toString(),
                               Text(widget.firstName).toString(),
-                              Text(widget.generatedOTP).toString());
+                              Text(widget.generatedOTP).toString(), 
+                              widget.smtpServer
+                             );
                         },
                         child: Text(
                           "Resend Code",

@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import 'package:mailer/smtp_server.dart';
 import '../Home/Citizen.dart';
 import '../input_design.dart';
 import '../constants.dart';
@@ -95,7 +96,6 @@ class _RegisterState extends State<Register> {
             .push(MaterialPageRoute(builder: (context) => const Citizen()));
       }
       // ignore: use_build_context_synchronously
-
     } else {
       email.clear();
       password.clear();
@@ -312,13 +312,22 @@ class _RegisterState extends State<Register> {
                             TextButton(
                                 onPressed: () async {
                                   String generatedOTP = generateOTP();
-                                  sendOtpEmail(email.text, first_name.text, generatedOTP);
-                                  print("SENT"); 
-                                  print(generatedOTP); 
+                                  final String username =
+                                      'teamplsp2023@gmail.com';
+                                  final String password = 'qtzhoqtegpyvyfik';
+                                  final smtpServer = gmail(username, password);
+                                  sendOtpEmail(email.text, first_name.text,
+                                      generatedOTP, smtpServer);
+                                  print("SENT");
+                                  print(generatedOTP);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Otp(generatedOTP: generatedOTP, email: email.text, firstName: first_name.text)),
+                                        builder: (context) => Otp(
+                                            generatedOTP: generatedOTP,
+                                            email: email.text,
+                                            firstName: first_name.text, 
+                                            smtpServer: smtpServer)),
                                   );
                                 },
                                 child: Row(children: [
