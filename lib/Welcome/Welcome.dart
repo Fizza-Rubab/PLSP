@@ -7,6 +7,7 @@ import '../texttheme.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'package:awesome_dialog/awesome_dialog.dart';
 
+
 enum LocaleMenu { en, ur, ar}
 
 TextDirection td = TextDirection.ltr;

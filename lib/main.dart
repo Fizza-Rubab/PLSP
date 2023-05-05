@@ -4,8 +4,17 @@ import 'package:get/get.dart';
 import 'shared.dart';
 import 'Welcome/Welcome.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter/services.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.white, // set color here
+      statusBarColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.dark
+    ),
+  );
   AwesomeNotifications().initialize(
     'resource://drawable/res_img_test',
     [
@@ -21,7 +30,7 @@ void main() {
   sharedPrefInit();
   WidgetsFlutterBinding.ensureInitialized();
   // runApp(const MaterialApp(home:Arrived(args:{"latitude":24.9059, "longitude":67.1383})));
-  runApp( GetMaterialApp(home: Welcome()));   //Welcome
+  runApp( const GetMaterialApp(home: Welcome(), debugShowCheckedModeBanner: false));   //Welcome
 }
 
 // void main(){
