@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'package:mailer/smtp_server.dart';
 import '../Home/Citizen.dart';
+import '../config.dart';
 import '../input_design.dart';
 import '../constants.dart';
 import '../shared.dart';
@@ -314,7 +315,7 @@ class _RegisterState extends State<Register> {
                                   String generatedOTP = generateOTP();
                                   final String username =
                                       'teamplsp2023@gmail.com';
-                                  final String password = 'qtzhoqtegpyvyfik';
+                                  final String password = plsp_password;
                                   final smtpServer = gmail(username, password);
                                   sendOtpEmail(email.text, first_name.text,
                                       generatedOTP, smtpServer);
