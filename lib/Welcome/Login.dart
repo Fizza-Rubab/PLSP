@@ -17,6 +17,7 @@ import '../constants.dart';
 import '../shared.dart';
 import 'ForgotPassword.dart';
 import '../appbar.dart';
+import '../Welcome/Welcome.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -57,6 +58,7 @@ class _LoginState extends State<Login> {
     Map<String, dynamic> body = json.decode(result.body);
     print(body);
     if (body.containsKey('access')) {
+      putBool('logged_in', true);
       putString('token', body['access']);
       if (body['is_lifesaver']) {
         putBool('is_lifesaver', body['is_lifesaver']);
@@ -79,6 +81,11 @@ class _LoginState extends State<Login> {
             await prefs.setString('profile_image', file.path);
             print("setting prefs image");
         }
+        String fcm_token = await NotificationController.getFirebaseMessagingToken();
+        final http.Response token_result = await http.put(Uri.parse(
+            '${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${body['id']}'), body: {'registration_token':fcm_token});
+        Map<String, dynamic> resbody = json.decode(token_result.body);
+        print(resbody);
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => Lifesaver()));
       } else {
@@ -97,6 +104,13 @@ class _LoginState extends State<Login> {
         putString('date_of_birth', ct_body['date_of_birth']);
         putString('address', ct_body['address']);
         putString('contact_no', ct_body['contact_no']);
+        if (ct_body['profile_picture'] != null) {
+            var fileName = Uri.parse(ApiConstants.baseUrl + ct_body['profile_picture']).pathSegments.last;
+            var file = await _saveImageToFile(ApiConstants.baseUrl+ct_body['profile_picture'], fileName);
+            var prefs = await SharedPreferences.getInstance();
+            await prefs.setString('profile_image', file.path);
+            print("setting prefs image");
+        }
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => Citizen()));
       }

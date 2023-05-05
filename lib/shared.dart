@@ -34,6 +34,13 @@ dynamic getString(key) async {
     return _res;
 }
 
+dynamic getBool(key) async {
+    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+    final SharedPreferences prefs = await _prefs;
+    bool? _res = prefs.getBool("$key");
+    return _res;
+}
+
 Future reset() async {
     Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
     final SharedPreferences prefs = await _prefs;

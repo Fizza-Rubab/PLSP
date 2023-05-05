@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter/src/widgets/container.dart';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
@@ -6,6 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
+import 'ButtonOption.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import "../Welcome/Welcome.dart";
 import '../appbar.dart';
 import '../common.dart';
 import 'termsAndPolicy.dart';

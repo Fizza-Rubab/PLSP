@@ -1,17 +1,24 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../constants.dart';
 import 'Arrival.dart';
 import '../config.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 
 class AboutToReach extends StatefulWidget {
-  final Map<String, dynamic> args;
-  const AboutToReach({Key? key, required this.args}) : super(key: key);
+  final LatLng destinationLocation;
+  final Map<String, dynamic> incident_obj;
+
+  AboutToReach({required this.destinationLocation, required this.incident_obj});
 
   @override
   State<AboutToReach> createState() => _AboutToReachState();
@@ -20,13 +27,14 @@ class AboutToReach extends StatefulWidget {
 class _AboutToReachState extends State<AboutToReach> {
   final Completer<GoogleMapController> _controller = Completer();
   static const LatLng sourceLocation = LatLng(24.8918, 67.0731);
-  static const LatLng destinationLocation = LatLng(24.9061, 67.1384);
+  // static const LatLng destinationLocation = LatLng(24.9061, 67.1384);
   BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor currentIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor destinationIcon = BitmapDescriptor.defaultMarker;
 
   List<LatLng> polylineCoordinates = [];
-  LocationData? currentLocation;
+  LatLng? currentLocation;
+  late Timer _timer;
 
   startTime() async {
     var duration = const Duration(seconds: 20);
@@ -34,35 +42,66 @@ class _AboutToReachState extends State<AboutToReach> {
   }
 
   endRoute() {
+    _timer.cancel();
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => const Arrived(args: {"latitude":24.9059, "longitude":67.1383})));
+            builder: (context) => Arrived(destinationLocation:currentLocation!, incident_obj: widget.incident_obj)));
+  }
+  LocationData convertLatLngToLocationData(double latitude, double longitude) {
+  return LocationData.fromMap({
+    "latitude": latitude,
+    "longitude": longitude,
+    "accuracy": 0.0,
+    "altitude": 0.0,
+    "speed": 0.0,
+    "speed_accuracy": 0.0,
+    "heading": 0.0,
+    "time": DateTime.now().millisecondsSinceEpoch,
+    "is_mock": false,
+    "altitude_accuracy": 0.0,
+  });
   }
 
   void getCurrentLocation() async {
-    Location location = Location();
-    location.getLocation().then(
-      (location) {
-        currentLocation = location;
-      },
+    print("fetching location from "+ "${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${widget.incident_obj['lifesaver']}");
+    final http.Response ls_result = await http.get(Uri.parse("${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${widget.incident_obj['lifesaver']}"));
+    if (ls_result.statusCode == 200) {
+      print(ls_result);
+      final data = json.decode(ls_result.body);
+      final latitude = data['latitude'] as double;
+      final longitude = data['longitude'] as double;
+      // final LocationData ld = convertLatLngToLocationData(latitude, longitude);
+      setState(() {
+        currentLocation = LatLng(latitude, longitude);
+      });
+      // Assuming currentLocation and destination are both LatLng objects
+    double distanceInMeters = await Geolocator.distanceBetween(
+    currentLocation!.latitude,
+    currentLocation!.longitude,
+    widget.destinationLocation.latitude,
+    widget.destinationLocation.longitude,
     );
+    print(widget.destinationLocation.toString());
+    print("distance "+ distanceInMeters.toString());
+    if (distanceInMeters<40){
+      _timer.cancel();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Arrived(destinationLocation:currentLocation!, incident_obj: widget.incident_obj)));
+    }
     GoogleMapController googleMapController = await _controller.future;
-
-    location.onLocationChanged.listen((newloc) {
-      currentLocation = newloc;
-      googleMapController.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            zoom: 18,
-            target: LatLng(newloc.latitude!, newloc.longitude!),
-          ),
+    print(currentLocation!.latitude.toString() + ' ' + currentLocation!.longitude.toString());
+    googleMapController.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          zoom: 18,
+          target: LatLng(currentLocation!.latitude, currentLocation!.longitude),
         ),
-      );
-      if (this.mounted) {
-      setState(() {});
-      }
-    });
+      ),
+    );
+  }
   }
 
   void getPolyPoints() async {
@@ -70,7 +109,7 @@ class _AboutToReachState extends State<AboutToReach> {
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       api_key,
       PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
-      PointLatLng(destinationLocation.latitude, destinationLocation.longitude),
+      PointLatLng(widget.destinationLocation.latitude, widget.destinationLocation.longitude),
     );
 
     if (result.points.isNotEmpty) {
@@ -85,13 +124,17 @@ class _AboutToReachState extends State<AboutToReach> {
     }
   }
 
+
   @override
   void initState() {
     getCurrentLocation();
     // setCustomMarker();
-    getPolyPoints();
+    //getPolyPoints();
+    _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+      getCurrentLocation();
+    });
     super.initState();
-    startTime();
+    // startTime();
   }
 
   void setCustomMarker() {
@@ -165,8 +208,8 @@ class _AboutToReachState extends State<AboutToReach> {
                         print(cameraPosition.zoom);
                       },
                       initialCameraPosition: CameraPosition(
-                          target: LatLng(currentLocation!.latitude!,
-                              currentLocation!.longitude!),
+                          target: LatLng(currentLocation!.latitude,
+                              currentLocation!.longitude),
                           zoom: 10.0),
                       polylines: {
                         Polyline(
@@ -180,18 +223,18 @@ class _AboutToReachState extends State<AboutToReach> {
                         Marker(
                           markerId: const MarkerId("currentLocation"),
                           icon: BitmapDescriptor.defaultMarkerWithHue(240),
-                          position: LatLng(currentLocation!.latitude!,
-                              currentLocation!.longitude!),
+                          position: LatLng(currentLocation!.latitude,
+                              currentLocation!.longitude),
                         ),
-                        const Marker(
+                        Marker(
                           markerId: MarkerId("source"),
                           // icon: sourceIcon,
                           position: sourceLocation,
                         ),
-                        const Marker(
+                        Marker(
                             markerId: MarkerId("destination"),
                             // icon: destinationIcon,
-                            position: destinationLocation),
+                            position: widget.destinationLocation),
                       },
                       onMapCreated: (mapController) {
                         _controller.complete(mapController);
@@ -217,7 +260,7 @@ class _AboutToReachState extends State<AboutToReach> {
                         // ignore: prefer_const_literals_to_create_immutables
                         children: [
                           Text(
-                            "Sameer Pervez",
+                            widget.incident_obj['lifesaver_name'],
                             style: GoogleFonts.poppins(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -228,7 +271,7 @@ class _AboutToReachState extends State<AboutToReach> {
                           Padding(
                             padding: EdgeInsets.only(top: 1.0),
                             child: Text(
-                              "+923352395720",
+                              widget.incident_obj['lifesaver_contact'],
                               style: GoogleFonts.lato(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
