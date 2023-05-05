@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps/Lifesaver/Lifesaver_Arrival.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,8 +11,8 @@ import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
 
 class MapScreen extends StatefulWidget {
-  final Map<String, dynamic> args;
-  const MapScreen({Key? key, required this.args}) : super(key: key);
+  final Map<String, dynamic> incident_obj;
+  const MapScreen({Key? key, required this.incident_obj}) : super(key: key);
 
   @override
   State<MapScreen> createState() => _MapScreenState();
@@ -19,25 +20,32 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   final Completer<GoogleMapController> _controller = Completer();
-  static const LatLng sourceLocation = LatLng(24.8918, 67.0731);
-  static const LatLng destinationLocation = LatLng(24.9061, 67.1384);
+  late LatLng sourceLocation;
+  late LatLng destinationLocation;
   BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor currentIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor destinationIcon = BitmapDescriptor.defaultMarker;
-
+  late Timer _timer;
   List<LatLng> polylineCoordinates = [];
   LocationData? currentLocation;
 
   startTime() async {
-    var duration = const Duration(seconds: 20);
+    var duration = const Duration(seconds: 60);
     return Timer(duration, endRoute);
   }
 
   endRoute() {
+    _timer.cancel();
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => const LifesaverArrived(args: {"latitude":24.9059, "longitude":67.1383})));
+            builder: (context) => LifesaverArrived(incident_obj:widget.incident_obj)));
+  }
+
+  void getSourceLocation() async {
+    final locationData = await Location().getLocation();
+    sourceLocation = LatLng(locationData.latitude!, locationData.longitude!);
+    print('Current location: ${sourceLocation.latitude}, ${sourceLocation.longitude}');
   }
 
   void getCurrentLocation() async {
@@ -45,8 +53,28 @@ class _MapScreenState extends State<MapScreen> {
     location.getLocation().then(
       (location) {
         currentLocation = location;
+        // sourceLocation = LatLng(currentLocation!.latitude!, currentLocation!.longitude!);
       },
     );
+
+    if (currentLocation!=null){
+    double distanceInMeters = await Geolocator.distanceBetween(
+    currentLocation!.latitude!,
+    currentLocation!.longitude!,
+    widget.incident_obj['latitude'],
+    widget.incident_obj['latitude'],
+    );
+    print(widget.incident_obj['latitude'].toString());
+    print("distance "+ distanceInMeters.toString());
+    if (distanceInMeters<40){
+      _timer.cancel();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => LifesaverArrived(incident_obj:widget.incident_obj)));
+    }
+    }
+    
     GoogleMapController googleMapController = await _controller.future;
 
     location.onLocationChanged.listen((newloc) {
@@ -87,11 +115,15 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   void initState() {
+    destinationLocation = LatLng(double.parse(widget.incident_obj['latitude'].toString()), double.parse(widget.incident_obj['longitude'].toString()));
     getCurrentLocation();
-    // setCustomMarker();
+    sourceLocation = currentLocation==null?LatLng(24.8191631,67.0667168):LatLng(currentLocation!.latitude!, currentLocation!.longitude!);    // setCustomMarker();
     getPolyPoints();
     super.initState();
     startTime();
+    _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+      getCurrentLocation();
+    });
   }
 
   void setCustomMarker() {
@@ -185,18 +217,30 @@ class _MapScreenState extends State<MapScreen> {
                       markers: {
                         Marker(
                           markerId: const MarkerId("currentLocation"),
+                          infoWindow: InfoWindow(
+                                title: 'Current Location',
+                                snippet: 'Current Location',
+                              ),
                           icon: BitmapDescriptor.defaultMarkerWithHue(240),
                           position: LatLng(currentLocation!.latitude!,
                               currentLocation!.longitude!),
                         ),
-                        const Marker(
+                        Marker(
                           markerId: MarkerId("source"),
+                          infoWindow: InfoWindow(
+                                title: 'Source Location',
+                                snippet: 'Source Location',
+                              ),
                           // icon: sourceIcon,
                           position: sourceLocation,
                         ),
-                        const Marker(
+                        Marker(
                             markerId: MarkerId("destination"),
                             // icon: destinationIcon,
+                            infoWindow: InfoWindow(
+                                title: 'Incident Location',
+                                snippet: 'Incident Location',
+                              ),
                             position: destinationLocation),
                       },
                       onMapCreated: (mapController) {
@@ -235,7 +279,7 @@ class _MapScreenState extends State<MapScreen> {
                         // ignore: prefer_const_literals_to_create_immutables
                         children: [
                           Text(
-                            "Aiman Naqvi",
+                            widget.incident_obj['citizen_name'],
                             style: GoogleFonts.poppins(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -246,7 +290,7 @@ class _MapScreenState extends State<MapScreen> {
                           Padding(
                             padding: EdgeInsets.only(top: 1.0),
                             child: Text(
-                              "+923352395720",
+                              widget.incident_obj['citizen_contact'],
                               style: GoogleFonts.lato(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,

@@ -50,7 +50,9 @@ class _CitizenProfileState extends State<CitizenProfile> {
 
   void _loadImageFromLocal() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("trying to load the image");
     String? imagePath = prefs.getString('profile_image');
+    print(imagePath);
     if (imagePath != null) {
       setState(() {
         pickedImage = File(imagePath);
