@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/src/widgets/container.dart';
+import 'package:google_maps/shared.dart';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
@@ -44,6 +45,7 @@ class _LifesaverHomeState extends State<LifesaverHome> {
   late SharedPreferences _prefs;
   String first_name = '';
   String last_name = '';
+  bool? _switchValue;
 
   @override
   initState() {
@@ -51,6 +53,7 @@ class _LifesaverHomeState extends State<LifesaverHome> {
     SharedPreferences.getInstance().then((prefs) {
       setState(() {
         _prefs = prefs;
+        _switchValue = _prefs.getBool('is_available')?? true;
         first_name = _prefs.getString('first_name') ?? '';
         last_name = _prefs.getString('last_name') ?? '';
       });
@@ -127,10 +130,10 @@ class _LifesaverHomeState extends State<LifesaverHome> {
                                 MediaQuery.of(context).size.height * (1 / 512)),
                       ),
                     ),
-                    Transform.scale(
+                    _switchValue==null?CircularProgressIndicator():Transform.scale(
                       scale: 1.6,
                       child: LiteRollingSwitch(
-                        value: true,
+                        value: _switchValue,
                         textOn:localizations.available,
                         textOff: localizations.unavailable,
                         colorOn: Colors.green,
@@ -138,7 +141,18 @@ class _LifesaverHomeState extends State<LifesaverHome> {
                         iconOn: Icons.check,
                         iconOff: Icons.close,
                         textSize: 10.0,
-                        onChanged: (bool position) {},
+                        onChanged: (bool position) async{
+                           if (_switchValue != position) {
+                            setState(() {
+                              _switchValue = position;
+                              putBool("is_available", position);
+                            });
+                            final response = await http.put(Uri.parse(
+                          '${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${await SharedPreferences.getInstance().then((prefs) => prefs.getString('id') ?? "")}'), body: {"is_available":position.toString()});
+                            print(response.body.toString());
+                          }
+                        }
+                        
                       ),
                     ),
                   ],

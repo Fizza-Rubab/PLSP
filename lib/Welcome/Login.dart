@@ -74,6 +74,7 @@ class _LoginState extends State<Login> {
         putString('date_of_birth', ls_body['date_of_birth']);
         putString('address', ls_body['address']);
         putString('contact_no', ls_body['contact_no']);
+        putBool('is_available', ls_body['is_available']);
         if (ls_body['profile_picture'] != null) {
             var fileName = Uri.parse(ls_body['profile_picture']).pathSegments.last;
             var file = await _saveImageToFile(ls_body['profile_picture'], fileName);
