@@ -1,27 +1,17 @@
-import 'dart:convert';
+// ignore_for_file: file_names, camel_case_types, avoid_print, non_constant_identifier_names, use_build_context_synchronously, deprecated_member_use
 
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../appbar.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../constants.dart';
-import '../input_design.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'searching.dart';
-import "package:flutter_gen/gen_l10n/app_localizations.dart";
-import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
-import '../input_design.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../appbar.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../constants.dart';
-import 'package:http/http.dart' as http;
+import '../input_design.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'searching.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import 'package:http/http.dart' as http;
+import 'package:location/location.dart';
 
 // class Alert_Details extends StatefulWidget {
 //   const Alert_Details({Key? key}) : super(key: key);
@@ -267,7 +257,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
         String first_name = _prefs.getString('first_name') ?? '';
         String last_name = _prefs.getString('last_name') ?? '';
         _callercontactController.text = _prefs.getString('contact_no') ?? '';
-        _callernameController.text = first_name + ' ' + last_name;
+        _callernameController.text = '$first_name $last_name';
       });
     });
       _getCurrentLocation();
@@ -275,13 +265,13 @@ class _Alert_DetailsState extends State<Alert_Details> {
 
   @override
   Widget build(BuildContext context) {
-    final Set<Marker> markers = new Set();
+    final Set<Marker> markers = {};
     final AppLocalizations localizations = AppLocalizations.of(context)!;
     markers.add(Marker(
       //add first marker
       markerId: MarkerId(_currentLocation.toString()),
-      position: _currentLocation==null?LatLng(0.0,0.0):_currentLocation!, //position of marker
-      infoWindow: InfoWindow(
+      position: _currentLocation==null?const LatLng(0.0,0.0):_currentLocation!, //position of marker
+      infoWindow: const InfoWindow(
         //popup info
         title: 'My current location',
         snippet: 'Lifesaver to come here',
@@ -291,8 +281,9 @@ class _Alert_DetailsState extends State<Alert_Details> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: SimpleAppBar(localizations.emergency_details),
-      body: _currentLocation==null?Center(child: CircularProgressIndicator()):Padding(
-        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 14.0),
+      body: _currentLocation==null?const Center(child: CircularProgressIndicator()):
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -309,7 +300,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
               height: MediaQuery.of(context).size.height * (1 / 4),
               decoration: BoxDecoration(
                   color: Colors.red.shade100,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(25),
                     bottomRight: Radius.circular(25),
                   )),
@@ -415,9 +406,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
                     textStyle: Theme.of(context).textTheme.bodyText2,
                   ),
                   onPressed: () async {
-                    print('here' +
-                        ApiConstants.baseUrl +
-                        ApiConstants.incidentEndpoint);
+                    print('here${ApiConstants.baseUrl}${ApiConstants.incidentEndpoint}');
 
                     ///////////////////// checks
                     int number = 1;
@@ -464,7 +453,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
                         });
 
                     Map<String, dynamic> body = json.decode(result.body);
-                    print("Output: " + body.toString());
+                    print("Output: $body");
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => Searching(latitude: _currentLocation!.latitude, longitude: _currentLocation!.longitude, incident_obj:body)));
                   },

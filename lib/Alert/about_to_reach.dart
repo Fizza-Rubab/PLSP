@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, avoid_print, use_build_context_synchronously
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -5,11 +7,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 import 'Arrival.dart';
 import '../config.dart';
-import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -18,7 +18,7 @@ class AboutToReach extends StatefulWidget {
   final LatLng destinationLocation;
   final Map<String, dynamic> incident_obj;
 
-  AboutToReach({required this.destinationLocation, required this.incident_obj});
+  const AboutToReach({super.key, required this.destinationLocation, required this.incident_obj});
 
   @override
   State<AboutToReach> createState() => _AboutToReachState();
@@ -64,7 +64,7 @@ class _AboutToReachState extends State<AboutToReach> {
   }
 
   void getCurrentLocation() async {
-    print("fetching location from "+ "${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${widget.incident_obj['lifesaver']}");
+    print("fetching location from ""${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${widget.incident_obj['lifesaver']}");
     final http.Response ls_result = await http.get(Uri.parse("${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${widget.incident_obj['lifesaver']}"));
     if (ls_result.statusCode == 200) {
       print(ls_result);
@@ -76,14 +76,14 @@ class _AboutToReachState extends State<AboutToReach> {
         currentLocation = LatLng(latitude, longitude);
       });
       // Assuming currentLocation and destination are both LatLng objects
-    double distanceInMeters = await Geolocator.distanceBetween(
+    double distanceInMeters = Geolocator.distanceBetween(
     currentLocation!.latitude,
     currentLocation!.longitude,
     widget.destinationLocation.latitude,
     widget.destinationLocation.longitude,
     );
     print(widget.destinationLocation.toString());
-    print("distance "+ distanceInMeters.toString());
+    print("distance $distanceInMeters");
     if (distanceInMeters<40){
       _timer.cancel();
       Navigator.push(
@@ -92,7 +92,7 @@ class _AboutToReachState extends State<AboutToReach> {
             builder: (context) => Arrived(destinationLocation:currentLocation!, incident_obj: widget.incident_obj)));
     }
     GoogleMapController googleMapController = await _controller.future;
-    print(currentLocation!.latitude.toString() + ' ' + currentLocation!.longitude.toString());
+    print('${currentLocation!.latitude} ${currentLocation!.longitude}');
     googleMapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
@@ -118,7 +118,7 @@ class _AboutToReachState extends State<AboutToReach> {
           LatLng(point.latitude, point.longitude),
         );
       }
-      if (this.mounted) {
+      if (mounted) {
       setState(() {});
       }
     }
@@ -130,7 +130,7 @@ class _AboutToReachState extends State<AboutToReach> {
     getCurrentLocation();
     // setCustomMarker();
     //getPolyPoints();
-    _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
       getCurrentLocation();
     });
     super.initState();
@@ -151,7 +151,6 @@ class _AboutToReachState extends State<AboutToReach> {
 
   @override
   Widget build(BuildContext context) {
-    final AppLocalizations localizations = AppLocalizations.of(context)!;
     return MaterialApp(
       home: Scaffold(
         bottomNavigationBar: BottomAppBar(
@@ -226,13 +225,13 @@ class _AboutToReachState extends State<AboutToReach> {
                           position: LatLng(currentLocation!.latitude,
                               currentLocation!.longitude),
                         ),
-                        Marker(
+                        const Marker(
                           markerId: MarkerId("source"),
                           // icon: sourceIcon,
                           position: sourceLocation,
                         ),
                         Marker(
-                            markerId: MarkerId("destination"),
+                            markerId: const MarkerId("destination"),
                             // icon: destinationIcon,
                             position: widget.destinationLocation),
                       },
@@ -269,7 +268,7 @@ class _AboutToReachState extends State<AboutToReach> {
                           ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 1.0),
+                            padding: const EdgeInsets.only(top: 1.0),
                             child: Text(
                               widget.incident_obj['lifesaver_contact'],
                               style: GoogleFonts.lato(
