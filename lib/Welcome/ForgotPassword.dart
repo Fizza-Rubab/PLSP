@@ -1,20 +1,15 @@
 import 'package:google_fonts/google_fonts.dart';
 import './register.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
-import '../Home/Citizen.dart';
 import '../input_design.dart';
 import '../constants.dart';
-import '../shared.dart';
-import 'package:intl/intl.dart';
-import 'package:flutter/gestures.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import '../appbar.dart';
 import 'NewPassword.dart';
 
 class ForgotPassword extends StatefulWidget {
+  const ForgotPassword({super.key});
+
   @override
   _MyStaForgotPassword createState() => _MyStaForgotPassword();
 }
@@ -24,7 +19,7 @@ class _MyStaForgotPassword extends State<ForgotPassword> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: SimpleAppBar(""),
+        appBar: const SimpleAppBar(""),
         body: Padding(
           padding: const EdgeInsets.all(defaultPadding),
           child: Column(
@@ -39,7 +34,7 @@ class _MyStaForgotPassword extends State<ForgotPassword> {
                   AppLocalizations.of(context)!.reset_pass_disc,
                   style: header_disc,
                 ),
-                Spacer(),
+                const Spacer(),
                 TextFormField(
                   // controller: "Email",
                   autofocus: true,
@@ -57,7 +52,7 @@ class _MyStaForgotPassword extends State<ForgotPassword> {
                     return null;
                   },
                 ),
-                Spacer(),
+                const Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -69,7 +64,7 @@ class _MyStaForgotPassword extends State<ForgotPassword> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Register()));
+                                builder: (context) => const Register()));
                       },
                       child: Text(
                         AppLocalizations.of(context)!.register,
@@ -78,14 +73,14 @@ class _MyStaForgotPassword extends State<ForgotPassword> {
                     )
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 TextButton(
                     // icon: Icon(Icons.chevron_right),
                     onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => NewPassword()));
+                              builder: (context) => const NewPassword()));
                     },
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,

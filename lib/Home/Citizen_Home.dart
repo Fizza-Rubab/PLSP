@@ -52,6 +52,7 @@ class _CitizenHomeState extends State<CitizenHome> {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: greyWhite,
+      extendBody: true,
       appBar: pickedImage == null
           ? MyAppBar(name: "Hello\n", name1: '$first_name $last_name')
           : MyAppBar(

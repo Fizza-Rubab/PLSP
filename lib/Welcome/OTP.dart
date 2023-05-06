@@ -13,7 +13,7 @@ import 'Login.dart';
 
 // Generate a random OTP
 String generateOTP() {
-  Random random = new Random();
+  Random random = Random();
   int randomNumber = random.nextInt(9999);
   return randomNumber.toString().padLeft(4, '0');
 }
@@ -24,15 +24,14 @@ bool verifyOtp(String enteredOtp, String expectedOtp) {
 
 void sendOtpEmail(
     String recipientEmail, String recipientName, String generatedOTP, SmtpServer smtpServer) async {
-  final String username = 'teamplsp2023@gmail.com';
-  final String password = 'qtzhoqtegpyvyfik';
+  const String username = 'teamplsp2023@gmail.com';
   print(recipientEmail);
   // Create the email message
 
   try {
     // final smtpServer = gmail(username, password);
     final message = Message()
-      ..from = Address(username)
+      ..from = const Address(username)
       ..recipients.add(recipientEmail.toString())
       ..subject = 'Registeration OTP - PLSP Application'
       ..text =
@@ -77,10 +76,10 @@ class _OtpState extends State<Otp> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: SimpleAppBar(""),
+      appBar: const SimpleAppBar(""),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(padding_val),
+          padding: const EdgeInsets.all(padding_val),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -93,7 +92,7 @@ class _OtpState extends State<Otp> {
                   "Enter your OTP here",
                   style: header_disc,
                 ),
-                Spacer(),
+                const Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -103,7 +102,7 @@ class _OtpState extends State<Otp> {
                     _textFieldOTP(first: false, last: true, index: 3),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -147,7 +146,7 @@ class _OtpState extends State<Otp> {
                     )
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 TextButton(
                   onPressed: () {
                     if (_otp == Text(widget.generatedOTP)) {
@@ -203,7 +202,7 @@ class _OtpState extends State<Otp> {
   }
 
   Widget _textFieldOTP({required bool first, last, required int index}) {
-    return Container(
+    return SizedBox(
       height: 60,
       child: AspectRatio(
         aspectRatio: 1.0,
@@ -213,7 +212,7 @@ class _OtpState extends State<Otp> {
             if (value.length == 1 && last == false) {
               FocusScope.of(context).nextFocus();
             }
-            if (value.length == 0 && first == false) {
+            if (value.isEmpty && first == false) {
               FocusScope.of(context).previousFocus();
             }
             _otp = _otp.substring(0, index) +
@@ -224,16 +223,16 @@ class _OtpState extends State<Otp> {
           showCursor: false,
           readOnly: false,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           keyboardType: TextInputType.number,
           maxLength: 1,
           decoration: InputDecoration(
-            counter: Offstage(),
+            counter: const Offstage(),
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(width: 2, color: Colors.black12),
+                borderSide: const BorderSide(width: 2, color: Colors.black12),
                 borderRadius: BorderRadius.circular(20)),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(width: 2, color: Colors.redAccent),
+                borderSide: const BorderSide(width: 2, color: Colors.redAccent),
                 borderRadius: BorderRadius.circular(20)),
           ),
         ),
