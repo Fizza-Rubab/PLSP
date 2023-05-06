@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.7.10'
+    ext.kotlin_version = '1.8.21'
     repositories {
         google()
         mavenCentral()
@@ -29,4 +29,10 @@ subprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+configurations.all {
+   resolutionStrategy {
+       force 'androidx.core:core-ktx:1.6.0'
+    }
 }

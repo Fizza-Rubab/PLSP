@@ -96,7 +96,7 @@ def tables(request):
         tdict[idlife]['lname'] = y.last_name
         tdict[idlife]['cnic'] = y.cnic
         tdict[idlife]['callReceived'] = y.calls_received
-        tdict[idlife]['badge'] = y.badge
+        tdict[idlife]['badge'] = y.rating
 
 
     context = {

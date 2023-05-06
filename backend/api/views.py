@@ -66,6 +66,8 @@ class IncidentGetCreate(generics.ListCreateAPIView):
             for l in ls:
                 r = requests.post('http://127.0.0.1:8000/request/', data={'is_active':True,
                 'lifesaver':l.id, 'incident':incident.id})
+                l.calls_received+=1
+                l.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
