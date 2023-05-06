@@ -83,8 +83,8 @@ class _AboutToReachState extends State<AboutToReach> {
     widget.destinationLocation.longitude,
     );
     print(widget.destinationLocation.toString());
-    print("distance $distanceInMeters");
-    if (distanceInMeters<40){
+    print("distance "+ distanceInMeters.toString());
+    if (distanceInMeters<8){
       _timer.cancel();
       Navigator.push(
         context,

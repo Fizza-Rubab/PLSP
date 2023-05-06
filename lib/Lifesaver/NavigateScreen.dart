@@ -44,7 +44,9 @@ class _MapScreenState extends State<MapScreen> {
 
   void getSourceLocation() async {
     final locationData = await Location().getLocation();
-    sourceLocation = LatLng(locationData.latitude!, locationData.longitude!);
+    setState(() {
+      sourceLocation = LatLng(locationData.latitude!, locationData.longitude!);  
+    });
     print('Current location: ${sourceLocation.latitude}, ${sourceLocation.longitude}');
   }
 
@@ -52,7 +54,9 @@ class _MapScreenState extends State<MapScreen> {
     Location location = Location();
     location.getLocation().then(
       (location) {
-        currentLocation = location;
+        setState(() {
+          currentLocation = location;
+        });
         // sourceLocation = LatLng(currentLocation!.latitude!, currentLocation!.longitude!);
       },
     );
@@ -66,7 +70,7 @@ class _MapScreenState extends State<MapScreen> {
     );
     print(widget.incident_obj['latitude'].toString());
     print("distance "+ distanceInMeters.toString());
-    if (distanceInMeters<40){
+    if (distanceInMeters<8){
       _timer.cancel();
       Navigator.push(
         context,
@@ -117,11 +121,11 @@ class _MapScreenState extends State<MapScreen> {
   void initState() {
     destinationLocation = LatLng(double.parse(widget.incident_obj['latitude'].toString()), double.parse(widget.incident_obj['longitude'].toString()));
     getCurrentLocation();
-    sourceLocation = currentLocation==null?LatLng(24.8191631,67.0667168):LatLng(currentLocation!.latitude!, currentLocation!.longitude!);    // setCustomMarker();
+    sourceLocation = currentLocation==null?LatLng(24.90501,67.1380108):LatLng(currentLocation!.latitude!, currentLocation!.longitude!);    // setCustomMarker();
     getPolyPoints();
     super.initState();
     startTime();
-    _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+    _timer = Timer.periodic(Duration(seconds: 3), (timer) {
       getCurrentLocation();
     });
   }
