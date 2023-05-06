@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print, non_constant_identifier_names
 
 import 'dart:io';
-import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps/Welcome/ForgotPassword.dart';
@@ -15,7 +14,6 @@ import '../Home/Citizen.dart';
 import '../input_design.dart';
 import '../constants.dart';
 import '../shared.dart';
-import 'ForgotPassword.dart';
 import '../appbar.dart';
 import '../Welcome/Welcome.dart';
 
@@ -88,7 +86,7 @@ class _LoginState extends State<Login> {
         Map<String, dynamic> resbody = json.decode(token_result.body);
         print(resbody);
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => Lifesaver()));
+            .push(MaterialPageRoute(builder: (context) => const Lifesaver()));
       } else {
         putBool('is_lifesaver', body['is_lifesaver']);
         setState(() {
@@ -113,7 +111,7 @@ class _LoginState extends State<Login> {
             print("setting prefs image");
         }
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => Citizen()));
+            .push(MaterialPageRoute(builder: (context) => const Citizen()));
       }
       // ignore: use_build_context_synchronously
 
@@ -129,10 +127,10 @@ class _LoginState extends State<Login> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: SimpleAppBar(""),
+          appBar: const SimpleAppBar(""),
           body: Padding(
             padding:
-                EdgeInsets.all(defaultPadding),
+                const EdgeInsets.all(defaultPadding),
             child: Form(
               key: _formkey,
               // child: Expanded(l
@@ -180,12 +178,12 @@ class _LoginState extends State<Login> {
                       filled: true,
                       fillColor: Colors.grey[200],
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             width: 1, color: Colors.white), //<-- SEE HERE
                         borderRadius: BorderRadius.circular(50.0),
                       ),
                       labelText: AppLocalizations.of(context)!.password,
-                      prefixIcon: Icon(Icons.key_rounded),
+                      prefixIcon: const Icon(Icons.key_rounded),
                       suffixIcon: IconButton(
                         icon: Icon(
                           _obscureText
@@ -209,11 +207,11 @@ class _LoginState extends State<Login> {
                     },
                   ),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 4,
                   ),
                   Padding(
-                    padding:  EdgeInsets.only(
+                    padding:  const EdgeInsets.only(
                         right: defaultPadding,
                         left: defaultPadding,
                         bottom: 4.0),

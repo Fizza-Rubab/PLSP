@@ -14,7 +14,7 @@ class TermsAndConditions extends StatelessWidget {
       appBar: SimpleAppBar(localizations.terms_and_conditions),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(defaultPadding),
+          padding: const EdgeInsets.all(defaultPadding),
           child: Column(children: [
             Text(
               localizations.tnc1,

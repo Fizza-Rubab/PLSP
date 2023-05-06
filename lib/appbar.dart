@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 
  class SimpleAppBar extends StatelessWidget implements PreferredSizeWidget {
 
-  const SimpleAppBar(this.title_text);
+  const SimpleAppBar(this.title_text, {super.key});
   
 
   final String title_text; 
@@ -41,17 +41,17 @@ import 'package:flutter/services.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
-  MyAppBar({
+  const MyAppBar({super.key, 
     ImageProvider<Object>? imageProvider,
     this.name = 'Default Title',
     this.name1 = 'he',
-  }) : this.imageProvider = imageProvider ?? AssetImage('assets/images/profileicon.png');
+  }) : imageProvider = imageProvider ?? const AssetImage('assets/images/profileicon.png');
 
   final String name; 
   final String name1; 
   final ImageProvider<Object> imageProvider;
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override 
   Widget build(BuildContext context) {

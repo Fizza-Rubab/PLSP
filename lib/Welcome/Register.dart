@@ -8,13 +8,11 @@ import 'package:flutter/material.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'package:mailer/smtp_server.dart';
 import '../Home/Citizen.dart';
-import '../config.dart';
 import '../input_design.dart';
 import '../constants.dart';
 import '../shared.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/gestures.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import 'OTP.dart';
 
 class Register extends StatefulWidget {
@@ -117,7 +115,7 @@ class _RegisterState extends State<Register> {
       child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.transparent,
-            iconTheme: IconThemeData(color: Colors.redAccent),
+            iconTheme: const IconThemeData(color: Colors.redAccent),
             elevation: 0,
           ),
           resizeToAvoidBottomInset: false,
@@ -250,13 +248,13 @@ class _RegisterState extends State<Register> {
                             filled: true,
                             fillColor: Colors.grey[200],
                             enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                   width: 1, color: Colors.white), //<-- SEE HERE
                               borderRadius: BorderRadius.circular(50.0),
                             ),
                             labelText:
                                 AppLocalizations.of(context)!.date_of_birth,
-                            prefixIcon: Icon(Icons.calendar_today),
+                            prefixIcon: const Icon(Icons.calendar_today),
                           ),
                           readOnly: true,
                           //set it true, so that user will not able to edit text
@@ -302,7 +300,7 @@ class _RegisterState extends State<Register> {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  TermsAndConditions()));
+                                                  const TermsAndConditions()));
                                     }),
                             ],
                           ),
@@ -313,9 +311,9 @@ class _RegisterState extends State<Register> {
                             TextButton(
                                 onPressed: () async {
                                   String generatedOTP = generateOTP();
-                                  final String username =
+                                  const String username =
                                       'teamplsp2023@gmail.com';
-                                  final String password = 'qtzhoqtegpyvyfik';
+                                  const String password = 'qtzhoqtegpyvyfik';
                                   final smtpServer = gmail(username, password);
                                   sendOtpEmail(email.text, first_name.text,
                                       generatedOTP, smtpServer);
