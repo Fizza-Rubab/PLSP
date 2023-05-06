@@ -1,28 +1,23 @@
-import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
-import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'package:flutter/services.dart';
-import 'texttheme.dart';
-import 'constants.dart';
 
 
  class SimpleAppBar extends StatelessWidget implements PreferredSizeWidget {
 
-  SimpleAppBar(this.title_text);
+  const SimpleAppBar(this.title_text);
   
 
   final String title_text; 
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override 
   Widget build(BuildContext context) {
     return AppBar(
       leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.redAccent,),
+          icon: const Icon(Icons.arrow_back, color: Colors.redAccent,),
           onPressed: () => Navigator.pop(context),
         ),
         // iconTheme: IconThemeData(color: appbar_icon_color),

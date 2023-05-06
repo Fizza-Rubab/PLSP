@@ -315,7 +315,7 @@ class _RegisterState extends State<Register> {
                                   String generatedOTP = generateOTP();
                                   final String username =
                                       'teamplsp2023@gmail.com';
-                                  final String password = plsp_password;
+                                  final String password = 'qtzhoqtegpyvyfik';
                                   final smtpServer = gmail(username, password);
                                   sendOtpEmail(email.text, first_name.text,
                                       generatedOTP, smtpServer);

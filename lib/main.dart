@@ -1,30 +1,15 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:google_maps/Alert/Arrival.dart';
-import 'package:google_maps/Home/Citizen_History.dart';
-import 'package:google_maps/Lifesaver/Lifesaver.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:web_socket_channel/io.dart';
-import 'package:flutter/services.dart';
 import 'shared.dart';
 import 'Welcome/Welcome.dart';
-import 'Home/Citizen.dart';
-import 'Lifesaver/Lifesaver_Home.dart';
-import 'Alert/searching.dart';
-import 'Alert/about_to_reach.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:location/location.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'dart:isolate';
-import 'package:get/get.dart';
-import 'shared.dart';
-import 'Welcome/Welcome.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:flutter/services.dart';
 
 
 sendLocation() async{
@@ -60,8 +45,8 @@ sendLocation() async{
 
 void runBackgroundTask(RootIsolateToken rootIsolateToken) async {
   BackgroundIsolateBinaryMessenger.ensureInitialized(rootIsolateToken);
-  const duration = const Duration(seconds: 60);
-  new Timer.periodic(duration, (Timer t) => sendLocation());
+  const duration = Duration(seconds: 60);
+  Timer.periodic(duration, (Timer t) => sendLocation());
 }
 
 Future<void> main() async {
