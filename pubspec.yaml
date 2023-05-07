@@ -65,6 +65,7 @@ dependencies:
   cached_network_image: ^3.2.3
   flutter_cached_pdfview: ^0.4.1
   mailer: ^6.0.1
+  flutter_google_places_hoc081098: ^1.2.0
   
   
  
