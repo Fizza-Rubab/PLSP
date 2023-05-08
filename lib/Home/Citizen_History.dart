@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -67,7 +66,8 @@ class _MyWidgetState extends State<CitizenHistory> {
   File? pickedImage;
   String imageUrl = '';
   Future<void> _fetchData() async {
-    print('${ApiConstants.baseUrl}${ApiConstants.citizenHistory}/${await SharedPreferences.getInstance().then((prefs) => prefs.getString('id') ?? "")}');
+    print(
+        '${ApiConstants.baseUrl}${ApiConstants.citizenHistory}/${await SharedPreferences.getInstance().then((prefs) => prefs.getString('id') ?? "")}');
     final response = await http.get(Uri.parse(
         '${ApiConstants.baseUrl}${ApiConstants.citizenHistory}/${await SharedPreferences.getInstance().then((prefs) => prefs.getString('id') ?? "")}'));
     final history = json.decode(response.body);
@@ -99,7 +99,7 @@ class _MyWidgetState extends State<CitizenHistory> {
   void initState() {
     super.initState();
     _fetchData();
-   _loadImageFromLocal();
+    _loadImageFromLocal();
   }
 
   void _loadImageFromLocal() async {
@@ -116,138 +116,141 @@ class _MyWidgetState extends State<CitizenHistory> {
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations localizations = AppLocalizations.of(context)!;
     return WillPopScope(
       onWillPop: () async {
-        
         if (isLoggedIn) {
-         
           // If user is logged in, do not navigate back
           return false;
         } else {
-           print("do"); 
           // If user is not logged in, allow navigation back
           return true;
         }
       },
-      child: 
-     Scaffold(
-      backgroundColor: greyWhite,
-      appBar: pickedImage==null? MyAppBar(
-        name: " ",
-        name1: "History",):MyAppBar(
-        name: " ",
-        name1: "History",
-        imageProvider: FileImage(pickedImage!),
-      ),
-      body: Center(
-        child: _destinations==null
-            ? const CircularProgressIndicator()
-            : ListView.builder(
-                itemCount: _destinations.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    elevation: 0.0,
-                    color: Colors.white,
-                    shadowColor: Colors.black26,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                      side: BorderSide(color: Colors.grey.shade300),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Theme(
-                            data: Theme.of(context)
-                                .copyWith(dividerColor: Colors.transparent),
-                            child: ExpansionTile(
-                              trailing: Icon(
-                                _customTileExpanded
-                                    ? Icons.keyboard_arrow_up
-                                    : Icons.keyboard_arrow_down,
-                                color: PrimaryColor,
-                              ),
-                              title: Text(
-                                _names[index],
-                                style: GoogleFonts.lato(
-                                    fontWeight: FontWeight.w800,
-                                    letterSpacing: 0,
-                                    fontSize: 18.0,
-                                    color: Colors.black87),
-                              ),
-                              children: [
-                                Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          16, 0, 16, space_between_rows),
-                                      child: DetailsAdded(
-                                          "Condition:", _conditions[index]),
-                                    ),
-                                    // Padding(
-                                    //   padding: const EdgeInsets.symmetric(
-                                    //       horizontal: 16,
-                                    //       vertical: space_between_rows),
-                                    //   child: DetailsAdded(
-                                    //       "Intervention:", "Intervention TBA"),
-                                    // ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16,
-                                          vertical: space_between_rows),
-                                      child: DetailsAdded(
-                                          "Number of Patients:",
-                                          _number_of_patients[index]
-                                              .toString()),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                              onExpansionChanged: (bool expanded) {
-                                setState(() => _customTileExpanded = expanded);
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: space_between_rows),
-                            child:
-                                DetailsAdded("Location:", _destinations[index]),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: space_between_rows),
-                            child: DetailsAdded("Date:", _date_time[index]),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: space_between_rows),
-                            child: RatingBar.builder(
-                              ignoreGestures: true,
-                              initialRating: _rating[index],  
-                              minRating: 1,
-                              glow: false,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemSize: 28,
-                              itemBuilder: (context, _) => const Icon(
-                                Icons.health_and_safety,
-                                color: Colors.redAccent,
-                              ),
-                              onRatingUpdate: (rating) {
-                                // print(rating);
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
+      child: Scaffold(
+        backgroundColor: greyWhite,
+        appBar: pickedImage == null
+            ? MyAppBar(
+                name: " ",
+                name1: localizations.history,
+              )
+            : MyAppBar(
+                name: " ",
+                name1: localizations.history,
+                imageProvider: FileImage(pickedImage!),
               ),
+        body: Center(
+          child: _destinations == null
+              ? const CircularProgressIndicator()
+              : ListView.builder(
+                  itemCount: _destinations.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Card(
+                      elevation: 0.0,
+                      color: Colors.white,
+                      shadowColor: Colors.black26,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        side: BorderSide(color: Colors.grey.shade300),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Theme(
+                              data: Theme.of(context)
+                                  .copyWith(dividerColor: Colors.transparent),
+                              child: ExpansionTile(
+                                trailing: Icon(
+                                  _customTileExpanded
+                                      ? Icons.keyboard_arrow_up
+                                      : Icons.keyboard_arrow_down,
+                                  color: PrimaryColor,
+                                ),
+                                title: Text(
+                                  _names[index],
+                                  style: GoogleFonts.lato(
+                                      fontWeight: FontWeight.w800,
+                                      letterSpacing: 0,
+                                      fontSize: 18.0,
+                                      color: Colors.black87),
+                                ),
+                                children: [
+                                  Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            16, 0, 16, space_between_rows),
+                                        child: DetailsAdded(
+                                            localizations.condition, _conditions[index]),
+                                      ),
+                                      // Padding(
+                                      //   padding: const EdgeInsets.symmetric(
+                                      //       horizontal: 16,
+                                      //       vertical: space_between_rows),
+                                      //   child: DetailsAdded(
+                                      //       "Intervention:", "Intervention TBA"),
+                                      // ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16,
+                                            vertical: space_between_rows),
+                                        child: DetailsAdded(
+                                            localizations.patient_quantity,
+                                            _number_of_patients[index]
+                                                .toString()),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                                onExpansionChanged: (bool expanded) {
+                                  setState(
+                                      () => _customTileExpanded = expanded);
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: space_between_rows),
+                              child: DetailsAdded(
+                                  localizations.location, _destinations[index]),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: space_between_rows),
+                              child: DetailsAdded(
+                                  localizations.date, _date_time[index]),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: space_between_rows),
+                              child: RatingBar.builder(
+                                ignoreGestures: true,
+                                initialRating: _rating[index],
+                                minRating: 1,
+                                glow: false,
+                                direction: Axis.horizontal,
+                                allowHalfRating: true,
+                                itemCount: 5,
+                                itemSize: 28,
+                                itemBuilder: (context, _) => const Icon(
+                                  Icons.health_and_safety,
+                                  color: Colors.redAccent,
+                                ),
+                                onRatingUpdate: (rating) {
+                                  // print(rating);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+        ),
       ),
-    ),); 
+    );
   }
 }

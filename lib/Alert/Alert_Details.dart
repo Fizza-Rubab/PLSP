@@ -566,7 +566,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
                                           ),
                                         ),
                                         Text(
-                                          "Patient Information",
+                                          localizations.patients_information,
                                           style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w400, letterSpacing: 0.2),
                                         ),
                                       ],
