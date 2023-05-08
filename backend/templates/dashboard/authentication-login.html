@@ -9,10 +9,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="dashboard/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon.png">
     <title>Matrix Template - The Ultimate Multipurpose admin template</title>
     <!-- Custom CSS -->
-    <link href="dashboard/css/style.min.css" rel="stylesheet">
+    <link href="/static/css/style.min.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -42,10 +42,10 @@
             <div class="auth-box bg-dark border-top border-secondary">
                 <div id="loginform1">
                     <div class="text-center p-t-20 p-b-20">
-                        <span class="db"><img src="dashboard/images/logo.png" alt="logo" /></span>
+                        <span class="db"><img src="/static/images/logo.png" alt="logo" /></span>
                     </div>
                     <!-- Form -->
-                    <form class="form-horizontal m-t-20" id="loginform" action="index.html">
+                    <form class="form-horizontal m-t-20" id="loginform" action="{% url 'dashboard:admin' %}">
                         <div class="row p-b-30">
                             <div class="col-12">
                                 <div class="input-group mb-3">
@@ -58,7 +58,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text bg-warning text-white" id="basic-addon2"><i class="ti-pencil"></i></span>
                                     </div>
-                                    <input type="text" class="form-control form-control-lg" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required="">
+                                    <input type="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required="">
                                 </div>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                     </div>
                     <div class="row m-t-20">
                         <!-- Form -->
-                        <form class="col-12" action="index.html">
+                        <form class="col-12" action="{% url 'dashboard:admin' %}">
                             <!-- email -->
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -119,10 +119,10 @@
     <!-- ============================================================== -->
     <!-- All Required js -->
     <!-- ============================================================== -->
-    <script src="dashboard/js/jquery.min.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="dashboard/libs/popper.js/dist/umd/popper.min.js"></script>
-    <script src="dashboard/js/bootstrap.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
     <!-- ============================================================== -->
     <!-- This page plugin js -->
     <!-- ============================================================== -->
