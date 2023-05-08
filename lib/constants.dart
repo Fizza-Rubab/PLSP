@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+final Uri helpline= Uri.parse('tel:+923332428145'); 
+final Uri website = Uri.parse('https://plsp.org.pk/Pages/home.aspx');
+final Uri website_brochure = Uri.parse('https://plsp.org.pk/Style%20Library/Images/EducationalResources/PLSP%20Brochure%20-%20Email.pdf');
+final Uri lifesaver_reg = Uri.parse('https://plsp.org.pk/Pages/register.aspx');
+
+bool isLoggedIn = true;
+
 const PrimaryColor = Colors.redAccent;
 const greyWhite = Color(0xffEFF2F4);
 
@@ -47,16 +54,15 @@ const double defaultPadding = 16.0;
 
 class ApiConstants {
   // static String baseUrl = 'http://kaavish2023.pythonanywhere.com';
-  // http://10.0.2.2:8000
-  static String baseUrl = 'http://kaavish2023.pythonanywhere.com';
+  static String baseUrl = 'http://44.230.76.47:8000';
   static String lifesaverEndpoint = '/lifesaver';
   static String userEndpoint = '/users';
   static String citizenEndpoint = '/citizen';
   static String loginEndpoint = '/login/';
   static String signupEndpoint = '/register';
   static String incidentEndpoint = '/incident';
-  static String lifesaverHistory = '/incident/lifesaver/';
-  static String citizenHistory = '/citzen/lifesaver/';
+  static String lifesaverHistory = '/incident/lifesaver';
+  static String citizenHistory = '/incident/citizen';
   static String citizenFeedback = '/postinfo/citizen';
   static String lifesaverFeedback = '/postinfo/lifesaver';
 

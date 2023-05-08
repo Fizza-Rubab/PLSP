@@ -1,29 +1,32 @@
-import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
-import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'package:flutter/services.dart';
-import 'texttheme.dart';
+import 'package:google_maps/Welcome/Login.dart';
+import 'package:google_maps/Welcome/Welcome.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'constants.dart';
 
 
  class SimpleAppBar extends StatelessWidget implements PreferredSizeWidget {
 
-  SimpleAppBar(this.title_text);
+  const SimpleAppBar(this.title_text, {super.key});
   
 
   final String title_text; 
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override 
   Widget build(BuildContext context) {
     return AppBar(
       leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.redAccent,),
-          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.arrow_back, color: Colors.redAccent,),
+          onPressed: () {
+            isLoggedIn = false; 
+            Navigator.pop(context);  
+          },
         ),
         // iconTheme: IconThemeData(color: appbar_icon_color),
         elevation: 0,
@@ -44,19 +47,35 @@ import 'constants.dart';
 
 
 
+
+
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
-  MyAppBar({
+  const MyAppBar({super.key, 
     ImageProvider<Object>? imageProvider,
-    this.name = 'Default Title',
-    this.name1 = 'he',
-  }) : this.imageProvider = imageProvider ?? AssetImage('assets/images/profileicon.png');
+    this.name = 'John',
+    this.name1 = 'Doe',
+  }) : imageProvider = imageProvider ?? const AssetImage('assets/images/profileicon.png');
 
   final String name; 
   final String name1; 
   final ImageProvider<Object> imageProvider;
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  void logout(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+
+    Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => Login()),
+    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+    Navigator.of(context).popUntil((route) => route.isFirst);
+  });
+  }
+
 
   @override 
   Widget build(BuildContext context) {
@@ -95,7 +114,13 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 foregroundImage: imageProvider,
               ),
             ),
-          )
+          ),
+          IconButton(
+            onPressed: () {
+              logout(context);
+            },
+            icon: Icon(Icons.logout, color: Colors.redAccent,),
+          ),
         ],
         );
   }

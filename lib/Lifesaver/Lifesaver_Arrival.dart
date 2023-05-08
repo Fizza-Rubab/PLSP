@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../input_design.dart';
@@ -10,14 +11,33 @@ import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import 'Lifesaver_Feedback.dart';
 
 class LifesaverArrived extends StatefulWidget {
-  final Map<String, dynamic> args;
-  const LifesaverArrived({Key? key, required this.args}) : super(key: key);
+  final Map<String, dynamic> incident_obj;
+  const LifesaverArrived({Key? key, required this.incident_obj}) : super(key: key);
 
   @override
   State<LifesaverArrived> createState() => _LifesaverArrivedState();
 }
 
 class _LifesaverArrivedState extends State<LifesaverArrived> {
+  LocationData? currentLocation;
+
+  void getCurrentLocation() async {
+    Location location = Location();
+    location.getLocation().then(
+      (location) {
+        setState(() {
+          currentLocation = location;  
+        });
+        ;
+      },
+    );
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    getCurrentLocation();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final Set<Marker> markers = new Set();
@@ -25,31 +45,34 @@ class _LifesaverArrivedState extends State<LifesaverArrived> {
     markers.add(Marker(
       //add first marker
       markerId: MarkerId(
-          LatLng(widget.args['latitude'], widget.args['longitude']).toString()),
-      position: LatLng(widget.args['latitude'],
-          widget.args['longitude']), //position of markerconst
+          LatLng(double.parse(widget.incident_obj['latitude'].toString()), double.parse(widget.incident_obj['longitude'].toString())).toString()),
+      position: LatLng(double.parse(widget.incident_obj['latitude'].toString()), double.parse(widget.incident_obj['longitude'].toString())), //position of markerconst
       infoWindow: const InfoWindow(
         //popup info
-        title: 'My Location',
+        title: 'Incident Location',
+        snippet: 'Please look around for caller',
+
       ),
       icon: BitmapDescriptor.defaultMarker, //Icon for Marker
     ));
+    if (currentLocation!=null){
     markers.add(Marker(
       //add first marker
       //37.42681245606211, -122.08065576215935
-      markerId: MarkerId(LatLng(widget.args['latitude'] + 0.000003052,
-              widget.args['longitude'] - 0.0000040210)
+      markerId: MarkerId(LatLng(currentLocation!.latitude!,
+              currentLocation!.latitude!)
           .toString()),
-      position: LatLng(widget.args['latitude'] + 0.000070052,
-          widget.args['longitude'] - 0.0000050210), //position of markerconst
+      position: LatLng(currentLocation!.latitude!,
+          currentLocation!.longitude!), //position of markerconst
       infoWindow: const InfoWindow(
         //popup info
-        title: 'Lifesavers Location',
-        snippet: 'Lifesaver is here',
+        title: 'My Location',
+        snippet: 'You have reached the place of incident',
       ),
       icon: BitmapDescriptor.defaultMarkerWithHue(
           BitmapDescriptor.hueBlue), //Icon for Marker
     ));
+    }
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -79,7 +102,7 @@ class _LifesaverArrivedState extends State<LifesaverArrived> {
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Lifesaver_Feedback()));
+                          builder: (context) => Lifesaver_Feedback(incident_obj:widget.incident_obj)));
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue.shade100),
@@ -102,7 +125,7 @@ class _LifesaverArrivedState extends State<LifesaverArrived> {
               child: GoogleMap(
                 initialCameraPosition: CameraPosition(
                   target:
-                      LatLng(widget.args['latitude'], widget.args['longitude']),
+                      LatLng(double.parse(widget.incident_obj['latitude'].toString()), double.parse(widget.incident_obj['longitude'].toString())),
                   zoom: 15.0,
                 ),
                 mapType: MapType.normal,
@@ -141,7 +164,7 @@ class _LifesaverArrivedState extends State<LifesaverArrived> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            "Sameer Pervez",
+                            widget.incident_obj['citizen_name'],
                             style: GoogleFonts.poppins(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
@@ -152,7 +175,7 @@ class _LifesaverArrivedState extends State<LifesaverArrived> {
                           Padding(
                             padding: EdgeInsets.only(top: 0.0),
                             child: Text(
-                              "+923352395720",
+                              widget.incident_obj['citizen_contact'],
                               style: GoogleFonts.lato(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,

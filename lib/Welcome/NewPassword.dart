@@ -1,19 +1,13 @@
 import 'package:google_fonts/google_fonts.dart';
 import './register.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
-import '../Home/Citizen.dart';
-import '../input_design.dart';
 import '../constants.dart';
-import '../shared.dart';
-import 'package:intl/intl.dart';
-import 'package:flutter/gestures.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import '../appbar.dart';
 
 class NewPassword extends StatefulWidget {
+  const NewPassword({super.key});
+
   @override
   _MyStaNewPassword createState() => _MyStaNewPassword();
 }
@@ -24,7 +18,7 @@ class _MyStaNewPassword extends State<NewPassword> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: SimpleAppBar(""),
+        appBar: const SimpleAppBar(""),
         body: Padding(
           padding: const EdgeInsets.all(defaultPadding),
           child: Column(
@@ -39,7 +33,7 @@ class _MyStaNewPassword extends State<NewPassword> {
                   "Enter New Password",
                   style: header_disc,
                 ),
-                Spacer(),
+                const Spacer(),
                 TextFormField(
                     obscureText: _obscureText,
                     // controller: password,
@@ -51,12 +45,12 @@ class _MyStaNewPassword extends State<NewPassword> {
                       filled: true,
                       fillColor: Colors.grey[200],
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             width: 1, color: Colors.white), //<-- SEE HERE
                         borderRadius: BorderRadius.circular(50.0),
                       ),
                       labelText: "New Password",
-                      prefixIcon: Icon(Icons.key_rounded),
+                      prefixIcon: const Icon(Icons.key_rounded),
                       suffixIcon: IconButton(
                         icon: Icon(
                           _obscureText
@@ -82,7 +76,7 @@ class _MyStaNewPassword extends State<NewPassword> {
 
 
 
-                  SizedBox(
+                  const SizedBox(
                     height: 4,
                   ),
                    TextFormField(
@@ -96,12 +90,12 @@ class _MyStaNewPassword extends State<NewPassword> {
                       filled: true,
                       fillColor: Colors.grey[200],
                       enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             width: 1, color: Colors.white), //<-- SEE HERE
                         borderRadius: BorderRadius.circular(50.0),
                       ),
                       labelText: "Confirm new Password",
-                      prefixIcon: Icon(Icons.key_rounded),
+                      prefixIcon: const Icon(Icons.key_rounded),
                       suffixIcon: IconButton(
                         icon: Icon(
                           _obscureText
@@ -125,7 +119,7 @@ class _MyStaNewPassword extends State<NewPassword> {
                     // },
                   ),
 
-                Spacer(),
+                const Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -136,7 +130,7 @@ class _MyStaNewPassword extends State<NewPassword> {
                    GestureDetector(
                       onTap: () {
                         // handle tap event here
-                       Navigator.push(context, MaterialPageRoute(builder: (context) => Register())); 
+                       Navigator.push(context, MaterialPageRoute(builder: (context) => const Register())); 
                       },
                       child: Text(
                          AppLocalizations.of(context)!.register, 
@@ -145,7 +139,7 @@ class _MyStaNewPassword extends State<NewPassword> {
                     )
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 TextButton(
                     // icon: Icon(Icons.chevron_right),
                     onPressed: () {},

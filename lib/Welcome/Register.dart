@@ -1,17 +1,19 @@
 // ignore_for_file: avoid_print, non_constant_identifier_names
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps/Lifesaver/termsAndPolicy.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
+import 'package:mailer/smtp_server.dart';
 import '../Home/Citizen.dart';
 import '../input_design.dart';
 import '../constants.dart';
 import '../shared.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/gestures.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'OTP.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -93,7 +95,6 @@ class _RegisterState extends State<Register> {
             .push(MaterialPageRoute(builder: (context) => const Citizen()));
       }
       // ignore: use_build_context_synchronously
-
     } else {
       email.clear();
       password.clear();
@@ -112,15 +113,16 @@ class _RegisterState extends State<Register> {
     // Build a Form widget using the _formKey created above.
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-         iconTheme: IconThemeData(color: Colors.redAccent),
-          elevation: 0,
-        ),
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            iconTheme: const IconThemeData(color: Colors.redAccent),
+            elevation: 0,
+          ),
           resizeToAvoidBottomInset: false,
           body: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(left: defaultPadding, right: defaultPadding),
+              padding: const EdgeInsets.only(
+                  left: defaultPadding, right: defaultPadding),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -140,14 +142,12 @@ class _RegisterState extends State<Register> {
                     key: _formkey,
                     // child: Expanded(l
                     child: Column(
-                    
                       children: [
                         TextFormField(
                           controller: email,
                           autofocus: true,
                           keyboardType: TextInputType.emailAddress,
-                          decoration: buildInputDecoration(
-                              Icons.email_rounded,
+                          decoration: buildInputDecoration(Icons.email_rounded,
                               AppLocalizations.of(context)!.email),
                           validator: (String? value) {
                             if (value!.isEmpty) {
@@ -184,7 +184,7 @@ class _RegisterState extends State<Register> {
                         TextFormField(
                           style: Theme.of(context).textTheme.caption,
                           obscureText: true,
-                          controller: password,
+                          controller: confirmpassword,
                           keyboardType: TextInputType.text,
                           decoration: buildInputDecoration(Icons.key_rounded,
                               AppLocalizations.of(context)!.confirm_password),
@@ -199,7 +199,7 @@ class _RegisterState extends State<Register> {
                           height: space_between_val,
                         ),
                         TextFormField(
-                          controller: email,
+                          controller: first_name,
                           autofocus: true,
                           keyboardType: TextInputType.text,
                           decoration: buildInputDecoration(Icons.person,
@@ -209,7 +209,7 @@ class _RegisterState extends State<Register> {
                           height: space_between_val,
                         ),
                         TextFormField(
-                          controller: email,
+                          controller: last_name,
                           autofocus: true,
                           keyboardType: TextInputType.text,
                           decoration: buildInputDecoration(Icons.person,
@@ -219,19 +219,17 @@ class _RegisterState extends State<Register> {
                           height: space_between_val,
                         ),
                         TextFormField(
-                          controller: email,
+                          controller: address,
                           autofocus: true,
                           keyboardType: TextInputType.text,
-                          decoration: buildInputDecoration(
-                              Icons.location_city,
+                          decoration: buildInputDecoration(Icons.location_city,
                               AppLocalizations.of(context)!.address),
                         ),
                         SizedBox(
                           height: space_between_val,
                         ),
                         TextFormField(
-
-                          controller: email,
+                          controller: contact_no,
                           autofocus: true,
                           keyboardType: TextInputType.number,
                           decoration: buildInputDecoration(Icons.call,
@@ -250,14 +248,13 @@ class _RegisterState extends State<Register> {
                             filled: true,
                             fillColor: Colors.grey[200],
                             enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 1,
-                                  color: Colors.white), //<-- SEE HERE
+                              borderSide: const BorderSide(
+                                  width: 1, color: Colors.white), //<-- SEE HERE
                               borderRadius: BorderRadius.circular(50.0),
                             ),
-                            labelText:    AppLocalizations.of(context)!
-                                        .date_of_birth, 
-                            prefixIcon: Icon(Icons.calendar_today),
+                            labelText:
+                                AppLocalizations.of(context)!.date_of_birth,
+                            prefixIcon: const Icon(Icons.calendar_today),
                           ),
                           readOnly: true,
                           //set it true, so that user will not able to edit text
@@ -268,7 +265,7 @@ class _RegisterState extends State<Register> {
                                 firstDate: DateTime(1950),
                                 //DateTime.now() - not to allow to choose before today.
                                 lastDate: DateTime(2100));
-    
+
                             if (pickedDate != null) {
                               print(
                                   pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
@@ -291,17 +288,19 @@ class _RegisterState extends State<Register> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text:
-                                     AppLocalizations.of(context)!.disclaimer,
-                                    style: generalfontStyle
-                              ),
+                                  text:
+                                      AppLocalizations.of(context)!.disclaimer,
+                                  style: generalfontStyle),
                               TextSpan(
-                                  text:    AppLocalizations.of(context)!.disclaimer_url, 
+                                  text: AppLocalizations.of(context)!
+                                      .disclaimer_url,
                                   style: urlfontStyle,
                                   recognizer: TapGestureRecognizer()
                                     ..onTap = () {
-                                      const url = "https://google.com.pk";
-                                      launchUrlString(url);
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const TermsAndConditions()));
                                     }),
                             ],
                           ),
@@ -310,7 +309,26 @@ class _RegisterState extends State<Register> {
                           children: [
                             const Spacer(),
                             TextButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  String generatedOTP = generateOTP();
+                                  const String username =
+                                      'teamplsp2023@gmail.com';
+                                  const String password = 'qtzhoqtegpyvyfik';
+                                  final smtpServer = gmail(username, password);
+                                  sendOtpEmail(email.text, first_name.text,
+                                      generatedOTP, smtpServer);
+                                  print("SENT");
+                                  print(generatedOTP);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Otp(
+                                            generatedOTP: generatedOTP,
+                                            email: email.text,
+                                            firstName: first_name.text, 
+                                            smtpServer: smtpServer)),
+                                  );
+                                },
                                 child: Row(children: [
                                   Text(
                                     AppLocalizations.of(context)!.register,

@@ -52,11 +52,21 @@ dependencies:
   lite_rolling_switch: ^0.1.1
   awesome_dialog: ^3.0.2
   google_maps_webservice: ^0.0.19
+  firebase_core: ^2.9.0
   awesome_notifications: ^0.7.4+1
+  awesome_notifications_fcm: ^0.7.4+1
+  fluttertoast: ^8.2.1
+  web_socket_channel: ^2.4.0
+  workmanager: ^0.5.1
+  google_maps_utils: ^1.5.0+0
   image_picker: ^0.8.7+3
   get: ^4.6.5
-  flutter_pdfview: ^1.2.7
+  flutter_pdfview: 1.2.9
   cached_network_image: ^3.2.3
+  flutter_cached_pdfview: ^0.4.1
+  mailer: ^6.0.1
+  flutter_google_places_hoc081098: ^1.2.0
+  
   
  
 
@@ -74,6 +84,12 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_localizations:
     sdk: flutter
+  flutter_launcher_icons: "^0.13.1"
+
+flutter_launcher_icons:
+  android: true
+  adaptive_icon_background: "assets/icons/background.png"
+  adaptive_icon_foreground: "assets/icons/foreground.png"
  
 
 # For information on the generic Dart part of this file, see the
@@ -91,6 +107,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/.
+    - assets/pdf/.
     - lang/en_US.json
     - lang/pt_BR.json
     - lang/ur_PK.json

@@ -59,7 +59,20 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        
+        if (isLoggedIn) {
+         
+          // If user is logged in, do not navigate back
+          return false;
+        } else {
+           print("do"); 
+          // If user is not logged in, allow navigation back
+          return true;
+        }
+      },
+      child:  Scaffold(
         backgroundColor: greyWhite,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(expandedHeight),
@@ -106,7 +119,10 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
                         shape: CircleBorder(),
                       ),
                       child: pickedImage == null
-                          ? CircularProgressIndicator()
+                          ? CircleAvatar(
+                              backgroundImage: AssetImage('assets/images/profileicon.png'),
+                              radius: 55,
+                            )
                           : CircleAvatar(
                               backgroundImage: FileImage(pickedImage!),
                               radius: 55,
@@ -184,7 +200,7 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
                   )
                 ],
               )),
-        ));
+        )),); 
   }
 }
 

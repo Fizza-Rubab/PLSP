@@ -1,15 +1,23 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps/Lifesaver/Lifesaver.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../Welcome/Welcome.dart';
+import '../constants.dart';
 import '../input_design.dart';
 import 'NavigateScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 import '../appbar.dart'; 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class RedirectDestination extends StatefulWidget {
-  const RedirectDestination({Key? key}) : super(key: key);
+  Map<String, Object> incident_obj;
+
+  RedirectDestination({required this.incident_obj});
 
   @override
   State<RedirectDestination> createState() => _RedirectDestinationState();
@@ -21,9 +29,23 @@ class _RedirectDestinationState extends State<RedirectDestination> {
   String last_name = '';
   String contact_no = '';
 
+  // acceptRequest() async{
+  //   final http.Response token_result = await http.put(Uri.parse(
+  //       '${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${body['id']}'), body: {'registration_token':fcm_token});
+  //   Map<String, dynamic> resbody = json.decode(token_result.body);
+  //   print(resbody);
+    
+  // }
+
+  // getIncidentData() async{
+
+  // }
+
   @override
   void initState() {
     super.initState();
+    print("incident call:");
+    print(widget.incident_obj);
     SharedPreferences.getInstance().then((prefs) {
       setState(() {
         _prefs = prefs;
@@ -39,8 +61,8 @@ class _RedirectDestinationState extends State<RedirectDestination> {
   Widget build(BuildContext context) {
     final Set<Marker> markers = new Set();
   markers.add(Marker( //add first marker
-    markerId: MarkerId(LatLng(24.8918, 67.0731).toString()),
-    position: LatLng(24.90587, 67.3827), //position of marker
+    markerId: MarkerId(LatLng(double.parse(widget.incident_obj['latitude'].toString()), double.parse(widget.incident_obj['longitude'].toString())).toString()),
+    position: LatLng(double.parse(widget.incident_obj['latitude'].toString()), double.parse(widget.incident_obj['longitude'].toString())), //position of marker
     infoWindow: InfoWindow( //popup info
       title: 'My current location',
       snippet: 'Lifesaver to come here',
@@ -68,7 +90,7 @@ class _RedirectDestinationState extends State<RedirectDestination> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 2.2,
                   child: TextField(
-                    controller: TextEditingController(text: "Aiman Naqvi"),
+                    controller: TextEditingController(text: widget.incident_obj['citizen_name'] as String),
                     decoration: buildInputDecoration(Icons.person, "Name", border: const BorderRadius.only(
                     topLeft: Radius.circular(25),
                     bottomLeft: Radius.circular(25),
@@ -81,11 +103,12 @@ class _RedirectDestinationState extends State<RedirectDestination> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 2.2,
                   child: TextField(
-                    controller: TextEditingController(text: "03454181960"),
+                    controller: TextEditingController(text: widget.incident_obj['citizen_contact'] as String),
                     decoration: buildInputDecoration(Icons.call, "Contact Number",border: const BorderRadius.only(
                     topRight: Radius.circular(25),
                     bottomRight: Radius.circular(25),
                   )),
+                  readOnly: true,
                   ),
                 ),
               ],
@@ -100,7 +123,7 @@ class _RedirectDestinationState extends State<RedirectDestination> {
                 )),
             const Spacer(flex: 2,),
             TextFormField(
-              initialValue: '1',
+              initialValue: widget.incident_obj['no_of_patients'].toString(),
               decoration: buildInputDecoration(Icons.groups, "How Many Patients?", border: const BorderRadius.only(
                     topLeft: Radius.circular(25),
                     topRight: Radius.circular(25),
@@ -110,7 +133,7 @@ class _RedirectDestinationState extends State<RedirectDestination> {
             
             const SizedBox(height: 3,),
             TextFormField(
-              initialValue: 'Cardiac Arrest Case, low pulse',
+              initialValue: widget.incident_obj['info'] as String,
               maxLines: 1,
               textAlignVertical: TextAlignVertical.top,
               decoration: buildInputDecoration(Icons.info, "Other Important Details (optional)", border: const BorderRadius.only(
@@ -141,7 +164,7 @@ class _RedirectDestinationState extends State<RedirectDestination> {
                                 height:  (MediaQuery.of(context).size.height) / 2.5,
                                 child: GoogleMap(
                                   initialCameraPosition: CameraPosition(
-                                    target: LatLng(24.90587, 67.3827),
+                                    target: LatLng(double.parse(widget.incident_obj['latitude'].toString()), double.parse(widget.incident_obj['longitude'].toString())),
                                     zoom: 15.0,
                                   ),
                                   mapType: MapType.normal,
@@ -168,8 +191,9 @@ class _RedirectDestinationState extends State<RedirectDestination> {
                               color: Colors.white),
                         ),
                         onPressed: () {
+                          // acceptRequest();
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => MapScreen(args: {})));
+                              builder: (context) => MapScreen(incident_obj:widget.incident_obj)));
                         },
                         child: Text(
                           'Take me there!',

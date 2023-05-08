@@ -70,7 +70,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
     }
   }
   Future<void> _uploadImage() async {
-    final url = 'http://kaavish2023.pythonanywhere.com/lifesaver/upload_photo/2';
+    final url = 'http://44.230.76.47:8000/citizen/upload_photo/'+ await SharedPreferences.getInstance().then((prefs) => prefs.getString('id') ?? "0");
     final request = http.MultipartRequest('POST', Uri.parse(url));
     print("path" + pickedImage!.path);
     request.files.add(await http.MultipartFile.fromPath('image', pickedImage!.path));
@@ -85,79 +85,82 @@ class _ProfileEditingState extends State<ProfileEditing> {
   }
 
   void imagePickerOption() {
-    Get.bottomSheet(
-      SingleChildScrollView(
-        child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(10.0),
-            topRight: Radius.circular(10.0),
-          ),
-          child: Container(
-            color: Colors.white,
-            height: 250,
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.select_image_from,
-                    style: titleFontStyle,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: peachColor, // Background color
-                    ),
-                    onPressed: () {
-                      pickImage(ImageSource.camera);
-                    },
-                    icon: const Icon(Icons.camera),
-                    label: Text(
-                        AppLocalizations.of(context)!.camera,
-                      style: whitegeneralfontStyle,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: peachColor, // Background color
-                    ),
-                    onPressed: () {
-                      pickImage(ImageSource.gallery);
-                    },
-                    icon: const Icon(Icons.image),
-                    label: Text(
-                       AppLocalizations.of(context)!.gallery,
-                      style: whitegeneralfontStyle,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: peachColor, // Background color
-                    ),
-                    onPressed: () {
-                      Get.back();
-                    },
-                    icon: const Icon(Icons.close),
-                    label: Text(  AppLocalizations.of(context)!.cancel, style: whitegeneralfontStyle),
-                  ),
-                ],
+  showModalBottomSheet(
+    context: context,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(10.0),
+        topRight: Radius.circular(10.0),
+      ),
+    ),
+    builder: (context) {
+      return Container(
+        height: 250,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                AppLocalizations.of(context)!.select_image_from,
+                style: titleFontStyle,
+                textAlign: TextAlign.center,
               ),
-            ),
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: peachColor, // Background color
+                ),
+                onPressed: () {
+                  pickImage(ImageSource.camera);
+                },
+                icon: const Icon(Icons.camera),
+                label: Text(
+                  AppLocalizations.of(context)!.camera,
+                  style: whitegeneralfontStyle,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: peachColor, // Background color
+                ),
+                onPressed: () {
+                  pickImage(ImageSource.gallery);
+                },
+                icon: const Icon(Icons.image),
+                label: Text(
+                  AppLocalizations.of(context)!.gallery,
+                  style: whitegeneralfontStyle,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: peachColor, // Background color
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: const Icon(Icons.close),
+                label: Text(
+                  AppLocalizations.of(context)!.cancel,
+                  style: whitegeneralfontStyle,
+                ),
+              ),
+            ],
           ),
         ),
-      ),
-    );
-  }
+      );
+    },
+  );
+}
 
   void _saveImageToLocal(File image) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -318,7 +321,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
               TextFormField(
                 controller: first_name,
                 decoration:
-                    buildInputDecoration(Icons.person_outline, "First Name"),
+                    buildInputDecoration(Icons.person_outline, localizations.first_name),
                 validator: (value) {
                   if (value != null && value.isEmpty) {
                     return 'Please enter your name';
@@ -332,7 +335,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
               TextFormField(
                 controller: last_name,
                 decoration:
-                    buildInputDecoration(Icons.person_outline, "Last Name"),
+                    buildInputDecoration(Icons.person_outline, localizations.last_name),
                 validator: (value) {
                   if (value != null && value.isEmpty) {
                     return 'Please enter your name';
@@ -345,7 +348,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
               ),
               TextFormField(
                 controller: address,
-                decoration: buildInputDecoration(Icons.location_on, "Address"),
+                decoration: buildInputDecoration(Icons.location_on, localizations.address),
                 validator: (value) {
                   if (value != null && value.isEmpty) {
                     return 'Please enter your name';
@@ -358,7 +361,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
               ),
               TextFormField(
                 controller: contact_no,
-                decoration: buildInputDecoration(Icons.call, "Contact"),
+                decoration: buildInputDecoration(Icons.call, localizations.contact),
                 validator: (value) {
                   if (value != null && value.isEmpty) {
                     return 'Please enter your name';
@@ -394,7 +397,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
                         }
                       },
                       child: Text(
-                        'Save',
+                        localizations.save,
                         style: GoogleFonts.poppins(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -422,7 +425,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
                         Navigator.of(context).pop();
                       },
                       child: Text(
-                        'Cancel',
+                        localizations.cancel,
                         style: GoogleFonts.poppins(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
