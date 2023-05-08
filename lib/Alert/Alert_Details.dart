@@ -233,6 +233,8 @@ class _Alert_DetailsState extends State<Alert_Details> {
 
   LatLng? _currentLocation;
 
+  bool patientInfo = false;
+
   Future<void> _getCurrentLocation() async {
     final location = loc.Location();
     try {
@@ -243,6 +245,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
           currentPosition.longitude!,
         );
       });
+      mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: _currentLocation!, zoom: 15)));
     } catch (e) {
       print(e.toString());
     }
@@ -280,6 +283,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
       icon: BitmapDescriptor.defaultMarker, //Icon for Marker
     ));
     return Scaffold(
+      backgroundColor: greyWhite,
       resizeToAvoidBottomInset: false,
       appBar: SimpleAppBar(localizations.emergency_details),
       body: _currentLocation == null
@@ -289,78 +293,89 @@ class _Alert_DetailsState extends State<Alert_Details> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      TextField(
-                        controller: TextEditingController(text: _addressController.text),
-                        readOnly: true,
-                        onTap: () async {
-                          var place = await PlacesAutocomplete.show(
-                              startText: _addressController.text.contains(", ")
-                                  ? _addressController.text.substring(0, _addressController.text.indexOf(", "))
-                                  : _addressController.text,
-                              hint: "Search Your Address",
-                              overlayBorderRadius: BorderRadius.circular(25),
-                              // logo: Text("Powered by Google"),
-                              context: context,
-                              apiKey: api_key,
-                              mode: Mode.overlay,
-                              types: [],
-                              strictbounds: false,
-                              components: [Component(Component.country, 'pk')],
-                              //google_map_webservice package
-                              onError: (err) {
-                                print(err);
-                              });
-
-                          if (place != null) {
-                            //form google_maps_webservice package
-                            final plist = GoogleMapsPlaces(
-                              apiKey: api_key,
-                              apiHeaders: await const GoogleApiHeaders().getHeaders(),
-                              //from google_api_headers package
-                            );
-                            String placeid = place.placeId ?? "0";
-                            final detail = await plist.getDetailsByPlaceId(placeid);
-                            final geometry = detail.result.geometry!;
-                            final lat = geometry.location.lat;
-                            final lang = geometry.location.lng;
-                            setState(() {
-                              _addressController.text = place.description.toString();
-                              _currentLocation = LatLng(lat, lang);
-                            });
-
-                            //move map camera to selected place with animation
-                            mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: _currentLocation!, zoom: 17)));
-                          }
-                        },
-                        decoration: InputDecoration(
-                          labelText: localizations.emergency_location,
-                          labelStyle: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w600, letterSpacing: 0.8),
-                          // hintText: hinttext,
-                          prefixIcon: const Icon(Icons.location_on),
-                          filled: true,
-                          fillColor: Colors.grey.shade200,
-                          focusColor: Colors.red.shade50,
-
-                          enabledBorder: const OutlineInputBorder(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(25),
-                              topRight: Radius.circular(25),
-                            ),
-                            borderSide: BorderSide(style: BorderStyle.none, width: 0),
+                  TextField(
+                    decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(18),
+                        labelText: localizations.emergency_location,
+                        labelStyle: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w600, letterSpacing: 0.8),
+                        // hintText: hinttext,
+                        prefixIcon: const Icon(Icons.location_on),
+                        filled: true,
+                        fillColor: Colors.white,
+                        focusColor: Colors.red.shade50,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(25),
+                            topRight: Radius.circular(25),
                           ),
+                          borderSide: BorderSide(color: Colors.red.shade100),
                         ),
-                      ),
-                      IconButton(
-                          onPressed: () {
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25),
+                            topRight: Radius.circular(25),
+                          ),
+                          borderSide: BorderSide(style: BorderStyle.none, width: 0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(25),
+                            topRight: Radius.circular(25),
+                          ),
+                          borderSide: BorderSide(color: Colors.grey.shade300),
+                        ),
+                        suffixIcon: IconButton(
+                          icon: const Icon(Icons.my_location),
+                          onPressed: () async {
                             _getCurrentLocation();
+                            _addressController.text = "Search your address";
                           },
-                          icon: const Icon(Icons.my_location), color: Colors.black54,)
-                    ],
+                        )),
+                    controller: TextEditingController(text: _addressController.text),
+                    readOnly: true,
+                    onTap: () async {
+                      var place = await PlacesAutocomplete.show(
+                          startText: _addressController.text.contains(", ")
+                              ? _addressController.text.substring(0, _addressController.text.indexOf(", "))
+                              : _addressController.text,
+                          hint: "Search your address",
+                          overlayBorderRadius: BorderRadius.circular(25),
+                          // logo: Text("Powered by Google"),
+                          context: context,
+                          apiKey: api_key,
+                          mode: Mode.overlay,
+                          types: [],
+                          strictbounds: false,
+                          components: [Component(Component.country, 'pk')],
+                          //google_map_webservice package
+                          onError: (err) {
+                            print(err);
+                          });
+
+                      if (place != null) {
+                        //form google_maps_webservice package
+                        final plist = GoogleMapsPlaces(
+                          apiKey: api_key,
+                          apiHeaders: await const GoogleApiHeaders().getHeaders(),
+                          //from google_api_headers package
+                        );
+                        String placeid = place.placeId ?? "0";
+                        final detail = await plist.getDetailsByPlaceId(placeid);
+                        final geometry = detail.result.geometry!;
+                        final lat = geometry.location.lat;
+                        final lang = geometry.location.lng;
+                        setState(() {
+                          _addressController.text = place.description.toString();
+                          _currentLocation = LatLng(lat, lang);
+                        });
+
+                        //move map camera to selected place with animation
+                        mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: _currentLocation!, zoom: 15)));
+                      }
+                    },
                   ),
                   Container(
-                    height: MediaQuery.of(context).size.height * (1 / 4),
+                    height: patientInfo ? MediaQuery.of(context).size.height * (1 / 4) : MediaQuery.of(context).size.height * (3 / 8),
                     decoration: BoxDecoration(
                         color: Colors.red.shade100,
                         borderRadius: const BorderRadius.only(
@@ -368,6 +383,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
                           bottomRight: Radius.circular(25),
                         )),
                     child: GoogleMap(
+                      myLocationEnabled: true,
                         initialCameraPosition: CameraPosition(
                           target: _currentLocation!,
                           zoom: 15.0,
@@ -383,39 +399,62 @@ class _Alert_DetailsState extends State<Alert_Details> {
                         }),
                   ),
                   const Spacer(flex: 2),
-                  Text(localizations.patients_information,
-                      style: GoogleFonts.poppins(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        letterSpacing: 0,
-                        color: Colors.black45,
-                      )),
-                  const Spacer(
-                    flex: 2,
-                  ),
-                  TextField(
-                    keyboardType: TextInputType.number,
-                    controller: _quantityController,
-                    decoration: buildInputDecoration(Icons.groups, localizations.patient_quantity,
-                        border: const BorderRadius.only(
-                          topLeft: Radius.circular(25),
-                          topRight: Radius.circular(25),
-                        )),
-                  ),
-                  const SizedBox(
-                    height: 3,
-                  ),
-                  TextField(
-                    controller: _detailsController,
-                    maxLines: 2,
-                    textAlignVertical: TextAlignVertical.top,
-                    decoration: buildInputDecoration(Icons.info, localizations.other_details,
-                        border: const BorderRadius.only(
-                          bottomLeft: Radius.circular(25),
-                          bottomRight: Radius.circular(25),
-                        )),
-                  ),
-                  const Spacer(flex: 2),
+                  if (patientInfo) Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(localizations.patients_information,
+                                style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 0,
+                                  color: Colors.black45,
+                                )),
+                            TextField(
+                              keyboardType: TextInputType.number,
+                              controller: _quantityController,
+                              decoration: buildInputDecoration(Icons.groups, localizations.patient_quantity,
+                                  border: const BorderRadius.only(
+                                    topLeft: Radius.circular(25),
+                                    topRight: Radius.circular(25),
+                                  )),
+                            ),
+                            const SizedBox(
+                              height: 3,
+                            ),
+                            TextField(
+                              controller: _detailsController,
+                              maxLines: 2,
+                              textAlignVertical: TextAlignVertical.top,
+                              decoration: buildInputDecoration(Icons.info, localizations.other_details,
+                                  border: const BorderRadius.only(
+                                    bottomLeft: Radius.circular(25),
+                                    bottomRight: Radius.circular(25),
+                                  )),
+                            ),
+                          ],
+                        ) else SizedBox(
+                              height: 48,
+                              child: OutlinedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      patientInfo = !patientInfo;
+                                    });
+                                  },
+                                  child: Row(
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(right: 8),
+                                        child: Icon(Icons.add, size: 18,),
+                                      ),
+                                      Text(
+                                        "Patient Information",
+                                        style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w400, letterSpacing: 0.2),
+                                      ),
+                                    ],
+                                  )),
+                            ),
+                            const Spacer(flex: 2),
                   Text(localizations.caller_information,
                       style: GoogleFonts.poppins(
                         fontSize: 18,
