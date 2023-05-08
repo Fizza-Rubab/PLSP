@@ -20,6 +20,7 @@ class CitizenHome extends StatefulWidget {
 }
 
 class _CitizenHomeState extends State<CitizenHome> {
+ 
   late SharedPreferences _prefs;
   String first_name = '';
   String last_name = '';
@@ -50,7 +51,21 @@ class _CitizenHomeState extends State<CitizenHome> {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        
+        if (isLoggedIn) {
+         
+          // If user is logged in, do not navigate back
+          return false;
+        } else {
+           print("do"); 
+          // If user is not logged in, allow navigation back
+          return true;
+        }
+      },
+      child: 
+      Scaffold(
       backgroundColor: greyWhite,
       extendBody: true,
       appBar: pickedImage == null
@@ -121,7 +136,7 @@ class _CitizenHomeState extends State<CitizenHome> {
                 ),
                 const Spacer(),
               ],
-            )));
+            ))),); 
   }
   // @override
   // void debugFillProperties(DiagnosticPropertiesBuilder properties) {
