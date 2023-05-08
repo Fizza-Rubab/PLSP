@@ -116,7 +116,20 @@ class _MyWidgetState extends State<LifesaverHistory> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        
+        if (isLoggedIn) {
+         
+          // If user is logged in, do not navigate back
+          return false;
+        } else {
+           print("do"); 
+          // If user is not logged in, allow navigation back
+          return true;
+        }
+      },
+      child:  Scaffold(
       backgroundColor: greyWhite,
       appBar: pickedImage==null? MyAppBar(
         name: " ",
@@ -234,6 +247,6 @@ class _MyWidgetState extends State<LifesaverHistory> {
                 },
               ),
       ),
-    );
+    ),); 
   }
 }

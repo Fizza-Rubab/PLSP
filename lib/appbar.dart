@@ -5,6 +5,8 @@ import 'package:google_maps/Welcome/Login.dart';
 import 'package:google_maps/Welcome/Welcome.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'constants.dart';
+
 
  class SimpleAppBar extends StatelessWidget implements PreferredSizeWidget {
 
@@ -21,7 +23,10 @@ import 'package:shared_preferences/shared_preferences.dart';
     return AppBar(
       leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.redAccent,),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            isLoggedIn = false; 
+            Navigator.pop(context);  
+          },
         ),
         // iconTheme: IconThemeData(color: appbar_icon_color),
         elevation: 0,

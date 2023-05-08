@@ -97,7 +97,20 @@ class _LifesaverHomeState extends State<LifesaverHome> {
     ];
     print(first_name); 
     print(last_name); 
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        
+        if (isLoggedIn) {
+         
+          // If user is logged in, do not navigate back
+          return false;
+        } else {
+           print("do"); 
+          // If user is not logged in, allow navigation back
+          return true;
+        }
+      },
+      child:  Scaffold(
       backgroundColor: greyWhite,
       appBar: pickedImage == null
           ? MyAppBar(name: localizations.hello, name1: "$first_name $last_name")
@@ -289,6 +302,6 @@ class _LifesaverHomeState extends State<LifesaverHome> {
           ],
         ),
       ),
-    );
+    ),); 
   }
 }
