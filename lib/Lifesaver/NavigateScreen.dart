@@ -42,13 +42,23 @@ class _MapScreenState extends State<MapScreen> {
             builder: (context) => LifesaverArrived(incident_obj:widget.incident_obj)));
   }
 
-  void getSourceLocation() async {
-    final locationData = await Location().getLocation();
-    setState(() {
-      sourceLocation = LatLng(locationData.latitude!, locationData.longitude!);  
-    });
-    print('Current location: ${sourceLocation!.latitude}, ${sourceLocation!.longitude}');
+void getSourceLocation() async {
+  var status = await Location().hasPermission();
+  if (status == PermissionStatus.denied) {
+    status = await Location().requestPermission();
+    if (status != PermissionStatus.granted) {
+      // handle permission not granted
+      return;
+    }
   }
+
+  final locationData = await Location().getLocation();
+  setState(() {
+    sourceLocation = LatLng(locationData.latitude!, locationData.longitude!);  
+  });
+  print('Current location: ${sourceLocation!.latitude}, ${sourceLocation!.longitude}');
+  getPolyPoints();
+}
 
   void getCurrentLocation() async {
     Location location = Location();
@@ -123,7 +133,7 @@ class _MapScreenState extends State<MapScreen> {
     getSourceLocation();
     getCurrentLocation();
     // sourceLocation = currentLocation==null?LatLng(24.90501,67.1380108):LatLng(currentLocation!.latitude!, currentLocation!.longitude!);    // setCustomMarker();
-    getPolyPoints();
+    // getPolyPoints();
     super.initState();
     startTime();
     _timer = Timer.periodic(Duration(seconds: 3), (timer) {
