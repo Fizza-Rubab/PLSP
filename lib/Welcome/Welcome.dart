@@ -441,7 +441,7 @@ class _WelcomeContentState extends State<WelcomeContent> {
                   padding: const EdgeInsets.fromLTRB(14, 86, 14, 28),
                   decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage("assets/images/welcome-bg.png"),
+                        image: AssetImage("assets/images/welcome_bg.png"),
                         fit: BoxFit.cover,
                         // colorFilter: ColorFilter.mode(Colors.white12, BlendMode.overlay)
                       ),
