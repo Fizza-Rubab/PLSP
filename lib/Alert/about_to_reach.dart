@@ -86,10 +86,12 @@ class _AboutToReachState extends State<AboutToReach> {
     print("distance "+ distanceInMeters.toString());
     if (distanceInMeters<8){
       _timer.cancel();
-      Navigator.push(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-            builder: (context) => Arrived(destinationLocation:currentLocation!, incident_obj: widget.incident_obj)));
+            builder: (context) => Arrived(destinationLocation:currentLocation!, incident_obj: widget.incident_obj)),
+            (Route<dynamic> route) => false
+            );
     }
     GoogleMapController googleMapController = await _controller.future;
     print('${currentLocation!.latitude} ${currentLocation!.longitude}');

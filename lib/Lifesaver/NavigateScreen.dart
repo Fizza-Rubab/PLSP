@@ -95,31 +95,14 @@ void getSourceLocation() async {
         print("sourceLocation" + sourceLocation.toString());
         getPolyPoints();
 
-        // sourceLocation = LatLng(currentLocation!.latitude!, currentLocation!.longitude!);
       },
     );
 
-    // if (currentLocation!=null){
-    // double distanceInMeters = await Geolocator.distanceBetween(
-    // currentLocation!.latitude!,
-    // currentLocation!.longitude!,
-    // widget.incident_obj['latitude'],
-    // widget.incident_obj['latitude'],
-    // );
-    // print(widget.incident_obj['latitude'].toString());
-    // print("distance "+ distanceInMeters.toString());
-    // if (distanceInMeters<8){
-    //   _timer.cancel();
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) => LifesaverArrived(incident_obj:widget.incident_obj)));
-    // }
-    // }
     
     GoogleMapController googleMapController = await _controller.future;
+    StreamSubscription<LocationData>? _locationSubscription;
 
-    location.onLocationChanged.listen((newloc) async {
+    _locationSubscription = location.onLocationChanged.listen((newloc) async {
       currentLocation = newloc;
       googleMapController.animateCamera(
         CameraUpdate.newCameraPosition(
@@ -133,35 +116,22 @@ void getSourceLocation() async {
       currentLocation!.latitude!,
       currentLocation!.longitude!,
       widget.incident_obj['latitude'],
-      widget.incident_obj['latitude'],
+      widget.incident_obj['longitude'],
       );
       print(widget.incident_obj['latitude'].toString());
       print("distance "+ distanceInMeters.toString());
-      if (distanceInMeters<8){
-        // _timer.cancel();
-        Navigator.push(
+      if (distanceInMeters<8.0){
+        _locationSubscription?.cancel();
+        Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(
-              builder: (context) => LifesaverArrived(incident_obj:widget.incident_obj)));
+          MaterialPageRoute(builder: (BuildContext context) => new LifesaverArrived(incident_obj:widget.incident_obj)),
+          (Route<dynamic> route) => false
+          );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //       builder: (context) => LifesaverArrived(incident_obj:widget.incident_obj)));
       }
-      // if (this.mounted) {
-      // setState(() {});
-      // }
-      // double distanceInMeters = await Geolocator.distanceBetween(
-      // currentLocation!.latitude!,
-      // currentLocation!.longitude!,
-      // widget.incident_obj['latitude'],
-      // widget.incident_obj['latitude'],
-      // );
-      // print(widget.incident_obj['latitude'].toString());
-      // print("distance "+ distanceInMeters.toString());
-      // if (distanceInMeters<8){
-      //   // _timer.cancel();
-      //   Navigator.push(
-      //     context,
-      //     MaterialPageRoute(
-      //         builder: (context) => LifesaverArrived(incident_obj:widget.incident_obj)));
-      // }
       print("currentLocation" + currentLocation.toString());
     });
   }
