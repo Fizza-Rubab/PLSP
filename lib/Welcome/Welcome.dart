@@ -12,6 +12,7 @@ import 'package:google_maps/Lifesaver/Lifesaver.dart';
 import 'package:google_maps/Lifesaver/RedirectDestination.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Welcome/register.dart';
+import '../common.dart';
 import '../constants.dart';
 import 'Login.dart';
 import '../shared.dart';
@@ -562,16 +563,17 @@ class _WelcomeContentState extends State<WelcomeContent> {
                             width: double.infinity,
                             child: TextButton(
                                 onPressed: () {
-                                  AwesomeDialog(
-                                          context: context,
-                                          dialogType: DialogType.success,
-                                          animType: AnimType.topSlide,
-                                          descTextStyle: generalfontStyle,
-                                          titleTextStyle: titleFontStyle,
-                                          title: AppLocalizations.of(context)!.request_sent,
-                                          desc: AppLocalizations.of(context)!.request_sent_disc,
-                                          btnOkOnPress: () {})
-                                      .show();
+                                  launchUri(lifesaver_reg); 
+                                  // AwesomeDialog(
+                                  //         context: context,
+                                  //         dialogType: DialogType.success,
+                                  //         animType: AnimType.topSlide,
+                                  //         descTextStyle: generalfontStyle,
+                                  //         titleTextStyle: titleFontStyle,
+                                  //         title: AppLocalizations.of(context)!.request_sent,
+                                  //         desc: AppLocalizations.of(context)!.request_sent_disc,
+                                  //         btnOkOnPress: () {})
+                                  //     .show();
                                 },
                                 style: TextButton.styleFrom(
                                   backgroundColor: Colors.red.withOpacity(0.15),

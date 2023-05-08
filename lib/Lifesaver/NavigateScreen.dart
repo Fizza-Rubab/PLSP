@@ -25,73 +25,101 @@ class _MapScreenState extends State<MapScreen> {
   BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor currentIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor destinationIcon = BitmapDescriptor.defaultMarker;
-  late Timer _timer;
+  // late Timer _timer;
   List<LatLng> polylineCoordinates = [];
   LocationData? currentLocation;
 
-  startTime() async {
-    var duration = const Duration(seconds: 60);
-    return Timer(duration, endRoute);
-  }
+  // startTime() async {
+  //   var duration = const Duration(seconds: 60);
+  //   return Timer(duration, endRoute);
+  // }
 
-  endRoute() {
-    _timer.cancel();
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => LifesaverArrived(incident_obj:widget.incident_obj)));
-  }
+  // endRoute() {
+  //   _timer.cancel();
+  //   Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //           builder: (context) => LifesaverArrived(incident_obj:widget.incident_obj)));
+  // }
 
 void getSourceLocation() async {
-  var status = await Location().hasPermission();
-  if (status == PermissionStatus.denied) {
-    status = await Location().requestPermission();
-    if (status != PermissionStatus.granted) {
-      // handle permission not granted
-      return;
-    }
-  }
-
-  final locationData = await Location().getLocation();
-  setState(() {
-    sourceLocation = LatLng(locationData.latitude!, locationData.longitude!);  
-  });
-  print('Current location: ${sourceLocation!.latitude}, ${sourceLocation!.longitude}');
-  getPolyPoints();
+  // Check if permission is granted
+  // PermissionStatus permissionStatus = await Location().hasPermission();
+  // if (permissionStatus == PermissionStatus.granted) {
+    // Permission is granted, get location data
+    final locationData = await Location().getLocation();
+    setState(() {
+      sourceLocation = LatLng(locationData.latitude!, locationData.longitude!);  
+    });
+    print('Current location: ${sourceLocation!.latitude}, ${sourceLocation!.longitude}');
+    getPolyPoints();
+  // } else {
+  //   // Permission is not granted, request permission
+  //   permissionStatus = await Location().requestPermission();
+  //   if (permissionStatus == PermissionStatus.granted) {
+  //     // Permission granted, get location data
+  //     final locationData = await Location().getLocation();
+  //     setState(() {
+  //       sourceLocation = LatLng(locationData.latitude!, locationData.longitude!);  
+  //     });
+  //     print('Current location: ${sourceLocation!.latitude}, ${sourceLocation!.longitude}');
+  //     getPolyPoints();
+  //   } else {
+  //     // Permission denied, handle accordingly
+  //     print('Location permission denied');
+  //   }
+  // }
 }
 
+
   void getCurrentLocation() async {
+      var status = await Location().hasPermission();
+      print(status.toString());
+      if (status == PermissionStatus.denied) {
+        status = await Location().requestPermission();
+        if (status != PermissionStatus.granted) {
+          // handle permission not granted
+          return;
+        }
+      }
+
+
     Location location = Location();
     location.getLocation().then(
       (location) {
         setState(() {
           currentLocation = location;
+          sourceLocation =  LatLng(location!.latitude!, location!.longitude!);
         });
+        print("currentLocation" + currentLocation.toString());
+        print("sourceLocation" + sourceLocation.toString());
+        getPolyPoints();
+
         // sourceLocation = LatLng(currentLocation!.latitude!, currentLocation!.longitude!);
       },
     );
 
-    if (currentLocation!=null){
-    double distanceInMeters = await Geolocator.distanceBetween(
-    currentLocation!.latitude!,
-    currentLocation!.longitude!,
-    widget.incident_obj['latitude'],
-    widget.incident_obj['latitude'],
-    );
-    print(widget.incident_obj['latitude'].toString());
-    print("distance "+ distanceInMeters.toString());
-    if (distanceInMeters<8){
-      _timer.cancel();
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => LifesaverArrived(incident_obj:widget.incident_obj)));
-    }
-    }
+    // if (currentLocation!=null){
+    // double distanceInMeters = await Geolocator.distanceBetween(
+    // currentLocation!.latitude!,
+    // currentLocation!.longitude!,
+    // widget.incident_obj['latitude'],
+    // widget.incident_obj['latitude'],
+    // );
+    // print(widget.incident_obj['latitude'].toString());
+    // print("distance "+ distanceInMeters.toString());
+    // if (distanceInMeters<8){
+    //   _timer.cancel();
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => LifesaverArrived(incident_obj:widget.incident_obj)));
+    // }
+    // }
     
     GoogleMapController googleMapController = await _controller.future;
 
-    location.onLocationChanged.listen((newloc) {
+    location.onLocationChanged.listen((newloc) async {
       currentLocation = newloc;
       googleMapController.animateCamera(
         CameraUpdate.newCameraPosition(
@@ -101,9 +129,25 @@ void getSourceLocation() async {
           ),
         ),
       );
-      if (this.mounted) {
-      setState(() {});
-      }
+      // if (this.mounted) {
+      // setState(() {});
+      // }
+    //   double distanceInMeters = await Geolocator.distanceBetween(
+    // currentLocation!.latitude!,
+    // currentLocation!.longitude!,
+    // widget.incident_obj['latitude'],
+    // widget.incident_obj['latitude'],
+    // );
+    // print(widget.incident_obj['latitude'].toString());
+    // print("distance "+ distanceInMeters.toString());
+    // if (distanceInMeters<8){
+    //   // _timer.cancel();
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => LifesaverArrived(incident_obj:widget.incident_obj)));
+    // }
+      print("currentLocation" + currentLocation.toString());
     });
   }
 
@@ -129,16 +173,23 @@ void getSourceLocation() async {
 
   @override
   void initState() {
+    super.initState();
+    print("in after init state");
     destinationLocation = LatLng(double.parse(widget.incident_obj['latitude'].toString()), double.parse(widget.incident_obj['longitude'].toString()));
     getSourceLocation();
+    print("source gotton");
+
     getCurrentLocation();
+    print("current gotten");
+
     // sourceLocation = currentLocation==null?LatLng(24.90501,67.1380108):LatLng(currentLocation!.latitude!, currentLocation!.longitude!);    // setCustomMarker();
     // getPolyPoints();
-    super.initState();
-    startTime();
-    _timer = Timer.periodic(Duration(seconds: 3), (timer) {
-      getCurrentLocation();
-    });
+    // startTime();
+    // _timer = Timer.periodic(Duration(seconds: 3), (timer) {
+    //   getCurrentLocation();
+    // });
+    // Timer.run(() { })
+    // getCurrentLocation();
   }
 
   void setCustomMarker() {

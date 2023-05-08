@@ -39,7 +39,7 @@ sendLocation() async{
       }
     }
     channel.sink.add(locationJson);
-    print("Location for ls " + user_id + "updated by "+ currentLocation.latitude.toString() + "," +currentLocation.longitude.toString());
+    print("Location for ls " + user_id + " updated by "+ currentLocation.latitude.toString() + "," +currentLocation.longitude.toString());
   }
 }
 

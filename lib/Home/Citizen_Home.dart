@@ -69,9 +69,9 @@ class _CitizenHomeState extends State<CitizenHome> {
       backgroundColor: greyWhite,
       extendBody: true,
       appBar: pickedImage == null
-          ? MyAppBar(name: "Hello\n", name1: '$first_name $last_name')
+          ? MyAppBar(name:  localizations.hello, name1: '$first_name $last_name')
           : MyAppBar(
-              name: "Hello\n",
+              name:  localizations.hello,
               name1: '$first_name $last_name',
               imageProvider: FileImage(pickedImage!),
             ),    

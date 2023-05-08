@@ -321,7 +321,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
               TextFormField(
                 controller: first_name,
                 decoration:
-                    buildInputDecoration(Icons.person_outline, "First Name"),
+                    buildInputDecoration(Icons.person_outline, localizations.first_name),
                 validator: (value) {
                   if (value != null && value.isEmpty) {
                     return 'Please enter your name';
@@ -335,7 +335,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
               TextFormField(
                 controller: last_name,
                 decoration:
-                    buildInputDecoration(Icons.person_outline, "Last Name"),
+                    buildInputDecoration(Icons.person_outline, localizations.last_name),
                 validator: (value) {
                   if (value != null && value.isEmpty) {
                     return 'Please enter your name';
@@ -348,7 +348,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
               ),
               TextFormField(
                 controller: address,
-                decoration: buildInputDecoration(Icons.location_on, "Address"),
+                decoration: buildInputDecoration(Icons.location_on, localizations.address),
                 validator: (value) {
                   if (value != null && value.isEmpty) {
                     return 'Please enter your name';
@@ -361,7 +361,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
               ),
               TextFormField(
                 controller: contact_no,
-                decoration: buildInputDecoration(Icons.call, "Contact"),
+                decoration: buildInputDecoration(Icons.call, localizations.contact),
                 validator: (value) {
                   if (value != null && value.isEmpty) {
                     return 'Please enter your name';
@@ -397,7 +397,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
                         }
                       },
                       child: Text(
-                        'Save',
+                        localizations.save,
                         style: GoogleFonts.poppins(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
@@ -425,7 +425,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
                         Navigator.of(context).pop();
                       },
                       child: Text(
-                        'Cancel',
+                        localizations.cancel,
                         style: GoogleFonts.poppins(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,

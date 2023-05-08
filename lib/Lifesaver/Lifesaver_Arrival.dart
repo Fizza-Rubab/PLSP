@@ -49,7 +49,9 @@ class _LifesaverArrivedState extends State<LifesaverArrived> {
       position: LatLng(double.parse(widget.incident_obj['latitude'].toString()), double.parse(widget.incident_obj['longitude'].toString())), //position of markerconst
       infoWindow: const InfoWindow(
         //popup info
-        title: 'My Location',
+        title: 'Incident Location',
+        snippet: 'Please look around for caller',
+
       ),
       icon: BitmapDescriptor.defaultMarker, //Icon for Marker
     ));
@@ -64,8 +66,8 @@ class _LifesaverArrivedState extends State<LifesaverArrived> {
           currentLocation!.longitude!), //position of markerconst
       infoWindow: const InfoWindow(
         //popup info
-        title: 'Lifesavers Location',
-        snippet: 'Lifesaver is here',
+        title: 'My Location',
+        snippet: 'You have reached the place of incident',
       ),
       icon: BitmapDescriptor.defaultMarkerWithHue(
           BitmapDescriptor.hueBlue), //Icon for Marker
