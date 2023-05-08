@@ -18,9 +18,9 @@ class Lifesaver extends StatefulWidget {
 
 class _LifesaverState extends State<Lifesaver> {
   List<Widget> bodyList = [
-    const LifesaverHome(),
-    const LifesaverHistory(),
-    const LifesaverProfile(),
+    LifesaverHome(),
+    LifesaverHistory(),
+    LifesaverProfile(),
   ];
   final PageController _pageController = PageController();
   int index = 0;

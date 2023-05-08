@@ -78,8 +78,8 @@ Future<void> main() async {
   RootIsolateToken rootIsolateToken = RootIsolateToken.instance;
   Isolate.spawn(runBackgroundTask, rootIsolateToken);
   bool x =  await SharedPreferences.getInstance().then((prefs) => prefs.getBool('logged_in') ?? false);
-  print("checking status " + x.toString());
-  x = false;
+  // print("checking status " + x.toString());
+  // x = false;
   runApp( MaterialApp(
     debugShowCheckedModeBanner: false,
     home: Welcome(

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
+import 'package:google_maps/Welcome/Login.dart';
+import 'package:google_maps/Welcome/Welcome.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
  class SimpleAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -39,12 +42,14 @@ import 'package:flutter/services.dart';
 
 
 
+
+
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   const MyAppBar({super.key, 
     ImageProvider<Object>? imageProvider,
-    this.name = 'Default Title',
-    this.name1 = 'he',
+    this.name = 'John',
+    this.name1 = 'Doe',
   }) : imageProvider = imageProvider ?? const AssetImage('assets/images/profileicon.png');
 
   final String name; 
@@ -52,6 +57,20 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final ImageProvider<Object> imageProvider;
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  void logout(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+
+    Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => Login()),
+    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+    Navigator.of(context).popUntil((route) => route.isFirst);
+  });
+  }
+
 
   @override 
   Widget build(BuildContext context) {
@@ -90,7 +109,13 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 foregroundImage: imageProvider,
               ),
             ),
-          )
+          ),
+          IconButton(
+            onPressed: () {
+              logout(context);
+            },
+            icon: Icon(Icons.logout, color: Colors.redAccent,),
+          ),
         ],
         );
   }

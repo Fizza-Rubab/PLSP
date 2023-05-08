@@ -86,7 +86,8 @@ class _LoginState extends State<Login> {
         Map<String, dynamic> resbody = json.decode(token_result.body);
         print(resbody);
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const Lifesaver()));
+            .push(MaterialPageRoute(builder: (context) => Lifesaver()));
+        print("should navigate to lifesaver screen");
       } else {
         putBool('is_lifesaver', body['is_lifesaver']);
         setState(() {

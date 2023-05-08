@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:google_maps/Lifesaver/Lifesaver.dart';
 import 'package:google_maps/Lifesaver/Lifesaver_Profile.dart';
 import 'package:google_maps/Welcome/NewPassword.dart';
 import '../input_design.dart';
@@ -189,7 +190,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
       last_name.text = ln;
       address.text = add;
       contact_no.text = cont;
-      // DOB = dob;
+      dateInput.text = dob;
     });
   }
 
@@ -205,7 +206,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
         body: {
           "first_name": first_name.text,
           "last_name": last_name.text,
-          "date_of_birth": DOB,
+          "date_of_birth": dateInput.text,
           "address": address.text,
           "contact_no": contact_no.text
         });
@@ -217,7 +218,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
       putString('address', res_body['address']);
       putString('contact_no', res_body['contact_no']);
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => LifesaverProfile()));
+          .push(MaterialPageRoute(builder: (context) => Lifesaver()));
     } else {
       throw Exception('Failed to update.');
     }

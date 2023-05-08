@@ -20,7 +20,7 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   final Completer<GoogleMapController> _controller = Completer();
-  late LatLng sourceLocation;
+  LatLng? sourceLocation;
   late LatLng destinationLocation;
   BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor currentIcon = BitmapDescriptor.defaultMarker;
@@ -47,7 +47,7 @@ class _MapScreenState extends State<MapScreen> {
     setState(() {
       sourceLocation = LatLng(locationData.latitude!, locationData.longitude!);  
     });
-    print('Current location: ${sourceLocation.latitude}, ${sourceLocation.longitude}');
+    print('Current location: ${sourceLocation!.latitude}, ${sourceLocation!.longitude}');
   }
 
   void getCurrentLocation() async {
@@ -101,7 +101,7 @@ class _MapScreenState extends State<MapScreen> {
     PolylinePoints polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       api_key,
-      PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
+      PointLatLng(sourceLocation!.latitude, sourceLocation!.longitude),
       PointLatLng(destinationLocation.latitude, destinationLocation.longitude),
     );
 
@@ -120,8 +120,9 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void initState() {
     destinationLocation = LatLng(double.parse(widget.incident_obj['latitude'].toString()), double.parse(widget.incident_obj['longitude'].toString()));
+    getSourceLocation();
     getCurrentLocation();
-    sourceLocation = currentLocation==null?LatLng(24.90501,67.1380108):LatLng(currentLocation!.latitude!, currentLocation!.longitude!);    // setCustomMarker();
+    // sourceLocation = currentLocation==null?LatLng(24.90501,67.1380108):LatLng(currentLocation!.latitude!, currentLocation!.longitude!);    // setCustomMarker();
     getPolyPoints();
     super.initState();
     startTime();
@@ -190,7 +191,7 @@ class _MapScreenState extends State<MapScreen> {
             SizedBox(
               width: double.infinity,
               height: (MediaQuery.of(context).size.height) / 1.8,
-              child: currentLocation == null
+              child: currentLocation == null || sourceLocation == null
                   ?  Center(
                       child: Text("Loading",
                       style: GoogleFonts.poppins(
@@ -236,7 +237,7 @@ class _MapScreenState extends State<MapScreen> {
                                 snippet: 'Source Location',
                               ),
                           // icon: sourceIcon,
-                          position: sourceLocation,
+                          position: sourceLocation!,
                         ),
                         Marker(
                             markerId: MarkerId("destination"),

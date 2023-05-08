@@ -26,7 +26,7 @@ class AboutToReach extends StatefulWidget {
 
 class _AboutToReachState extends State<AboutToReach> {
   final Completer<GoogleMapController> _controller = Completer();
-  static const LatLng sourceLocation = LatLng(24.8918, 67.0731);
+  // static const LatLng sourceLocation = LatLng(24.8918, 67.0731);
   // static const LatLng destinationLocation = LatLng(24.9061, 67.1384);
   BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor currentIcon = BitmapDescriptor.defaultMarker;
@@ -104,25 +104,25 @@ class _AboutToReachState extends State<AboutToReach> {
   }
   }
 
-  void getPolyPoints() async {
-    PolylinePoints polylinePoints = PolylinePoints();
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      api_key,
-      PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
-      PointLatLng(widget.destinationLocation.latitude, widget.destinationLocation.longitude),
-    );
+  // void getPolyPoints() async {
+  //   PolylinePoints polylinePoints = PolylinePoints();
+  //   PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+  //     api_key,
+  //     PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
+  //     PointLatLng(widget.destinationLocation.latitude, widget.destinationLocation.longitude),
+  //   );
 
-    if (result.points.isNotEmpty) {
-      for (var point in result.points) {
-        polylineCoordinates.add(
-          LatLng(point.latitude, point.longitude),
-        );
-      }
-      if (this.mounted) {
-      setState(() {});
-      }
-    }
-  }
+  //   if (result.points.isNotEmpty) {
+  //     for (var point in result.points) {
+  //       polylineCoordinates.add(
+  //         LatLng(point.latitude, point.longitude),
+  //       );
+  //     }
+  //     if (this.mounted) {
+  //     setState(() {});
+  //     }
+  //   }
+  // }
 
 
   @override
@@ -130,7 +130,7 @@ class _AboutToReachState extends State<AboutToReach> {
     getCurrentLocation();
     // setCustomMarker();
     //getPolyPoints();
-    _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+    _timer = Timer.periodic(Duration(seconds: 3), (timer) {
       getCurrentLocation();
     });
     super.initState();
@@ -211,30 +211,41 @@ class _AboutToReachState extends State<AboutToReach> {
                           target: LatLng(currentLocation!.latitude,
                               currentLocation!.longitude),
                           zoom: 10.0),
-                      polylines: {
-                        Polyline(
-                          polylineId: const PolylineId("route"),
-                          points: polylineCoordinates,
-                          color: Colors.redAccent,
-                          width: 6,
-                        )
-                      },
+                      // polylines: {
+                      //   Polyline(
+                      //     polylineId: const PolylineId("route"),
+                      //     points: polylineCoordinates,
+                      //     color: Colors.redAccent,
+                      //     width: 6,
+                      //   )
+                      // },
                       markers: {
                         Marker(
                           markerId: const MarkerId("currentLocation"),
                           icon: BitmapDescriptor.defaultMarkerWithHue(240),
                           position: LatLng(currentLocation!.latitude,
                               currentLocation!.longitude),
+                              infoWindow: InfoWindow(
+                                title: widget.incident_obj['lifesaver_name'],
+                                snippet: 'Lifesaver approaching',
+                              ),
                         ),
-                        Marker(
-                          markerId: MarkerId("source"),
-                          // icon: sourceIcon,
-                          position: sourceLocation,
-                        ),
+                        // Marker(
+                        //   markerId: MarkerId("source"),
+                        //   // icon: sourceIcon,
+                        //   position: sourceLocation,
+                        // ),
                         Marker(
                             markerId: MarkerId("destination"),
                             // icon: destinationIcon,
-                            position: widget.destinationLocation),
+                            position: widget.destinationLocation,
+                            infoWindow: InfoWindow(
+                                title: "Incident Location",
+                                snippet: 'Called for help',
+                              )
+                              ),
+                                                     
+                            
                       },
                       onMapCreated: (mapController) {
                         _controller.complete(mapController);

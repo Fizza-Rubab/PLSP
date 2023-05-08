@@ -106,7 +106,10 @@ class _LifesaverProfileState extends State<LifesaverProfile> {
                         shape: CircleBorder(),
                       ),
                       child: pickedImage == null
-                          ? CircularProgressIndicator()
+                          ? CircleAvatar(
+                              backgroundImage: AssetImage('assets/images/profileicon.png'),
+                              radius: 55,
+                            )
                           : CircleAvatar(
                               backgroundImage: FileImage(pickedImage!),
                               radius: 55,
