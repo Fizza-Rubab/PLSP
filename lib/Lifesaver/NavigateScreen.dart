@@ -129,24 +129,39 @@ void getSourceLocation() async {
           ),
         ),
       );
+      double distanceInMeters = await Geolocator.distanceBetween(
+      currentLocation!.latitude!,
+      currentLocation!.longitude!,
+      widget.incident_obj['latitude'],
+      widget.incident_obj['latitude'],
+      );
+      print(widget.incident_obj['latitude'].toString());
+      print("distance "+ distanceInMeters.toString());
+      if (distanceInMeters<8){
+        // _timer.cancel();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => LifesaverArrived(incident_obj:widget.incident_obj)));
+      }
       // if (this.mounted) {
       // setState(() {});
       // }
-    //   double distanceInMeters = await Geolocator.distanceBetween(
-    // currentLocation!.latitude!,
-    // currentLocation!.longitude!,
-    // widget.incident_obj['latitude'],
-    // widget.incident_obj['latitude'],
-    // );
-    // print(widget.incident_obj['latitude'].toString());
-    // print("distance "+ distanceInMeters.toString());
-    // if (distanceInMeters<8){
-    //   // _timer.cancel();
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) => LifesaverArrived(incident_obj:widget.incident_obj)));
-    // }
+      // double distanceInMeters = await Geolocator.distanceBetween(
+      // currentLocation!.latitude!,
+      // currentLocation!.longitude!,
+      // widget.incident_obj['latitude'],
+      // widget.incident_obj['latitude'],
+      // );
+      // print(widget.incident_obj['latitude'].toString());
+      // print("distance "+ distanceInMeters.toString());
+      // if (distanceInMeters<8){
+      //   // _timer.cancel();
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(
+      //         builder: (context) => LifesaverArrived(incident_obj:widget.incident_obj)));
+      // }
       print("currentLocation" + currentLocation.toString());
     });
   }
