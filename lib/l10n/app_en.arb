@@ -52,7 +52,7 @@
     "patients_information" : "Patient's information",  
     "patient_quantity": "Number of Patients", 
     "other_details": "Other details (optional)", 
-    "caller_information" : "Caller's Information", 
+    "caller_information" : "Your Contact Information", 
     "name" : "Name", 
     "launch_alert" : "Launch Alert", 
     "stay_calm" : "Stay Calm" , 

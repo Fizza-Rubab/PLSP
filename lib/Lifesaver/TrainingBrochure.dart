@@ -14,7 +14,7 @@ class PDFViewerFromAsset extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SimpleAppBar("PLSP Brochure"),
+      appBar: const SimpleAppBar("PLSP Brochure"),
       body: PDF(
         enableSwipe: true,
         swipeHorizontal: true,
@@ -43,7 +43,7 @@ class PDFViewerFromAsset extends StatelessWidget {
                 FloatingActionButton(
                   backgroundColor: Colors.redAccent,
                   heroTag: '-',
-                  child: Icon(Icons.chevron_left_rounded),
+                  child: const Icon(Icons.chevron_left_rounded),
                   onPressed: () async {
                     final PDFViewController pdfController = snapshot.data!;
                     final int currentPage =
@@ -56,7 +56,7 @@ class PDFViewerFromAsset extends StatelessWidget {
                 FloatingActionButton(
                   backgroundColor: Colors.redAccent,
                   heroTag: '+',
-                  child: Icon(Icons.chevron_right_rounded),
+                  child: const Icon(Icons.chevron_right_rounded),
                   onPressed: () async {
                     final PDFViewController pdfController = snapshot.data!;
                     final int currentPage =
