@@ -64,7 +64,21 @@ class _CitizenProfileState extends State<CitizenProfile> {
   @override
   Widget build(BuildContext context) {
     final AppLocalizations localizations = AppLocalizations.of(context)!;
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        
+        if (isLoggedIn) {
+         
+          // If user is logged in, do not navigate back
+          return false;
+        } else {
+           print("do"); 
+          // If user is not logged in, allow navigation back
+          return true;
+        }
+      },
+      child: 
+     Scaffold(
         backgroundColor: greyWhite,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(expandedHeight),
@@ -217,7 +231,7 @@ class _CitizenProfileState extends State<CitizenProfile> {
                   )
                 ],
               )),
-        ));
+        )),); 
  }
 }
 

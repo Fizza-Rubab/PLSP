@@ -4,7 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 final Uri helpline= Uri.parse('tel:+923332428145'); 
 final Uri website = Uri.parse('https://plsp.org.pk/Pages/home.aspx');
 final Uri website_brochure = Uri.parse('https://plsp.org.pk/Style%20Library/Images/EducationalResources/PLSP%20Brochure%20-%20Email.pdf');
+final Uri lifesaver_reg = Uri.parse('https://plsp.org.pk/Pages/register.aspx');
 
+bool isLoggedIn = true;
 
 const PrimaryColor = Colors.redAccent;
 const greyWhite = Color(0xffEFF2F4);
