@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_webservice/places.dart';
-import 'package:google_maps/Alert/network_utility.dart';
 import '../appbar.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../config.dart';
@@ -17,8 +16,6 @@ import 'package:http/http.dart' as http;
 import 'package:location/location.dart' as loc;
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
 import 'package:google_api_headers/google_api_headers.dart';
-import 'place_auto_complete_response.dart';
-import 'autocompleteprediction.dart';
 
 // class Alert_Details extends StatefulWidget {
 //   const Alert_Details({Key? key}) : super(key: key);
@@ -225,29 +222,6 @@ class _Alert_DetailsState extends State<Alert_Details> {
   // String first_name = '';
   // String last_name = '';
   // String contact_no = '';
-  List<AutoCompletePrediction> placePredictions = [];
-  Marker _marker = const Marker(
-    markerId: MarkerId('marker_1'),
-    position: LatLng(24.892122463649557, 67.0747368523425), // current pos
-  );
-
-  void placeAutocomplete(String query) async {
-    Uri uri =
-        Uri.https("maps.googleapis.com", 'maps/api/place/autocomplete/json', {
-      "input": query,
-      "key": api_key,
-    });
-    String? response = await NetworkUtility.fetchUrl(uri);
-    if (response != null) {
-      PlaceAutocompleteResponse result =
-          PlaceAutocompleteResponse.parseAutocompleteResult(response);
-      if (result.predictions != null) {
-        setState(() {
-          placePredictions = result.predictions!;
-        });
-      }
-    }
-  }
 
   //number of patients
   final _quantityController = TextEditingController(text: 1.toString());
@@ -271,7 +245,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
           currentPosition.longitude!,
         );
       });
-      // mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: _currentLocation!, zoom: 15)));
+      mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: _currentLocation!, zoom: 15)));
     } catch (e) {
       print(e.toString());
     }
@@ -295,14 +269,6 @@ class _Alert_DetailsState extends State<Alert_Details> {
 
   @override
   Widget build(BuildContext context) {
-    Future<void> updateCamera(LatLng newPosition) async {
-      final CameraPosition newPosition = CameraPosition(
-        target: _marker.position,
-        zoom: 14,
-      );
-      await mapController!
-          .animateCamera(CameraUpdate.newCameraPosition(newPosition));
-    }
     final Set<Marker> markers = {};
     final AppLocalizations localizations = AppLocalizations.of(context)!;
     markers.add(Marker(
@@ -352,144 +318,83 @@ class _Alert_DetailsState extends State<Alert_Details> {
                         });
                       }),
                 ),
-                // Align(
-                //   alignment: Alignment.topCenter,
-                //   child: Padding(
-                //     padding: const EdgeInsets.symmetric(horizontal: 14.0),
-                //     child: TextField(
-                //       decoration: InputDecoration(
-                //           contentPadding: const EdgeInsets.all(16),
-                //           labelText: localizations.emergency_location,
-                //           labelStyle: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w600, letterSpacing: 0.8),
-                //           // hintText: hinttext,
-                //           prefixIcon: const Icon(Icons.location_on),
-                //           filled: true,
-                //           fillColor: Colors.white,
-                //           focusColor: Colors.red.shade50,
-                //           focusedBorder: OutlineInputBorder(
-                //             borderRadius: BorderRadius.circular(25),
-                //             borderSide: BorderSide(color: Colors.red.shade100),
-                //           ),
-                //           border: OutlineInputBorder(
-                //             borderRadius: BorderRadius.circular(25),
-                //             borderSide: const BorderSide(style: BorderStyle.none, width: 0),
-                //           ),
-                //           enabledBorder: OutlineInputBorder(
-                //             borderRadius: BorderRadius.circular(25),
-                //             borderSide: BorderSide(color: Colors.grey.shade300),
-                //           ),
-                //           suffixIcon: IconButton(
-                //             icon: const Icon(Icons.my_location),
-                //             onPressed: () async {
-                //               _getCurrentLocation();
-                //               _addressController.text = "Search your address";
-                //             },
-                //           )),
-                //       controller: TextEditingController(text: _addressController.text),
-                //       readOnly: true,
-                //       onTap: () async {
-                //         var place = await PlacesAutocomplete.show(
-                //             startText: _addressController.text.contains(", ")
-                //                 ? _addressController.text.substring(0, _addressController.text.indexOf(", "))
-                //                 : _addressController.text,
-                //             hint: "Search your address",
-                //             overlayBorderRadius: BorderRadius.circular(25),
-                //             // logo: Text("Powered by Google"),
-                //             context: context,
-                //             apiKey: api_key,
-                //             mode: Mode.overlay,
-                //             types: [],
-                //             strictbounds: false,
-                //             components: [Component(Component.country, 'pk')],
-                //             //google_map_webservice package
-                //             onError: (err) {
-                //               print(err);
-                //             });
-
-                //         if (place != null) {
-                //           //form google_maps_webservice package
-                //           final plist = GoogleMapsPlaces(
-                //             apiKey: api_key,
-                //             apiHeaders: await const GoogleApiHeaders().getHeaders(),
-                //             //from google_api_headers package
-                //           );
-                //           String placeid = place.placeId ?? "0";
-                //           final detail = await plist.getDetailsByPlaceId(placeid);
-                //           final geometry = detail.result.geometry!;
-                //           final lat = geometry.location.lat;
-                //           final lang = geometry.location.lng;
-                //           setState(() {
-                //             _addressController.text = place.description.toString();
-                //             _currentLocation = LatLng(lat, lang);
-                //           });
-
-                //           //move map camera to selected place with animation
-                //           mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: _currentLocation!, zoom: 15)));
-                //         }
-                //       },
-                //     ),
-                //   ),
-                // ),
                 Align(
                   alignment: Alignment.topCenter,
-                  child: Column(mainAxisSize: MainAxisSize.min, children: [
-                    TextField(
-                      onChanged: (value) {
-                        placeAutocomplete(value);
-                      },
-                      controller: _addressController,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                    child: TextField(
                       decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.clear),
-                          onPressed: () {
-                            _addressController.clear();
-                          },
-                        ),
-                        filled: true,
-                        labelText: localizations.emergency_location,
-                        fillColor: Colors.grey[200],
-                        hintText: "Current Location",
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(50.0), borderSide: BorderSide.none),
-                      ),
-                    ),
-                    // TextField(
-
-                    //   controller: _addressController,
-                    //   decoration: buildInputDecoration(
-                    //       Icons.location_on, localizations.emergency_location,
-                    //       border: const BorderRadius.only(
-                    //         topLeft: Radius.circular(25),
-                    //         topRight: Radius.circular(25),
-                    //       )),
-                    // ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: placePredictions.length,
-                        itemBuilder: (context, index) {
-                          final prediction = placePredictions[index];
-                          if (prediction.description == null) {
-                            return const SizedBox.shrink(); // don't render a tile if the location is null
-                          }
-                          return LocationListTile(
-                            location: prediction.description!,
-                            press: () {
-                              getLatLongFromPlaceId(prediction.placeId!).then((latitudelongitude) {
-                                setState(() {
-                                  _marker = Marker(
-                                    markerId: const MarkerId('marker_1'),
-                                    position: latitudelongitude,
-                                  );
-                                });
-                                updateCamera(latitudelongitude);
-                              });
-
-                              _addressController.text = prediction.description!;
+                          contentPadding: const EdgeInsets.all(16),
+                          labelText: localizations.emergency_location,
+                          labelStyle: GoogleFonts.lato(fontSize: 16, fontWeight: FontWeight.w600, letterSpacing: 0.8),
+                          // hintText: hinttext,
+                          prefixIcon: const Icon(Icons.location_on),
+                          filled: true,
+                          fillColor: Colors.white,
+                          focusColor: Colors.red.shade50,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: BorderSide(color: Colors.red.shade100),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: const BorderSide(style: BorderStyle.none, width: 0),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                            borderSide: BorderSide(color: Colors.grey.shade300),
+                          ),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.my_location),
+                            onPressed: () async {
+                              _getCurrentLocation();
+                              _addressController.text = "Search your address";
                             },
+                          )),
+                      controller: TextEditingController(text: _addressController.text),
+                      readOnly: true,
+                      onTap: () async {
+                        var place = await PlacesAutocomplete.show(
+                            startText: _addressController.text.contains(", ")
+                                ? _addressController.text.substring(0, _addressController.text.indexOf(", "))
+                                : _addressController.text,
+                            hint: "Search your address",
+                            overlayBorderRadius: BorderRadius.circular(25),
+                            // logo: Text("Powered by Google"),
+                            context: context,
+                            apiKey: api_key,
+                            mode: Mode.overlay,
+                            types: [],
+                            strictbounds: false,
+                            components: [Component(Component.country, 'pk')],
+                            //google_map_webservice package
+                            onError: (err) {
+                              print(err);
+                            });
+
+                        if (place != null) {
+                          //form google_maps_webservice package
+                          final plist = GoogleMapsPlaces(
+                            apiKey: api_key,
+                            apiHeaders: await const GoogleApiHeaders().getHeaders(),
+                            //from google_api_headers package
                           );
-                        },
-                      ),
+                          String placeid = place.placeId ?? "0";
+                          final detail = await plist.getDetailsByPlaceId(placeid);
+                          final geometry = detail.result.geometry!;
+                          final lat = geometry.location.lat;
+                          final lang = geometry.location.lng;
+                          setState(() {
+                            _addressController.text = place.description.toString();
+                            _currentLocation = LatLng(lat, lang);
+                          });
+
+                          //move map camera to selected place with animation
+                          mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: _currentLocation!, zoom: 15)));
+                        }
+                      },
                     ),
-                  ]),
+                  ),
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
@@ -597,7 +502,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
                                           color: Colors.black54,
                                         ),
                                         _callernameController.text),
-
+                              
                                     info(
                                         const Icon(
                                           Icons.call,
