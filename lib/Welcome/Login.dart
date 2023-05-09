@@ -213,17 +213,17 @@ class _LoginState extends State<Login> {
                           ),
                         )),
                   ),
-                  CheckboxListTile(
-                    controlAffinity: ListTileControlAffinity.platform,
-                    title: Text(AppLocalizations.of(context)!.rememberme, style: Theme.of(context).textTheme.caption),
-                    activeColor: PrimaryColor,
-                    value: rememberFlag,
-                    onChanged: ((value) {
-                      setState(() {
-                        rememberFlag = value!;
-                      });
-                    }),
-                  ),
+                  // CheckboxListTile(
+                  //   controlAffinity: ListTileControlAffinity.platform,
+                  //   title: Text(AppLocalizations.of(context)!.rememberme, style: Theme.of(context).textTheme.caption),
+                  //   activeColor: PrimaryColor,
+                  //   value: rememberFlag,
+                  //   onChanged: ((value) {
+                  //     setState(() {
+                  //       rememberFlag = value!;
+                  //     });
+                  //   }),
+                  // ),
                   const Spacer(),
                   Row(
                     children: [

@@ -104,7 +104,7 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
                   ),
                   Text('Yes', style: option_style),
                   Radio(
-                    value: false,
+                    value: true,
                     groupValue: _didPerformLifeSavingIntervention,
                     onChanged: (value) {
                       setState(() {

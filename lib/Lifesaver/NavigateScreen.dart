@@ -107,6 +107,9 @@ void getSourceLocation() async {
 
     _locationSubscription = location.onLocationChanged.listen((newloc) async {
       currentLocation = newloc;
+      setState(() {
+        currentLocation = newloc;  
+      });
       googleMapController.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
@@ -123,7 +126,7 @@ void getSourceLocation() async {
       );
       print(widget.incident_obj['latitude'].toString());
       print("distance "+ distanceInMeters.toString());
-      if (distanceInMeters<8.0){
+      if (distanceInMeters<13.0){
         _locationSubscription?.cancel();
         Navigator.pushAndRemoveUntil(
           context,
