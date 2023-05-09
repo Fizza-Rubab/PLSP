@@ -10,6 +10,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../config.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
+import 'Lifesaver.dart';
+
 
 class MapScreen extends StatefulWidget {
   final Map<String, dynamic> incident_obj;
@@ -453,7 +455,14 @@ void getSourceLocation() async {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          // _locationSubscription?.cancel();
+          Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (BuildContext context) => Lifesaver()),
+          (Route<dynamic> route) => false
+          );
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.redAccent,
           padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
