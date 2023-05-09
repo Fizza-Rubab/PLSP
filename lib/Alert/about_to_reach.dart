@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../constants.dart';
 import 'Arrival.dart';
 import '../config.dart';
@@ -369,7 +370,18 @@ class _AboutToReachState extends State<AboutToReach> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: ()async{
+          if (icon==Icons.call)
+            launch("tel://03222336019");
+          else {
+            Uri sms = Uri.parse('sms:03222336019?body=Hello Lifesaver');
+            if (await launchUrl(sms)) {
+              //app opened
+            } else {
+              //app is not opened
+            }
+          }
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.redAccent,
           padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),

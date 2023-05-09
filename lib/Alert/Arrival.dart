@@ -285,7 +285,7 @@ class _ArrivedState extends State<Arrived> {
           if (icon==Icons.call)
             launch("tel://03222336019");
           else {
-            Uri sms = Uri.parse('sms:03222336019?body=Hello there');
+            Uri sms = Uri.parse('sms:03222336019?body=Hello Lifesaver');
             if (await launchUrl(sms)) {
               //app opened
             } else {

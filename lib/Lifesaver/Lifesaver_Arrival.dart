@@ -287,9 +287,9 @@ class _LifesaverArrivedState extends State<LifesaverArrived> {
       child: ElevatedButton(
         onPressed: () async {
           if (icon == Icons.call)
-            launch("tel://03222336019");
+          launch("tel://${widget.incident_obj['citizen_contact']}");
           else {
-            Uri sms = Uri.parse('sms:03222336019?body=Hello there');
+            Uri sms = Uri.parse('sms:${widget.incident_obj['citizen_contact']}?body=Hello, regarding emergency...');
             if (await launchUrl(sms)) {
               //app opened
             } else {

@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps/Lifesaver/Lifesaver_Arrival.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../config.dart';
 import "package:flutter_gen/gen_l10n/app_localizations.dart";
 
@@ -427,7 +428,18 @@ void getSourceLocation() async {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () async {
+          if (icon == Icons.call)
+          launch("tel://${widget.incident_obj['citizen_contact']}");
+          else {
+            Uri sms = Uri.parse('sms:${widget.incident_obj['citizen_contact']}?body=Hello, regarding emergency...');
+            if (await launchUrl(sms)) {
+              //app opened
+            } else {
+              //app is not opened
+            }
+          }
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.redAccent,
           padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
