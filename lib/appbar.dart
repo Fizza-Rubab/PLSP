@@ -5,6 +5,8 @@ import 'package:google_maps/Welcome/Login.dart';
 import 'package:google_maps/Welcome/Welcome.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'constants.dart';
 
 
@@ -67,6 +69,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
 
+    final http.Response ls_result = await http.put(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${await SharedPreferences.getInstance().then((prefs) => prefs.getString('id') ?? '')}'),body:{"registration_token":"-"});
+    Map<String, dynamic> ls_body = json.decode(ls_result.body);
+    print(ls_body);
     Navigator.pushReplacement(
     context,
     MaterialPageRoute(builder: (context) => Login()),
