@@ -126,7 +126,7 @@ void getSourceLocation() async {
       );
       print(widget.incident_obj['latitude'].toString());
       print("distance "+ distanceInMeters.toString());
-      if (distanceInMeters<15.0){
+      if (distanceInMeters<10.0){
         _locationSubscription?.cancel();
         googleMapController.dispose();
         Navigator.pushAndRemoveUntil(

@@ -16,9 +16,7 @@ sendLocation() async{
     final prefs = await SharedPreferences.getInstance();
     bool is_lifesaver = prefs.getBool('is_lifesaver')??false;
     String user_id =  prefs.getString('id');
-    print("in send location");
     if (is_lifesaver){
-    print("Attempting to send location");
     final location = Location();
     final currentLocation = await location.getLocation();
     

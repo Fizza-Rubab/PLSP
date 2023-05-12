@@ -317,7 +317,7 @@ class _LifesaverArrivedState extends State<LifesaverArrived> {
                 return Container(
                   child: AlertDialog(
                     title: const Text(
-                      "Please verify the arrival of lifesaver",
+                      "Please verify your arrival to incident",
                       style: TextStyle(color: Colors.black45),
                     ),
                     actions: [

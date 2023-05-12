@@ -48,8 +48,8 @@ class _SearchingState extends State<Searching>
   // }
 
   // route() {
-  //   Navigator.pushReplacement(context,
-  //       MaterialPageRoute(builder: (context) => AboutToReach(destinationLocation: LatLng(widget.latitude, widget.longitude), incident: widget.incident, lifesaver: lifesaver_id)));
+    // Navigator.pushReplacement(context,
+    //     MaterialPageRoute(builder: (context) => AboutToReach(destinationLocation: LatLng(widget.latitude, widget.longitude), incident: widget.incident, lifesaver: lifesaver_id)));
   // }
 
     void startTimer() {

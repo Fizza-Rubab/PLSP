@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../Home/Citizen.dart';
 import '../constants.dart';
 import 'Arrival.dart';
 import '../config.dart';
@@ -96,7 +97,7 @@ class _AboutToReachState extends State<AboutToReach> {
     );
     print(widget.destinationLocation.toString());
     print("distance "+ distanceInMeters.toString());
-    if (distanceInMeters<15){
+    if (distanceInMeters<10.0){
       _timer.cancel();
       googleMapController.dispose();
       Navigator.pushAndRemoveUntil(
@@ -397,7 +398,11 @@ class _AboutToReachState extends State<AboutToReach> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const Citizen(),
+          ));
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.redAccent,
           padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),

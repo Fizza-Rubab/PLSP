@@ -153,7 +153,8 @@ class _OtpState extends State<Otp> {
                       });
                       final http.Response result = await http.post(
                           Uri.parse(ApiConstants.baseUrl +
-                              ApiConstants.citizenEndpoint + ApiConstants.signupEndpoint),
+                              ApiConstants.citizenEndpoint +
+                              ApiConstants.signupEndpoint),
                           body: jsonEncode({
                             "email": widget.email,
                             "password": widget.password,
@@ -171,7 +172,7 @@ class _OtpState extends State<Otp> {
                             'Accept': 'application/json',
                             'Content-Type': 'application/json'
                           });
-                          print(result.body);
+                      print(result.body);
 
                       AwesomeDialog(
                           context: context,
@@ -183,8 +184,10 @@ class _OtpState extends State<Otp> {
                           desc:
                               "You can now log in to your account using your email and password",
                           btnOkOnPress: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const Login()));
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => Login()),
+                            );
                           }).show();
                     } else {
                       AwesomeDialog(
