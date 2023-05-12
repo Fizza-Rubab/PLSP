@@ -77,23 +77,7 @@ class _AboutToReachState extends State<AboutToReach> {
         currentLocation = LatLng(latitude, longitude);
       });
       // Assuming currentLocation and destination are both LatLng objects
-    double distanceInMeters = Geolocator.distanceBetween(
-    currentLocation!.latitude,
-    currentLocation!.longitude,
-    widget.destinationLocation.latitude,
-    widget.destinationLocation.longitude,
-    );
-    print(widget.destinationLocation.toString());
-    print("distance "+ distanceInMeters.toString());
-    if (distanceInMeters<8){
-      _timer.cancel();
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-            builder: (context) => Arrived(destinationLocation:currentLocation!, incident_obj: widget.incident_obj)),
-            (Route<dynamic> route) => false
-            );
-    }
+    
     GoogleMapController googleMapController = await _controller.future;
     print('${currentLocation!.latitude} ${currentLocation!.longitude}');
     googleMapController.animateCamera(
@@ -104,6 +88,24 @@ class _AboutToReachState extends State<AboutToReach> {
         ),
       ),
     );
+    double distanceInMeters = Geolocator.distanceBetween(
+    currentLocation!.latitude,
+    currentLocation!.longitude,
+    widget.destinationLocation.latitude,
+    widget.destinationLocation.longitude,
+    );
+    print(widget.destinationLocation.toString());
+    print("distance "+ distanceInMeters.toString());
+    if (distanceInMeters<15){
+      _timer.cancel();
+      googleMapController.dispose();
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Arrived(destinationLocation:currentLocation!, incident_obj: widget.incident_obj)),
+            (Route<dynamic> route) => false
+            );
+    }
   }
   }
 
