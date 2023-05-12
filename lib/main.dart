@@ -17,10 +17,9 @@ sendLocation() async{
     String user_id = await SharedPreferences.getInstance().then((prefs) => prefs.getString('id') ?? "0");
     if (is_lifesaver){
     print("Attempting to send location");
-    print(is_lifesaver);
     final location = Location();
     final currentLocation = await location.getLocation();
-    print(currentLocation.latitude);
+    
     final locationJson = jsonEncode({
       'user_id': user_id,
       'latitude': currentLocation.latitude,
@@ -45,7 +44,7 @@ sendLocation() async{
 
 void runBackgroundTask(RootIsolateToken rootIsolateToken) async {
   BackgroundIsolateBinaryMessenger.ensureInitialized(rootIsolateToken);
-  const duration = Duration(seconds: 60);
+  const duration = Duration(seconds: 3);
   Timer.periodic(duration, (Timer t) => sendLocation());
 }
 
