@@ -26,7 +26,6 @@ import 'constants.dart';
       leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.redAccent,),
           onPressed: () {
-            isLoggedIn = false; 
             Navigator.pop(context);  
           },
         ),

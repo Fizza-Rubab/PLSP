@@ -50,57 +50,6 @@ class _RegisterState extends State<Register> {
     }
   }
 
-  Future userRegister() async {
-    final http.Response result = await http.post(
-        Uri.parse(ApiConstants.baseUrl + ApiConstants.loginEndpoint),
-        body: {'email': email.text, 'password': password.text});
-    Map<String, dynamic> body = json.decode(result.body);
-    print(body);
-    if (body.containsKey('access')) {
-      putString('token', body['access']);
-      if (body['is_lifesaver']) {
-        putBool('is_lifesaver', body['is_lifesaver']);
-        setState(() {
-          is_lifesaver = true;
-        });
-        final http.Response ls_result = await http.get(Uri.parse(
-            '${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${body['id']}'));
-        Map<String, dynamic> ls_body = json.decode(ls_result.body);
-        putString('id', ls_body['id'].toString());
-        putString('first_name', ls_body['first_name']);
-        putString('last_name', ls_body['last_name']);
-        putString('date_of_birth', ls_body['date_of_birth']);
-        putString('address', ls_body['address']);
-        putString('contact_no', ls_body['contact_no']);
-        putString('cnic', ls_body['cnic']);
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const Citizen()));
-      } else {
-        putBool('is_lifesaver', body['is_lifesaver']);
-        setState(() {
-          is_lifesaver = false;
-        });
-        final http.Response ct_result = await http.get(Uri.parse(
-            '${ApiConstants.baseUrl}${ApiConstants.citizenEndpoint}/${body['id']}'));
-        Map<String, dynamic> ct_body = json.decode(ct_result.body);
-        putString('id', ct_body['id'].toString());
-        putString('email', email.text);
-        putString('password', password.text);
-        putString('first_name', ct_body['first_name']);
-        putString('last_name', ct_body['last_name']);
-        putString('date_of_birth', ct_body['date_of_birth']);
-        putString('address', ct_body['address']);
-        putString('contact_no', ct_body['contact_no']);
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const Citizen()));
-      }
-      // ignore: use_build_context_synchronously
-    } else {
-      email.clear();
-      password.clear();
-    }
-  }
-
   TextEditingController dateInput = TextEditingController();
   @override
   void initState() {
@@ -330,7 +279,7 @@ class _RegisterState extends State<Register> {
                                             name: first_name.text,
                                             generatedOTP: generatedOTP,
                                             username: username,
-                                            password: apppassword,
+                                            password: password.text,
                                             smtpServer: smtpServer)),
                                   );
                                 },
