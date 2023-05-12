@@ -66,12 +66,13 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   void logout(BuildContext context) async {
+    print("attempting to logout");
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
-
+    print('${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${prefs.getString('id')}');
     final http.Response ls_result = await http.put(Uri.parse('${ApiConstants.baseUrl}${ApiConstants.lifesaverEndpoint}/${await SharedPreferences.getInstance().then((prefs) => prefs.getString('id') ?? '')}'),body:{"registration_token":"-"});
     Map<String, dynamic> ls_body = json.decode(ls_result.body);
     print(ls_body);
+    await prefs.clear();
     Navigator.pushReplacement(
     context,
     MaterialPageRoute(builder: (context) => Login()),
