@@ -1,19 +1,21 @@
+import 'dart:convert';
 import 'dart:math';
+import 'package:http/http.dart' as http;
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps/Lifesaver/Lifesaver_Home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
 import '../appbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
-
 import 'Login.dart';
 
 // Generate a random OTP
 String generateOTP() {
-  Random random = Random();
+  Random random = new Random();
   int randomNumber = random.nextInt(9999);
   return randomNumber.toString().padLeft(4, '0');
 }
@@ -22,16 +24,15 @@ bool verifyOtp(String enteredOtp, String expectedOtp) {
   return enteredOtp == expectedOtp;
 }
 
-void sendOtpEmail(
-    String recipientEmail, String recipientName, String generatedOTP, SmtpServer smtpServer) async {
-  const String username = 'teamplsp2023@gmail.com';
+void sendOtpEmail(String recipientEmail, String recipientName,
+    String generatedOTP, SmtpServer smtpServer) async {
   print(recipientEmail);
   // Create the email message
 
   try {
     // final smtpServer = gmail(username, password);
     final message = Message()
-      ..from = const Address(username)
+      ..from = Address(username)
       ..recipients.add(recipientEmail.toString())
       ..subject = 'Registeration OTP - PLSP Application'
       ..text =
@@ -47,39 +48,52 @@ void sendOtpEmail(
 }
 
 class Otp extends StatefulWidget {
-  final String generatedOTP;
+  final String last_name;
+  final String address;
+  final String contact_no;
+  final String DOB;
   final String email;
-  final String firstName;
+  final String name;
+  final String generatedOTP;
+  final String username;
+  final String password;
   final SmtpServer smtpServer;
-  const Otp(
-      {Key? key,
-      required this.generatedOTP,
-      required this.email,
-      required this.firstName, 
-      required this.smtpServer})
-      : super(key: key);
+  // final String generatedOTP;
+  // final String email;
+  // final String firstName;
+  // final SmtpServer smtpServer;
+  const Otp({
+    required this.last_name,
+    required this.address,
+    required this.contact_no,
+    required this.DOB,
+    required this.email,
+    required this.name,
+    required this.generatedOTP,
+    required this.username,
+    required this.password,
+    required this.smtpServer,
+  });
 
   @override
   _OtpState createState() => _OtpState();
 }
 
 class _OtpState extends State<Otp> {
-  String _otp = "XXXX";
+  late String enteredOTP = "XXXX";
   @override
   void initState() {
     super.initState();
-
-   
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: const SimpleAppBar(""),
+      appBar: SimpleAppBar(""),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(padding_val),
+          padding: EdgeInsets.all(padding_val),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -89,10 +103,10 @@ class _OtpState extends State<Otp> {
                   style: boldheader,
                 ),
                 Text(
-                  "Enter your OTP here",
+                  'Enter the OTP sent to ${widget.email}',
                   style: header_disc,
                 ),
-                const Spacer(),
+                Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -102,55 +116,63 @@ class _OtpState extends State<Otp> {
                     _textFieldOTP(first: false, last: true, index: 3),
                   ],
                 ),
-                const Spacer(),
+                Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('Did not receive any code? ', style: generalfontStyle),
                     GestureDetector(
                       onTap: () {
-                        print(_otp);
-                        // print(generated);
-                        if (_otp == Text(widget.generatedOTP)) {
-                          print("valid OTP");
-                          AwesomeDialog(
-                              context: context,
-                              dialogType: DialogType.success,
-                              animType: AnimType.topSlide,
-                              descTextStyle: generalfontStyle,
-                              titleTextStyle: titleFontStyle,
-                              title: "OTP Verified",
-                              desc:
-                                  "You can now log in to your account using your email and password",
-                              btnOkOnPress: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const Login()));
-                              }).show();
-                        }
+                        // print(Text(widget.email));
+                        _resendOTP();
                       },
-                      child: GestureDetector(
-                        onTap: () {
-                          // print(Text(widget.email));
-                          sendOtpEmail(
-                              Text(widget.email).toString(),
-                              Text(widget.firstName).toString(),
-                              Text(widget.generatedOTP).toString(), 
-                              widget.smtpServer
-                             );
-                        },
-                        child: Text(
-                          "Resend Code",
-                          style: urlfontStyle,
-                        ),
+                      child: Text(
+                        "Resend Code",
+                        style: urlfontStyle,
                       ),
-                    )
+                    ),
                   ],
                 ),
-                const Spacer(),
+                Spacer(),
                 TextButton(
-                  onPressed: () {
-                    if (_otp == Text(widget.generatedOTP)) {
-                      print("valid OTP");
+                  onPressed: () async {
+                    if (enteredOTP == widget.generatedOTP) {
+                      print({
+                        "email": widget.email,
+                        "password": widget.password,
+                        "citizen": {
+                          "citizen": null,
+                          "first_name": widget.name,
+                          "last_name": widget.last_name,
+                          "date_of_birth": widget.DOB.toString(),
+                          "address": widget.address,
+                          "contact_no": widget.contact_no.toString(),
+                          "calls_made": 0,
+                          "profile_picture": null
+                        }
+                      });
+                      final http.Response result = await http.post(
+                          Uri.parse(ApiConstants.baseUrl +
+                              ApiConstants.citizenEndpoint + ApiConstants.signupEndpoint),
+                          body: jsonEncode({
+                            "email": widget.email,
+                            "password": widget.password,
+                            "citizen": {
+                              "citizen": null,
+                              "first_name": widget.name,
+                              "last_name": widget.last_name,
+                              "date_of_birth": widget.DOB.toString(),
+                              "address": widget.address,
+                              "contact_no": widget.contact_no.toString(),
+                              "calls_made": 0,
+                            }
+                          }),
+                          headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                          });
+                          print(result.body);
+
                       AwesomeDialog(
                           context: context,
                           dialogType: DialogType.success,
@@ -165,7 +187,6 @@ class _OtpState extends State<Otp> {
                                 builder: (context) => const Login()));
                           }).show();
                     } else {
-                      print("Invalid OTP");
                       AwesomeDialog(
                               context: context,
                               dialogType: DialogType.error,
@@ -202,41 +223,71 @@ class _OtpState extends State<Otp> {
   }
 
   Widget _textFieldOTP({required bool first, last, required int index}) {
-    return SizedBox(
+    return Container(
       height: 60,
       child: AspectRatio(
         aspectRatio: 1.0,
         child: TextField(
           autofocus: true,
           onChanged: (value) {
-            if (value.length == 1 && last == false) {
+            print("Values: " + value);
+            if (value.length == 0) {
+              enteredOTP = enteredOTP.substring(0, index) +
+                  "X" +
+                  enteredOTP.substring(index + 1);
+              print("After back: ");
+              print(enteredOTP);
+            } else if (value.length == 1 && last == false) {
               FocusScope.of(context).nextFocus();
-            }
-            if (value.isEmpty && first == false) {
+              enteredOTP = enteredOTP.substring(0, index) +
+                  value.toString() +
+                  enteredOTP.substring(index + 1);
+            } else if (value.length == 0 && first == false) {
               FocusScope.of(context).previousFocus();
+              enteredOTP = enteredOTP.substring(0, index) +
+                  value.toString() +
+                  enteredOTP.substring(index + 1);
+            } else {
+              enteredOTP = enteredOTP.substring(0, index) +
+                  value.toString() +
+                  enteredOTP.substring(index + 1);
             }
-            _otp = _otp.substring(0, index) +
-                value.toString() +
-                _otp.substring(index + 1);
-            print("OTP Entered so far: " + _otp);
+
+            print("OTP Entered so far: " + enteredOTP);
           },
           showCursor: false,
           readOnly: false,
           textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           keyboardType: TextInputType.number,
           maxLength: 1,
           decoration: InputDecoration(
-            counter: const Offstage(),
+            counter: Offstage(),
             enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(width: 2, color: Colors.black12),
+                borderSide: BorderSide(width: 2, color: Colors.black12),
                 borderRadius: BorderRadius.circular(20)),
             focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(width: 2, color: Colors.redAccent),
+                borderSide: BorderSide(width: 2, color: Colors.redAccent),
                 borderRadius: BorderRadius.circular(20)),
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _resendOTP() async {
+    try {
+      final message = Message()
+        ..from = Address(widget.username)
+        ..recipients.add(widget.email)
+        ..subject = 'OTP for Verification'
+        ..text =
+            'Dear ${widget.name},\n\nYour OTP for verification is ${widget.generatedOTP}. Please enter this code to complete your verification process.\n\nThank you,\n\nTeam Pakistan Lifesavers Programme';
+      final sendReport = await send(message, widget.smtpServer);
+      print('OTP email sent: ' + sendReport.toString());
+    } catch (e) {
+      print('Error sending OTP email: ' + e.toString());
+      rethrow;
+    }
   }
 }

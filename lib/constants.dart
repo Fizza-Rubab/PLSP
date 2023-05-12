@@ -7,12 +7,12 @@ final Uri website_brochure = Uri.parse('https://plsp.org.pk/Style%20Library/Imag
 final Uri lifesaver_reg = Uri.parse('https://plsp.org.pk/Pages/register.aspx');
 
 bool isLoggedIn = true;
-
+const String username = 'teamplsp2023@gmail.com';
 const PrimaryColor = Colors.redAccent;
 const greyWhite = Color(0xffEFF2F4);
 
 const peachColor = Color.fromARGB(255, 253, 129, 107);
-
+const String apppassword = 'qtzhoqtegpyvyfik';
 var titleFontStyle = GoogleFonts.poppins(
     fontSize: 20,
     fontWeight: FontWeight.w300,

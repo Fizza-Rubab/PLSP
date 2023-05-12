@@ -311,21 +311,26 @@ class _RegisterState extends State<Register> {
                             TextButton(
                                 onPressed: () async {
                                   String generatedOTP = generateOTP();
-                                  const String username =
-                                      'teamplsp2023@gmail.com';
-                                  const String password = 'qtzhoqtegpyvyfik';
-                                  final smtpServer = gmail(username, password);
+      
+                                  final smtpServer =
+                                      gmail(username, apppassword);
                                   sendOtpEmail(email.text, first_name.text,
                                       generatedOTP, smtpServer);
-                                  print("SENT");
+                               
                                   print(generatedOTP);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => Otp(
-                                            generatedOTP: generatedOTP,
+                                          last_name: last_name.text, 
+                                          address: address.text, 
+                                          contact_no: contact_no.text,
+                                          DOB: dateInput.text,  
                                             email: email.text,
-                                            firstName: first_name.text, 
+                                            name: first_name.text,
+                                            generatedOTP: generatedOTP,
+                                            username: username,
+                                            password: apppassword,
                                             smtpServer: smtpServer)),
                                   );
                                 },
