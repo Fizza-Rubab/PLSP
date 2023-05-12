@@ -13,8 +13,10 @@ import 'dart:isolate';
 
 
 sendLocation() async{
-    bool is_lifesaver = await SharedPreferences.getInstance().then((prefs) => prefs.getBool('is_lifesaver') ?? false);
-    String user_id = await SharedPreferences.getInstance().then((prefs) => prefs.getString('id') ?? "0");
+    final prefs = await SharedPreferences.getInstance();
+    bool is_lifesaver = prefs.getBool('is_lifesaver');
+    String user_id =  prefs.getString('id');
+    print("in send location");
     if (is_lifesaver){
     print("Attempting to send location");
     final location = Location();

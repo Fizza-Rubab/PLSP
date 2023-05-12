@@ -92,7 +92,7 @@ void getSourceLocation() async {
       (location) {
         setState(() {
           currentLocation = location;
-          sourceLocation =  LatLng(location!.latitude!, location!.longitude!);
+          sourceLocation =  LatLng(location.latitude!, location.longitude!);
         });
         print("currentLocation" + currentLocation.toString());
         print("sourceLocation" + sourceLocation.toString());
@@ -126,8 +126,9 @@ void getSourceLocation() async {
       );
       print(widget.incident_obj['latitude'].toString());
       print("distance "+ distanceInMeters.toString());
-      if (distanceInMeters<13.0){
+      if (distanceInMeters<15.0){
         _locationSubscription?.cancel();
+        googleMapController.dispose();
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (BuildContext context) => new LifesaverArrived(incident_obj:widget.incident_obj)),

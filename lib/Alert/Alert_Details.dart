@@ -578,6 +578,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
 
                                 Map<String, dynamic> body = json.decode(result.body);
                                 print("Output: $body");
+                                mapController?.dispose();
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
                                         Searching(latitude: _currentLocation!.latitude, longitude: _currentLocation!.longitude, incident_obj: body)));
