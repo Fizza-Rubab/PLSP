@@ -106,7 +106,9 @@
 "lifesaver_is_on_his_way": "لائف سیوئر اپنے راستے پر ہے۔",
 "loading" : "لوڈ ہو رہا ہے", 
 "current_location" : "موجودہ مقام",
-"incident_location" : "واقعہ کا مقام"
+"incident_location" : "واقعہ کا مقام", 
+"search_your_address" : "اپنا پتہ تلاش کریں۔"
+
 
 
 

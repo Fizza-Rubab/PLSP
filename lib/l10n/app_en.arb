@@ -111,7 +111,8 @@
 "lifesaver_is_on_his_way": "Lifesaver is on his Way", 
 "loading" : "Loading", 
 "current_location" : "Current Location",
-"incident_location" : "Incident Location"
+"incident_location" : "Incident Location", 
+"search_your_address" : "Search your address"
 
 
 
