@@ -128,7 +128,7 @@ class _MyWidgetState extends State<Citizen_Feedback> {
               ),
             ),
             Text(
-              "Details:",
+              localizations.details,
               style: generalfontStyle,
             ),
             TextField(
@@ -142,15 +142,15 @@ class _MyWidgetState extends State<Citizen_Feedback> {
             ),
             Text(localizations.lifesaver_details, style: titleFontStyle),
             Text(
-              "Name: " + widget.incident_obj['lifesaver_name'],
+             localizations.name + widget.incident_obj['lifesaver_name'],
               style: generalfontStyle,
             ),
             Text(
-              "Contact: " + widget.incident_obj['lifesaver_contact'],
+              localizations.contact + widget.incident_obj['lifesaver_contact'],
               style: generalfontStyle,
             ),
             Text(
-              "Rate the Life saver",
+              localizations.rate_the_lifesaver,
               style: titleFontStyle,
             ),
             Center(
