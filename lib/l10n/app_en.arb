@@ -107,7 +107,11 @@
 "otp_ver_desc" : "You can now log in to your account using your email and password", 
 "incorrect_otp" : "Incorrect OTP", 
 "incorrect_otp_desc" : "Please enter the correct OTP sent to your email and try again", 
-"verify" : "Verify"
+"verify" : "Verify", 
+"lifesaver_is_on_his_way": "Lifesaver is on his Way", 
+"loading" : "Loading", 
+"current_location" : "Current Location",
+"incident_location" : "Incident Location"
 
 
 
