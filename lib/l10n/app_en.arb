@@ -101,6 +101,14 @@
     "website": "Website", 
     "helpline": "Helpline", 
     "manual": "Manual" 
+"verify_otp" : "Verify OTP", 
+"otp_desc" : "Enter the OTP sent to the folowing email addres", 
+"otp_verified" : "OTP Verified", 
+"otp_ver_desc" : "You can now log in to your account using your email and password", 
+"incorrect_otp" : "Incorrect OTP", 
+"incorrect_otp_desc" : "Please enter the correct OTP sent to your email and try again", 
+"verify" : "Verify"
+
 
 
 }
