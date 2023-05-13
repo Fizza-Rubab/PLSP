@@ -107,7 +107,9 @@
 "loading" : "لوڈ ہو رہا ہے", 
 "current_location" : "موجودہ مقام",
 "incident_location" : "واقعہ کا مقام", 
-"search_your_address" : "اپنا پتہ تلاش کریں۔"
+"search_your_address" : "اپنا پتہ تلاش کریں۔",
+"details": "تفصیلات", 
+"rate_the_lifesaver": "لائف سیور کی درجہ بندی کریں۔"
 
 
 

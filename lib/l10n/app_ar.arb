@@ -94,7 +94,10 @@
 "loading" : "لوڊ ڪرڻ", 
 "current_location" : "موجوده مقام",
 "incident_location" : "واقعي جي جڳھ", 
-"search_your_address" : "توھان جو پتو ڳولھيو" 
+"search_your_address" : "توھان جو پتو ڳولھيو",
+"details": "تفصيل", 
+"rate_the_lifesaver": "زندگي بچائيندڙ جي درجه بندي ڪريو"
+
 
 
 
