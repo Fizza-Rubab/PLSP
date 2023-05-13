@@ -57,7 +57,7 @@ class _Lifesaver_FeedbackState extends State<Lifesaver_Feedback> {
   List<String> _entries = [];
   String _lifeSavingIntervention = 'CPR';
 
-  bool _didPerformLifeSavingIntervention = false;
+  bool _didPerformLifeSavingIntervention = true;
   bool _didMedicalHelpArrive = false;
 
   TextStyle question_style = GoogleFonts.poppins(
