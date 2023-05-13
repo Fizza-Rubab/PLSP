@@ -348,7 +348,7 @@ class _Alert_DetailsState extends State<Alert_Details> {
                             icon: const Icon(Icons.my_location),
                             onPressed: () async {
                               _getCurrentLocation();
-                              _addressController.text = "Search your address";
+                              _addressController.text = localizations.search_your_address;
                             },
                           )),
                       controller: TextEditingController(text: _addressController.text),
