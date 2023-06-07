@@ -6,6 +6,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:flutter/material.dart';
+import './Helplines.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants.dart';
@@ -95,8 +96,8 @@ class _LifesaverHomeState extends State<LifesaverHome> {
       localizations.helpline,
       localizations.manual
     ];
-    print(first_name); 
-    print(last_name); 
+    // print(first_name); 
+    // print(last_name); 
     return WillPopScope(
       onWillPop: () async {
         
@@ -229,6 +230,7 @@ class _LifesaverHomeState extends State<LifesaverHome> {
                             MaterialPageRoute<dynamic>(
                               builder: (_) => PDFViewerFromAsset(
                                 pdfAssetPath: 'assets/pdf/vision_mission.pdf',
+                                pdfName: titles[index],
                               ),
                             ),
                           );
@@ -239,12 +241,19 @@ class _LifesaverHomeState extends State<LifesaverHome> {
                             MaterialPageRoute<dynamic>(
                               builder: (_) => PDFViewerFromAsset(
                                 pdfAssetPath: 'assets/pdf/training_manual.pdf',
+                                pdfName: titles[index],
                               ),
                             ),
                           );
                         }
                         if (index == 4) {
-                          launchUri(helpline);
+                          // launchUri(helpline);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    Helplines()),
+                          );
                         }
                         if (index == 2) {
                           Navigator.push(
@@ -252,6 +261,7 @@ class _LifesaverHomeState extends State<LifesaverHome> {
                             MaterialPageRoute<dynamic>(
                               builder: (_) => PDFViewerFromAsset(
                                 pdfAssetPath: 'assets/pdf/brochure.pdf',
+                                pdfName: titles[index],
                               ),
                             ),
                           );
