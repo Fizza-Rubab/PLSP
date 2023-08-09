@@ -11,3 +11,14 @@ The main objectives of the application include
 3. Allow citizen to transparently observe and track location of the lifesaver
 4. Allow citizens to rate the lifesavers skills
 5. Allow PLSP admin to see the statistics of incidents on the PLSP dashboard
+
+## Technologies
+
+### Backend
+Backend is written in python and the REST API is created using the Django framework.
+
+### Frontend
+Frontend i.e, the mobile application has been built using Flutter.
+
+## Achievements
+This project and its paper has been accepted in the IEEE Global Humanitarian Technology Conference (GHTC) 2023.
