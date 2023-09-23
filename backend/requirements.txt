@@ -4,7 +4,6 @@ Django==4.0.1
 djangorestframework
 markdown
 django-filter
-mysqlclient
 geopy
 django-allauth
 Pillow==9.3.0
