@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-=!xv6z4s9#+jb%-y@sab709yzdf_^3*osqtg866h_ss@-9=#l9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS =['10.0.2.2', '127.0.0.1', "localhost"]
+ALLOWED_HOSTS =["44.230.76.47", "172.31.29.110"]
 
 
 # Application definition
@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_swagger',
     'api',
+    'dashboard',
 ]
 ASGI_APPLICATION = 'backend.asgi.application'
 
@@ -82,7 +84,6 @@ TEMPLATES = [
 ]
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
@@ -90,9 +91,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'plsp',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
+        'USER': 'admin',
+        'PASSWORD': 'admin123?',
+        'HOST': 'plsp-db.c4dmafbhisin.us-west-2.rds.amazonaws.com',
         'PORT': '3306',
     }
 }
@@ -137,7 +138,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS=(

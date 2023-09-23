@@ -4,7 +4,7 @@ from . import views
 app_name = "dashboard"
 
 urlpatterns = [
-    path("", views.login_auth, name="dashboard"),
+    path("dashboard/", views.login_auth, name="dashboard"),
     path("admin/", views.index, name="admin"),
     path("charts/", views.charts, name="charts"),
     path("widgets/", views.widgets, name="widgets"),

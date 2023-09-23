@@ -6,7 +6,6 @@ from django.utils import timezone
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-
 def login_auth(request):
     return render(request, "dashboard/authentication-login.html")
 
