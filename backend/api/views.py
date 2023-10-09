@@ -1,6 +1,6 @@
 from rest_framework import generics
-from .models import Lifesaver, Citizen, PostInfoCitizen, PostInfoLifesaver, Incident, Request
-from .serializers import  LifesaverRegistrationSerializer, CitizenRegistrationSerializer, PostInfoCitizenSerializer, PostInfoLifesaverSerializer, RequestSerializer, IncidentSerializer, LifesaverSerializer, CitizenSerializer, UserLoginSerializer
+from .models import Lifesaver, Citizen, PostInfoCitizen, PostInfoLifesaver, Incident, Request, User
+from .serializers import  LifesaverRegistrationSerializer, CitizenRegistrationSerializer, PostInfoCitizenSerializer, PostInfoLifesaverSerializer, RequestSerializer, IncidentSerializer, LifesaverSerializer, CitizenSerializer, UserLoginSerializer, UserSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticated
@@ -18,7 +18,8 @@ from django.core.files.base import ContentFile
 from django.http import HttpResponse
 import time
 import redis
-
+import asyncio
+from multiprocessing import Process
 # incident.id, request.data['latitude'], request.data['longitude'], request.data['info'], request.data['no_of_patients'], f'{citizen.first_name} {citizen.last_name}', citizen.contact_no 
 def send_notification(registration_token, request_id, incident_id, latitude, longitude, info, no_of_patients, citizen_name, citizen_contact):
     r = requests.post('https://fcm.googleapis.com/fcm/send', headers={"Authorization":"key=AAAAT3R6Eao:APA91bHKhCyVHijluBFFxBoYdNt8tVvmZ1vpYlDbm0W8JSpQLg7RHG6kX-p09dIJXteunsi4CTfbIK47J_3dROjOSVWK4EbWjOgiJSj5zD5Epb4J48dVTAnyTGd_IuQOL82hcujLHjb9",
@@ -118,6 +119,10 @@ class CitizenRegister(generics.CreateAPIView):
 class LifesaverGet(generics.ListAPIView):
     queryset = Lifesaver.objects.all()
     serializer_class = LifesaverSerializer
+
+class UserGet(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 class CitizenGet(generics.ListAPIView):
     queryset = Citizen.objects.all()
@@ -270,19 +275,19 @@ class IncidentGetCreate(generics.ListCreateAPIView):
         if serializer.is_valid():
             incident = serializer.save()
             lat, long = request.data['latitude'], request.data['longitude']
+            rounded_lat, rounded_long= round(float(lat), 3), round(float(long), 3)
             citizen = incident.citizen
-            # Check Redis cache for nearby lifesavers
             ls = []
-            cache_key = f"{lat}:{long}"
+            cache_key = f"{rounded_lat}:{rounded_long}"
             cached_data = self.redis_conn.get(cache_key)
-            print("cached data", cached_data)
+            print("Retrieved Cache data", cached_data)
             if cached_data:
                 ls = Lifesaver.objects.filter(id__in=cached_data.decode().split(","))
-                print("from cached", ls)
+                print("Lifesavers from cached", ls)
             if not ls:
                 ls = [l  for l in Lifesaver.objects.filter(is_available=True) if l.is_nearby(lat, long)]
                 # lifesavers = Lifesaver.objects.filter(is_available=True, latitude__range=(lat-0.3, lat+0.3), longitude__range=(long-0.3, long+0.3))
-                print("from DB", ls)
+                print("Lifesavers obtained from database", ls)
                 ntries = 2
                 radius = 1
                 if not ls:
@@ -419,5 +424,4 @@ class RetrieveNearby(generics.ListAPIView):
         lat=float(self.kwargs['lat'])
         long=float(self.kwargs['long'])
         return  [ls for ls in super().get_queryset() if ls.is_nearby(lat, long)]
-
 
